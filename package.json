@@ -1,9 +1,9 @@
 {
-  "name": "@Marquito73/marquito-utils-react-lib",
+  "name": "@marquito73/marquito-utils-react-lib",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/marquito-utils-react-lib"
+    "registry": "https://npm.pkg.github.com/Marquito73"
   },
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Marquito React component library",
   "scripts": {
     "rollup": "rollup -c"
