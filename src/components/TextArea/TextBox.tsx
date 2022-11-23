@@ -13,7 +13,7 @@ export interface TextBoxProps extends ComponentProps {
 	PlaceHolder: string
 }
 
-export default class TextBox extends Component<TextBoxProps> {
+export default class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps> {
 	render() {
 		this.LogProperties();
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

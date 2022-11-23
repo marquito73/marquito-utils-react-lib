@@ -15,7 +15,7 @@ export interface ComponentProps {
 /**
  * Main component class
  * */
-export default abstract class Component<Props>
+export default abstract class Component<Props extends ComponentProps>
 	extends React.Component<Props & ComponentProps, {}> {
 
 	LogProperties = () => {
