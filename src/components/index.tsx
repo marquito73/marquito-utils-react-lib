@@ -5,6 +5,7 @@ import TextBox, { TextBoxProps } from "./TextArea";
 
 export { default as Component, ComponentProps } from "./Component";
 export { default as TextBox, TextBoxProps } from "./TextArea";
+export {ReactWidgetFactory};
 
 
 export default class ReactWidgetFactory {
