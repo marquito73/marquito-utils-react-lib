@@ -1,3 +1,3 @@
 export * from './components';
 
-import {ReactWidgetFactory} from "./components";
+export {ReactWidgetFactory} from "./components";
