@@ -7,9 +7,8 @@ export interface ComponentProps {
 	ContainerId: string,
 	Id: string,
 	CssClass: Array<string>,
-	Attributes: Map<String, String>,
-	Events: Map<String, String>
-	//Events
+	Attributes: Map<string, string>,
+	Events: Map<string, string>
 }
 
 /**
