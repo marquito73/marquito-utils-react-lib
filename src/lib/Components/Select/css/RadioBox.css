@@ -1,0 +1,12 @@
+div.RadioBox-React > label > span {
+    border-radius: 50%;
+}
+
+div.RadioBox-React > label > span:after {
+    top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}

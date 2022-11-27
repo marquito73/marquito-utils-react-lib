@@ -8,7 +8,7 @@ const packageJson = require("./package.json");
 
 export default [
   {
-    input: "src/index.ts",
+    input: "src/lib/index.ts",
     output: [
       {
         file: packageJson.main,
@@ -24,7 +24,9 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
+      typescript({ 
+        tsconfig: "./tsconfig.json"
+      }),
       postcss(),
     ],
   },

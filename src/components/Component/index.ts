@@ -1,1 +1,0 @@
-export {default, ComponentProps} from "./Component";

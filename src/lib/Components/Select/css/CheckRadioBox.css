@@ -1,0 +1,51 @@
+div.CheckBox-React, 
+div.RadioBox-React {
+    display: flex;
+    height: 29px;
+}
+
+div.CheckBox-React > label, 
+div.RadioBox-React > label {
+    display: inline-flex;
+    position: relative;
+    padding-left: 30px;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+div.CheckBox-React > label > input, 
+div.RadioBox-React > label > input {
+    width: 0px;
+    height: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+div.CheckBox-React > label > span,
+div.RadioBox-React > label > span {
+    position: absolute;
+    background-color: #eee;
+    width: 25px;
+    height: 25px;
+    top: 0;
+    left: 0;
+}
+
+div.CheckBox-React > label > input:checked ~ span,
+div.RadioBox-React > label > input:checked ~ span {
+    background-color: #2196F3;
+}
+
+div.CheckBox-React > label > span:after,
+div.RadioBox-React > label > span:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+div.CheckBox-React > label > input:checked ~ span:after,
+div.RadioBox-React > label > input:checked ~ span:after {
+    display: block;
+}
