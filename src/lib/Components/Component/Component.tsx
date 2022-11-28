@@ -33,10 +33,17 @@ import { StringBuilder } from "../../Utils";
 }
 
 /**
+ * Main components properties
+ * */
+export interface ComponentState {
+
+}
+
+/**
  * Main component class
  * */
-export abstract class Component<Props extends ComponentProps>
-	extends React.Component<Props & ComponentProps, {}> {
+export abstract class Component<Props extends ComponentProps, State extends ComponentState>
+	extends React.Component<Props & ComponentProps, State & ComponentState> {
 
 	public LogProperties = () => {
 		console.table(this.props);

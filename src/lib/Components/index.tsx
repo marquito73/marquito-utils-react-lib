@@ -7,6 +7,7 @@ import {TextBox, TextBoxProps} from "./TextArea";
 export * from "./Component";
 export * from "./TextArea";
 export * from "./Select";
+export * from "./Grid";
 export {ReactWidgetFactory};
 
 

@@ -1,8 +1,7 @@
 import * as React from "react";
 //import Component, { ComponentProps } from "../Component";
 import {Component, ComponentProps} from "../Component";
-import { useState } from 'react';
-import "./TextBox.css";
+import { useState } from 'react';	
 
 export interface LabelProps extends ComponentProps {
 	/**
@@ -15,7 +14,7 @@ export interface LabelProps extends ComponentProps {
     For: string
 }
 
-export class Label<Props extends LabelProps> extends Component<Props & LabelProps> {
+export class Label<Props extends LabelProps> extends Component<Props & LabelProps, {}> {
 	render() {
 		return (
 			<div id={this.GetOwnContainerId()} className="Label-React">

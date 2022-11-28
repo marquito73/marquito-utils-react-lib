@@ -1,0 +1,12 @@
+div.TextBox-React {
+    width: inherit;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+div.TextBox-React > input {
+    /* background-color: red; */
+    height: 20px;
+    width: 99%;
+}

@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Component, ComponentProps} from "../Component";
-import { useState } from 'react';
+import {Component, ComponentProps, ComponentState} from "../Component";
+import { useState, ChangeEvent } from 'react';
 import "./css/CheckRadioBox.css";
 
 export interface CheckRadioBoxProps extends ComponentProps {
@@ -22,14 +22,28 @@ export interface CheckRadioBoxProps extends ComponentProps {
     Type: string
 }
 
-export abstract class CheckRadioBox<Props extends CheckRadioBoxProps> extends Component<Props & CheckRadioBoxProps> {
-    
+export interface CheckRadioBoxState extends ComponentState {
+    IsChecked: boolean
+}
+
+export abstract class CheckRadioBox<Props extends CheckRadioBoxProps, State extends CheckRadioBoxState> 
+extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
+
+    protected IsChecked:boolean = this.props.Selected;
+
     render() {
+
+        const toggleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+            this.IsChecked = event.target.checked;
+            console.log(event.target.value + " : " + this.IsChecked);
+        }
+
         return (
             <div 
                 id={this.GetOwnContainerId()} 
 				{...this.props.Attributes}
                 className={this.GetOwnCssClass()}
+                onChange={toggleCheck}
             >
                 <label>
                     {this.props.Caption}
@@ -39,45 +53,20 @@ export abstract class CheckRadioBox<Props extends CheckRadioBoxProps> extends Co
         );
     }
 
-	/*render() {
-        let inputValue = "off";
-        if (this.props.Selected)
-        {
-            inputValue = "on";
-            this.props.Attributes.set("checked", "");
-        }
-		return (
-			// <div id={this.props.Id + "_cnt"} className="Label-React">
-                
-			// </div>
-            <input 
-                id={this.props.Id} 
-                name={this.props.Name} 
-                type={this.props.Type} 
-                defaultValue={inputValue} 
-                {...this.props.Attributes}
-                />
-		);
-	}*/
-
     protected getBoxInput = () => {
-        let inputValue = "off";
-        if (this.props.Selected)
-        {
-            inputValue = "on";
-            // this.props.Attributes.set("checked", "");
-        }
-        //this.props.Attributes.set("value", this.props.Value);
         return (
             <>
                 <input 
                     id={this.props.Id} 
                     name={this.props.Name} 
                     type={this.props.Type} 
-                    defaultValue={inputValue} 
+                    defaultValue={this.props.Value} 
+                    defaultChecked={this.props.Selected}
                     {...this.props.Attributes}
                 />
-                <span id={this.props.Id + "Box"} >
+                <span 
+                    id={this.props.Id + "Box"}
+                >
 
                 </span>
             </>

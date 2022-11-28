@@ -12,6 +12,11 @@ export class StringBuilder {
      */
     private Separator: string = "";
 
+    /**
+     * A string builder
+     * 
+     * @param separator A separator for differents strings
+     */
     constructor(separator: string) {
         this.Separator = separator;
     }

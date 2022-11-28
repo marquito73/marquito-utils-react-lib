@@ -27,4 +27,24 @@ export class Utils {
     public static IsNotEmpty = (value: string) => {
         return !this.IsEmpty(value);
     }
+
+    /**
+     * Convert object to string
+     * 
+     * @param value Object
+     * @returns Object as string
+     */
+    public static GetAsString(value: any) {
+        return String(value);
+    }
+
+    /**
+     * Convert object to boolean
+     * 
+     * @param value Object
+     * @returns Object as boolean
+     */
+    public static GetAsBoolean(value: any) {
+        return Boolean(value);
+    }
 }

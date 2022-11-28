@@ -1,0 +1,20 @@
+.Grid-React {
+    border: 1px solid blue;
+    overflow-x: auto;
+    width: 30rem;
+}
+
+.Grid-React table > colgroup > col.Text {
+    min-width: 20rem;
+    max-width: 20rem;
+}
+
+.Grid-React table > colgroup > col.Number {
+    min-width: 10rem;
+    max-width: 10rem;
+}
+
+.Grid-React table > colgroup > col.Boolean {
+    min-width: 4rem;
+    max-width: 4rem;
+}

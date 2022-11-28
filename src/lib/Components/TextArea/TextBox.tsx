@@ -1,7 +1,6 @@
 import * as React from "react";
-//import Component, { ComponentProps } from "../Component";
 import {Component, ComponentProps} from "../Component";
-import "./TextBox.css";
+import "./css/TextBox.css";
 
 export interface TextBoxProps extends ComponentProps {
 	/**
@@ -14,7 +13,7 @@ export interface TextBoxProps extends ComponentProps {
 	PlaceHolder: string
 }
 
-export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps> {
+export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps, {}> {
 	render() {
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			//this.LogProperties();
@@ -25,15 +24,14 @@ export class TextBox<Props extends TextBoxProps> extends Component<Props & TextB
 		// cssClass.push("TextBox-React");
 		// cssClass = cssClass.concat(this.props.CssClass);
 
-		const cssClass: Array<string> = new Array("TextBox-React").concat(this.props.CssClass);
-		
-		this.LogProperties();
+		//const cssClass: Array<string> = new Array("TextBox-React").concat(this.props.CssClass);
 
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
 				{...this.props.Attributes}
-				{...this.GetCssAttribute(cssClass)}
+				// {...this.GetCssAttribute(cssClass)}
+				className="TextBox-React"
 			>
 				<input
 					id={this.props.Id} 
