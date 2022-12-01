@@ -4,6 +4,7 @@ import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
 import { CellType } from "../lib";
+import { TestButton } from "./Button/Button";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -26,6 +27,10 @@ export default class App extends React.Component<{}, {}> {
     private getTestGrid = () => {
         return TestGrid();
     }
+    // Button 
+    private getTestButton = () => {
+        return TestButton("Test button", "https://www.google.com");
+    }
 
     render() {
         return (
@@ -44,6 +49,9 @@ export default class App extends React.Component<{}, {}> {
                     </div>
                     <div id="grid">
                         <this.getTestGrid/>
+                    </div>
+                    <div id="grid">
+                        <this.getTestButton/>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,32 @@
+.Button-React {
+    transition: all 0.2s ease, visibility 0s;
+    background: #FFFFFF;
+    border-radius: 50px;
+    border: 1px solid #323724;
+    box-shadow: 0 0 6px 0 rgb(207 221 172 / 70%);
+    min-width: 10px;
+    min-height: 10px;
+    cursor: pointer;
+}
+
+.Button-React:hover {
+    box-shadow: 0 0 6px 1px #8b9766;
+}
+
+.Button-React > a {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.Button-React > a > span {
+    transition: inherit;
+    display: initial;
+    font-family: avenir-lt-w01_35-light1475496,sans-serif;
+    font-size: 15px;
+    color: #8B9766;
+}

@@ -1,5 +1,5 @@
 import {CheckRadioBoxProps, CheckRadioBox, CheckRadioBoxState} from "./CheckRadioBox";
-import "./css/CheckBox.css"
+import "./css/CheckBox.scss"
 
 export class CheckBox<Props extends CheckRadioBoxProps> 
 extends CheckRadioBox<Props & CheckRadioBoxProps, CheckRadioBoxState> {

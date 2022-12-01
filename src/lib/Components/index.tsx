@@ -5,9 +5,10 @@ import {CheckBox, CheckRadioBoxProps} from "./Select";
 import {TextBox, TextBoxProps} from "./TextArea";
 
 export * from "./Component";
-export * from "./TextArea";
-export * from "./Select";
 export * from "./Grid";
+export * from "./Button";
+export * from "./Select";
+export * from "./TextArea";
 export {ReactWidgetFactory};
 
 

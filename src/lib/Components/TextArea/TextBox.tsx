@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component, ComponentProps} from "../Component";
-import "./css/TextBox.css";
+import "./css/TextBox.scss";
 
 export interface TextBoxProps extends ComponentProps {
 	/**

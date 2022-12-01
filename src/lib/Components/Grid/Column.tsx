@@ -2,7 +2,7 @@ import * as React from "react";
 import { StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component";
 import { CellType } from "./Cell";
-import "./css/Column.css";
+import "./css/Column.scss";
 
 export interface ColumnProps extends ComponentProps {
     Caption: string,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import { useState, ChangeEvent } from 'react';
-import "./css/CheckRadioBox.css";
+import "./css/CheckRadioBox.scss";
 
 export interface CheckRadioBoxProps extends ComponentProps {
 	/**
@@ -36,6 +36,16 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
         const toggleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
             this.IsChecked = event.target.checked;
             console.log(event.target.value + " : " + this.IsChecked);
+
+            test();
+        }
+
+        const test = () => {
+            const check = this.props.Events.get("OnCheck");
+            if (check != undefined) {
+                const func: Function = new Function(check);
+                func();
+            }
         }
 
         return (

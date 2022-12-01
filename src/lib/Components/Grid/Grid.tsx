@@ -4,7 +4,7 @@ import { Component, ComponentProps } from "../Component";
 import { Column, ColumnProps } from "./Column";
 import { Row, RowProps } from "./Row";
 import { CellType } from "./Cell";
-import "./css/Grid.css";
+import "./css/Grid.scss";
 
 export interface GridProps extends ComponentProps {
     Columns: Array<ColumnProps>,

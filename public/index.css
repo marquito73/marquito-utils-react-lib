@@ -5,6 +5,8 @@
 
 #testing > * {
     margin: 0.5rem;
-    border: 1px solid black;
     padding: 0.5rem;
+    border-width: 5px;
+    border-color: cornflowerblue;
+    border-style: dashed;
 }

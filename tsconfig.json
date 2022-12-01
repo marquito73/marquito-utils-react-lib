@@ -19,8 +19,8 @@
     "emitDeclarationOnly": true
   },
   "exclude": [
-    "src/App.tsx",
     "src/index.tsx",
-    "src/testing/*"
+    "src/testing/*",
+    "public/*"
   ]
 }

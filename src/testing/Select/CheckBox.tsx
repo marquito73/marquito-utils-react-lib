@@ -18,6 +18,8 @@ export const TestCheckBox = (selected: boolean, value: string) => {
         Events: new Map()
     };
 
+    chkProps.Events.set("OnCheck", "document.testCheck()");
+
     return (
         <CheckBox {...chkProps}/>
     );
