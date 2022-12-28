@@ -1,9 +1,40 @@
+#root > div > h1 {
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
 #testing {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
-#testing > * {
+#testing > #tabsbar {
+    align-self: center;
+}
+
+#testing > #content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#testing > #content > * {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-width: 5px;
+    border-color: cornflowerblue;
+    border-style: dashed;
+}
+
+#testing > #content > * > * {
     margin: 0.5rem;
     padding: 0.5rem;
     border-width: 5px;

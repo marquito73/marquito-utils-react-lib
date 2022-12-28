@@ -5,14 +5,20 @@ export class Utils {
     /**
      * Is empty ?
      * 
-     * @param value The string to test if is empty
+     * @param value The object to test if is empty
      * @returns Is empty ?
      */
-    public static IsEmpty = (value: string) => {
+    public static IsEmpty = (value: any) => {
         let isEmpty: boolean = false;
 
-        if (value == "" || value == undefined) {
+        if (value == undefined) {
             isEmpty = true;
+        } else {
+            if (value instanceof String || value == "") {
+                isEmpty = true;
+            } else if (value instanceof Number || value == 0) {
+                isEmpty = true;
+            }
         }
 
         return isEmpty;
@@ -21,10 +27,10 @@ export class Utils {
     /**
      * Is not empty ?
      * 
-     * @param value The string to test if is not empty
+     * @param value The object to test if is not empty
      * @returns Is not empty ?
      */
-    public static IsNotEmpty = (value: string) => {
+    public static IsNotEmpty = (value: any) => {
         return !this.IsEmpty(value);
     }
 

@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import { useState, ChangeEvent } from 'react';
 import "./css/CheckRadioBox.scss";
+import { EnumEvent } from "../../Enums";
 
 export interface CheckRadioBoxProps extends ComponentProps {
 	/**
@@ -41,9 +42,9 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
         }
 
         const test = () => {
-            const check = this.props.Events.get("OnCheck");
+            const check = this.props.Events.get(EnumEvent.OnCheck);
             if (check != undefined) {
-                const func: Function = new Function(check);
+                const func: Function = check;
                 func();
             }
         }

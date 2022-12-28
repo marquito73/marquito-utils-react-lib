@@ -33,6 +33,20 @@ export class StringBuilder {
     }
 
     /**
+     * Add tabulation
+     */
+    public AppendTab = () => {
+        this.Append("\t");
+    }
+
+    /**
+     * Add carriage return
+     */
+    public AppendReturn = () => {
+        this.Append("\n");
+    }
+
+    /**
      * Return the string contructed with all strings
      * @returns The string contructed with all strings
      */

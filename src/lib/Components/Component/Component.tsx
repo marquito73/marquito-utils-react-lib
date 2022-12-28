@@ -1,5 +1,7 @@
 import * as React from "react";
 import { StringBuilder } from "../../Utils";
+import CSS from 'csstype';
+import { EnumEvent } from "../../Enums";
 
 
 /**
@@ -29,7 +31,7 @@ import { StringBuilder } from "../../Utils";
 	/**
 	 * Events of the component
 	 */
-	Events: Map<string, string>
+	Events: Map<EnumEvent, Function>
 }
 
 /**
@@ -45,9 +47,15 @@ export interface ComponentState {
 export abstract class Component<Props extends ComponentProps, State extends ComponentState>
 	extends React.Component<Props & ComponentProps, State & ComponentState> {
 
-	public LogProperties = () => {
+	protected LogProperties = () => {
 		console.table(this.props);
     }
+
+	protected ExecuteFunction = (eventKey: EnumEvent) => {
+		return () => {
+			this.props.Events.get(eventKey)?.();
+		}
+	}
 
 	protected GetOwnContainerId = () => {
 		return this.GetContainerId(this.props.Id);
@@ -95,5 +103,13 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		const cssAttr: Map<string, string> = new Map();
 		
 		return cssAttr.set("className", this.GetCssClass(cssClass));
+	}
+
+	protected GetStyleImportant = (cssStyle: string) => {
+		const sbStyle: StringBuilder = new StringBuilder(" ");
+
+		sbStyle.Append(cssStyle).Append("!important");
+		
+		return sbStyle.ToString();
 	}
 }

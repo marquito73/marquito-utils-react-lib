@@ -6,7 +6,7 @@ export const TestRadioBox = (selected: boolean, value: string) => {
 
     // Radiobox
     const rbProps: CheckRadioBoxProps = {
-        Caption: "Test radiobox 1",
+        Caption: "Test radiobox " + value,
         Value: value,
         Selected: selected,
         Type: "radio",

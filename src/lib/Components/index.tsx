@@ -4,9 +4,10 @@ import { createRoot } from 'react-dom/client';
 import {CheckBox, CheckRadioBoxProps} from "./Select";
 import {TextBox, TextBoxProps} from "./TextArea";
 
+export * from "./Button";
 export * from "./Component";
 export * from "./Grid";
-export * from "./Button";
+export * from "./Menu";
 export * from "./Select";
 export * from "./TextArea";
 export {ReactWidgetFactory};

@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckBox, CheckRadioBoxProps } from "../../lib";
+import { EnumEvent } from "../../lib/Enums";
 
 
 export const TestCheckBox = (selected: boolean, value: string) => {
@@ -18,7 +19,7 @@ export const TestCheckBox = (selected: boolean, value: string) => {
         Events: new Map()
     };
 
-    chkProps.Events.set("OnCheck", "document.testCheck()");
+    chkProps.Events.set(EnumEvent.OnCheck, Function("document.testCheck()"));
 
     return (
         <CheckBox {...chkProps}/>

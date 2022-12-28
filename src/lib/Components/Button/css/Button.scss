@@ -2,11 +2,15 @@
     transition: all 0.2s ease, visibility 0s;
     background: #FFFFFF;
     border-radius: 50px;
-    border: 1px solid #323724;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #323724;
     box-shadow: 0 0 6px 0 rgb(207 221 172 / 70%);
     min-width: 10px;
     min-height: 10px;
     cursor: pointer;
+    color: #8B9766;
+    font-size: 15px;
 }
 
 .Button-React:hover {
@@ -14,6 +18,8 @@
 }
 
 .Button-React > a {
+    cursor: inherit;
+    transition: inherit;
     padding: 1rem;
     width: calc(100% - 2rem);
     height: calc(100% - 2rem);
@@ -23,10 +29,15 @@
     text-decoration: none;
 }
 
-.Button-React > a > span {
+.Button-React > a > span, 
+.Button-React > a > span > .Label-React,
+.Button-React > a > span > .Label-React > label {
+    cursor: inherit;
     transition: inherit;
+}
+
+.Button-React > a > span > .Label-React > label {
     display: initial;
     font-family: avenir-lt-w01_35-light1475496,sans-serif;
-    font-size: 15px;
     color: #8B9766;
 }
