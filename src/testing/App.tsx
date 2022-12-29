@@ -54,9 +54,9 @@ export default class App extends React.Component<{}, {}> {
             const select: Selector = new Selector("#testing").Children("#content");
 
             if (tabsName == "All") {
-                select.Child().SetVisible(true);
+                select.Children("").SetVisible(true);
             } else {
-                select.Child().SetVisible(false);
+                select.Children("").SetVisible(false);
                 select.Children(`#${tabsName}`).SetVisible(true);
             }
 

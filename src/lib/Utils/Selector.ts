@@ -3,6 +3,7 @@ import { Utils } from "./Utils";
 /**
  * Simple Selector
  */
+// TODO Replace Array by Set
 export class Selector {
     /**
      * Main selector
@@ -56,13 +57,17 @@ export class Selector {
      * @param selector The selector
      * @returns All elements corresponding to the selector and elements
      */
-    private GetElements = (elements: Array<Element>, selector: string) => {
+    private GetElements = (elements: Array<Element>, selector: string, searchParent: boolean) => {
         const elems: Array<Element> = new Array();
 
         elements.forEach(element => {
-            element.querySelectorAll(selector)!.forEach(node => {
-                elems.push(node);
-            });
+            if (searchParent) {
+                elems.push(element.closest(selector)!);
+            } else {
+                element.querySelectorAll(selector)!.forEach(node => {
+                    elems.push(node);
+                });
+            }
         });
 
         return elems;
@@ -80,15 +85,6 @@ export class Selector {
     /**
      * Get childrens of elements
      * 
-     * @returns Childrens of elements
-     */
-    public Child = () => {
-        return this.Children("");
-    }
-    
-    /**
-     * Get childrens of elements
-     * 
      * @param childrenSelector Selector
      * @returns Childrens of elements
      */
@@ -96,18 +92,73 @@ export class Selector {
         let childrens: Array<Element> = new Array();
         
         if (Utils.IsNotEmpty(childrenSelector)) {
-            childrens = this.GetElements(this.MainSelector, ":scope > " + childrenSelector);
+            childrens = this.GetElements(this.MainSelector, ":scope > " + childrenSelector, false);
         } else {
-            childrens = this.GetElements(this.MainSelector, ":scope > *");
+            childrens = this.GetElements(this.MainSelector, ":scope > *", false);
         }
 
         return new Selector(childrens);
     }
+    
+    /**
+     * Get closest childrens of elements
+     * 
+     * @param childrenSelector Selector
+     * @returns Closest childrens of elements
+     */
+    public Find = (childrenSelector: string) => {
+        let childrens: Array<Element> = new Array();
+        
+        if (Utils.IsNotEmpty(childrenSelector)) {
+            childrens = this.GetElements(this.MainSelector, ":scope " + childrenSelector, false);
+        } else {
+            childrens = this.GetElements(this.MainSelector, ":scope *", false);
+        }
 
+        return new Selector(childrens);
+    }
+    
+    /**
+     * Get parents of elements
+     * 
+     * @returns Parents of elements
+     */
+    public Parent = () => {
+        return new Selector(this.MainSelector.map(element => element.parentElement!));
+    }
+    
+    /**
+     * Get closest parents of elements
+     * 
+     * @param parentSelector Selector
+     * @returns Closest parents of elements
+     */
+    /*public Closest = (parentSelector: string) => {
+        let parents: Array<Element> = new Array();
+        
+        if (Utils.IsNotEmpty(parentSelector)) {
+            parents = this.GetElements(this.MainSelector, parentSelector, true);
+        } else {
+            parents = this.GetElements(this.MainSelector, "*", true);
+        }
+
+        return new Selector(parents);
+    }*/
+
+    /**
+     * Add css class to all elements matching the selector
+     * 
+     * @param className The class to add
+     */
     public AddClass = (className: string) => {
         this.MainSelector.forEach(element => element.classList.add(className));
     }
 
+    /**
+     * Remove css class to all elements matching the selector
+     * 
+     * @param className The class to remove
+     */
     public RemoveClass = (className: string) => {
         this.MainSelector.forEach(element => element.classList.remove(className));
     }

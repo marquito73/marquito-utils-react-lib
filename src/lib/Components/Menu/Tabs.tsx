@@ -16,18 +16,24 @@ extends Component<Props & TabsProps, {}> {
         this.props.CssClass.push("Tabs-React");
 
         return (
-            <div
+            <nav
                 id={this.GetOwnContainerId()}
                 className={this.GetOwnCssClass()}
             >
                 {this.GetTabs()}
-            </div>
+            </nav>
         );
     }
 
     private GetTabs = () => {
+        let isFirst: boolean = true;
+
         return (
             this.props.Tabs.map((tabProps) => {
+                if (isFirst) {
+                    tabProps.CssClass.push("active");
+                }
+                isFirst = false;
                 return this.GetTab(tabProps);
             })
         );

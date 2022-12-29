@@ -40,6 +40,7 @@ extends Component<Props & ButtonProps, {}> {
                 <a
                     // href={this.props.Link}
                     onClick={this.ExecuteFunction(EnumEvent.OnClick)}
+                    onMouseEnter={this.ExecuteFunction(EnumEvent.OnMouseEnter)}
                 >
                     <span
                         id={this.props.Id}

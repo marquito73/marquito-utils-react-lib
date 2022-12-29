@@ -3,3 +3,50 @@
     flex-direction: row;
     column-gap: 10px;
 }
+
+.Tabs-React > .Tab-React > .Button-React {
+    border-color: transparent !important;
+    background: none !important;
+    box-shadow: none !important;
+
+    font-weight: inherit !important;
+    color: inherit !important;
+    font-size: inherit !important;
+}
+
+.Tabs-React > .Tab-React > .Button-React {
+    transition: color 0.1s ease;
+}
+
+.Tabs-React > .Tab-React > .Button-React:hover,
+.Tabs-React > .Tab-React.active > .Button-React {
+    color: red !important;
+}
+
+.Tabs-React > .Tab-React > .Button-React > a,
+.Tabs-React > .Tab-React > .Button-React > a > span,
+.Tabs-React > .Tab-React > .Button-React > a > span > div,
+.Tabs-React > .Tab-React > .Button-React > a > span > div > label {
+    color: inherit !important;
+    transition: inherit !important;
+}
+
+.Tabs-React > .Tab-React > .Button-React > a > span::after {
+    transition: width 0.5s ease, background-color 0.5s ease;
+    content: "";
+    display: block;
+    height: 1px;
+    margin: auto;
+    width: 0;
+    background-color: transparent;
+}
+
+.Tabs-React > .Tab-React > .Button-React:hover > a > span::after {
+    width: 50% !important;
+    background-color: red !important;
+}
+
+.Tabs-React > .Tab-React.active > .Button-React > a > span::after {
+    width: 100% !important;
+    background-color: red !important;
+}

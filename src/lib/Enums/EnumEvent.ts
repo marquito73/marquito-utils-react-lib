@@ -4,6 +4,10 @@ export enum EnumEvent {
      */
     OnClick,
     /**
+     * Mouse enter event
+     */
+    OnMouseEnter,
+    /**
      * Check event
      */
     OnCheck
