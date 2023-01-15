@@ -1,20 +1,148 @@
+.Grid-React > .Grid {
+    width: fit-content;
+    table-layout: fixed;
+    border-collapse: collapse;
+    overflow-x: auto;
+    width: inherit;
+    height: inherit;
+
+    border-width: 0.1rem;
+    border-style: solid;
+}
+
+.Grid-React > .Grid.withoutBorder {
+    border-color: transparent;
+}
+
+.Grid-React > .Grid:not(.withoutBorder) {
+    border-color: black;
+}
+
+.Grid-React > .Grid tbody {
+    height: calc(100% - 1rem);
+    display: block;
+    width: 100%;
+    overflow-y: scroll;
+    border-top: 0.1rem solid #F6A42C;
+    border-bottom: 0.1rem solid #F6A42C;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.Grid-React > .Grid > table.grid {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+.Grid-React > .Grid thead tr {
+    display: block;
+}
+
+.Grid-React > .Grid thead tr.gridHeaderRow {
+    padding-top: 0.2rem;
+}
+
+.Grid-React > .Grid thead tr > th, div.grid thead tr > td {
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: black;
+}
+
+.Grid-React > .Grid tr > th, div.grid tr:not(.grid_footer_row) > td {
+    padding: 5px 0px;
+    text-align: center;
+}
+
+.Grid-React > .Grid tr > th.grid_content_text, tr > td.grid_content_text {
+    width: 12rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_password, tr > td.grid_content_password {
+    width: 12rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_emailaddress, tr > td.grid_content_emailaddress {
+    width: 12rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_phonenumber, tr > td.grid_content_phonenumber {
+    width: 8rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_number, tr > td.grid_content_number {
+    width: 4rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_currency, tr > td.grid_content_currency {
+    width: 7rem;
+}
+
+.Grid-React > .Grid tr > th.grid_content_boolean, tr > td.grid_content_boolean {
+    width: 3rem;
+}
+
+.Grid-React > .Grid tbody > tr:nth-child(even) {
+    background: #f8f6ff;
+}
+
+.Grid-React > .Grid tbody > tr:hover {
+    background-color: antiquewhite;
+}
+
+/*Le footer*/
+.Grid-React > .Grid > div.grid_footer {
+    width: 100%;
+    background-color: yellow;
+    height: 2rem;
+}
+
+.Grid-React > .Grid .resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    width: 3px;
+    cursor: col-resize;
+}
+
 .Grid-React {
-    border: 1px solid blue;
-    overflow-x: scroll;
-    width: 30rem;
+    width: 100%;
 }
 
-.Grid-React table > colgroup > col.Text {
-    min-width: 20rem;
-    max-width: 20rem;
+.Grid-React > .Grid {
+    width: inherit;
+    height: inherit;
 }
 
-.Grid-React table > colgroup > col.Number {
-    min-width: 10rem;
-    max-width: 10rem;
+.Grid-React > .Grid > table > tbody > tr > td > .gridCheckbox {
+    justify-content: center;
 }
 
-.Grid-React table > colgroup > col.Boolean {
-    min-width: 4rem;
-    max-width: 4rem;
+.Grid-React > .Grid > table > tbody > tr > td > label {
+    white-space: nowrap;
+    overflow-x: hidden;
 }
+
+// .Grid-React {
+//     border: 1px solid blue;
+//     overflow-x: scroll;
+//     width: 30rem;
+// }
+
+// .Grid-React table > colgroup > col.Text {
+//     min-width: 20rem;
+//     max-width: 20rem;
+// }
+
+// .Grid-React table > colgroup > col.Number {
+//     min-width: 10rem;
+//     max-width: 10rem;
+// }
+
+// .Grid-React table > colgroup > col.Boolean {
+//     min-width: 4rem;
+//     max-width: 4rem;
+// }

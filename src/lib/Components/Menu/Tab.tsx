@@ -6,11 +6,11 @@ import CSS from 'csstype';
 import { Selector, Utils } from "../../Utils";
 
 export interface TabProps extends ButtonProps {
-    OnClick: Function
+    OnClick: Function,
+    TabContainerId: string
 }
 
-export class Tab<Props extends TabProps> 
-extends Button<Props & TabProps> {
+export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
     render() {
         this.props.CssClass.push("Tab-React");
 

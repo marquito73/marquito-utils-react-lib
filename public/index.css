@@ -48,3 +48,7 @@
     border-color: cornflowerblue;
     border-style: dashed;
 }
+
+#testing > #content #gridTest_cnt {
+    height: 7rem;
+}

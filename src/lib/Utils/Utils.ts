@@ -3,6 +3,26 @@
  */
 export class Utils {
     /**
+     * Is null or undefined ?
+     * 
+     * @param value The object to test if is null or undefined
+     * @returns Is null or undefined ?
+     */
+    public static IsNull = (value: any) => {
+        return value === undefined || value == null;
+    }
+
+    /**
+     * Is not null and not undefined ?
+     * 
+     * @param value The object to test if is not null and not undefined
+     * @returns Is not null and not undefined ?
+     */
+    public static IsNotNull = (value: any) => {
+        return value === undefined || value == null;
+    }
+
+    /**
      * Is empty ?
      * 
      * @param value The object to test if is empty
@@ -11,7 +31,7 @@ export class Utils {
     public static IsEmpty = (value: any) => {
         let isEmpty: boolean = false;
 
-        if (value == undefined) {
+        if (this.IsNull(value)) {
             isEmpty = true;
         } else {
             if (value instanceof String || value == "") {
@@ -51,6 +71,6 @@ export class Utils {
      * @returns Object as boolean
      */
     public static GetAsBoolean(value: any) {
-        return Boolean(value);
+        return value == true || value == "true" || value == "TRUE";
     }
 }

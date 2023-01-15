@@ -1,8 +1,9 @@
 import React from "react";
-import { CellProps, Cell, CellType, StringBuilder, Utils } from "../../lib";
+import { CellProps, Cell, StringBuilder, Utils } from "../../lib";
+import { EnumContentType } from "../../lib/Enums";
 
 
-export const TestGridCell = (value: any, cellType: CellType, colName: string) => {
+export const TestGridCell = (value: any, cellType: EnumContentType, colName: string) => {
 
     const getCellExtensionName = (colName: string) => {
         const sbCell:StringBuilder = new StringBuilder("_");

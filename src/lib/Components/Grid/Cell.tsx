@@ -1,50 +1,29 @@
 import * as React from "react";
-import { StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component";
+import { StringBuilder, Utils } from "../../Utils";
+import { EnumContentType } from "../../Enums";
 import { CheckBox, CheckRadioBoxProps } from "../Select";
 import { TextBox, TextBoxProps } from "../TextArea/TextBox";
 
-/**
- * Cell type
- */
-export enum CellType {
-    Text,
-    Number,
-    Boolean
-}
-
 export interface CellProps extends ComponentProps {
-	/**
-	 * Value of cell
-	 * */
-	Value: any,
-	/**
-	 * Cell is editable ?
-	 * */
-     IsEditable: boolean,
-     /**
-      * Row number
-      */
-     RowNumber: number,
-     /**
-      * Col number
-      */
-     ColNumber: number,
-     /**
-      * Col name
-      */
-     ColName: string,
-     /**
-      * Cell type
-      */
-     CellType: CellType
+    Value: Object,
+    IsEditable: boolean,
+    RowNumber: number,
+    ColNumber: number,
+    ColName: string,
+    CellType: EnumContentType
 }
 
 export class Cell<Props extends CellProps> extends Component<Props & CellProps, {}> {
     render() {
+
+        this.props.CssClass.push("GridCell-React");
+        this.props.CssClass.push("grid_content_" + EnumContentType[this.props.CellType].toLowerCase());
+
         return (
             <td 
                 id={"td" + this.getCellExtensionId()}
+                className={this.GetOwnCssClass()}
             >
                 <this.getCellComponent/>
             </td>
@@ -56,17 +35,17 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         let component: JSX.Element;
 
         switch (this.props.CellType) {
-            case CellType.Text:
+            case EnumContentType.Text:
                 const sVal: string = Utils.GetAsString(this.props.Value);
 
                 component = this.getTextBox(sVal);
                 break;
-            case CellType.Boolean:
+            case EnumContentType.Boolean:
                 const bVal: boolean = Utils.GetAsBoolean(this.props.Value);
 
                 component = this.getCheckBox("TODO", bVal);
                 break;
-            case CellType.Number:
+            case EnumContentType.Number:
             default:
                 const nVal: string = Utils.GetAsString(this.props.Value);
 

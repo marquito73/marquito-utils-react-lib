@@ -3,7 +3,7 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { CellType, Selector } from "../lib";
+import { AjaxUtils, Selector, Tabs } from "../lib";
 import { TestButton } from "./Button/Button";
 import { EnumEvent } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
@@ -39,6 +39,15 @@ export default class App extends React.Component<{}, {}> {
     }
     public buttonMethod() {
         console.log("Hello world !");
+
+        AjaxUtils.PostData("https://localhost:7143", "AjxTemplate", "Test", {
+            _valeurTest: 154564
+        }, new Array(), (response) => {
+            const test = "";
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        }, "");
     }
 
     // Tabs
@@ -46,8 +55,11 @@ export default class App extends React.Component<{}, {}> {
         const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
-        })
-        return TestTabs(captions, events, "#2196F3", "", "#2196F3", 20);
+        });
+        const tabContainerIds: Array<string> = captions.map(caption => {
+            return "Test";
+        });
+        return TestTabs("", captions, tabContainerIds, events, "#2196F3", "", "#2196F3", 20);
     }
     public tabsTest = (tabsName) => {
         return () => {
@@ -63,6 +75,54 @@ export default class App extends React.Component<{}, {}> {
             console.log("Hello " + tabsName + " Tab !");
         }
     }
+
+
+    /*private test = () => {
+
+        const props = {
+            Tabs:[{
+                OnClick:() => console.log('Tab one'),
+                Caption:"Tab one",
+                BoldCaption:false,
+                CaptionColor:"",
+                BackgroundColor:"",
+                BorderColor:"",
+                CaptionSize:15,
+                Link:"",
+                Id:"tabsReact0",
+                Name:"tabsReact0",
+                ContainerId:"",
+                CssClass:new Array(),
+                Attributes:new Map(),
+                Events:new Map()
+            },{
+                OnClick:() => console.log('Tab two'),
+                Caption:"Tab two",
+                BoldCaption:false,
+                CaptionColor:"",
+                BackgroundColor:"",
+                BorderColor:"",
+                CaptionSize:15,
+                Link:"",
+                Id:"tabsReact1",
+                Name:"tabsReact1",
+                ContainerId:"",
+                CssClass:new Array(),
+                Attributes:new Map(),
+                Events:new Map()
+            }],
+            Id:"tabsReact",
+            Name:"tabsReact",
+            ContainerId:"test",
+            CssClass:new Array(),
+            Attributes:new Map(),
+            Events:new Map()
+        }
+
+        return (
+            <Tabs {...props}></Tabs>
+        );
+    }*/
 
     render() {
         return (

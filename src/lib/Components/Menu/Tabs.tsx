@@ -5,13 +5,14 @@ import { Button, ButtonProps } from "../Button";
 import { EnumEvent } from "../../Enums";
 import { Component, ComponentProps } from "../Component";
 import { Tab, TabProps } from "./Tab";
+import axios from "axios";
 
 export interface TabsProps extends ComponentProps {
-    Tabs: Array<TabProps>
+    Tabs: Array<TabProps>,
+    TabsContainerId: string
 }
 
-export class Tabs<Props extends TabsProps> 
-extends Component<Props & TabsProps, {}> {
+export class Tabs<Props extends TabsProps> extends Component<Props & TabsProps, {}> {
     render() {
         this.props.CssClass.push("Tabs-React");
 

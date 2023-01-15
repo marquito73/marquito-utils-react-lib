@@ -170,4 +170,20 @@ export class Selector {
             this.AddClass("hidden");
         }
     }
+
+    public SetAttribute = (attributeKey: string, attributeValue: any) => {
+        this.MainSelector.forEach(element => {
+            element.setAttribute(attributeKey, Utils.GetAsString(attributeValue));
+        });
+    }
+
+    public GetAttribute = (attributeKey: string) => {
+        let attributeValue: any = null;
+
+        if (this.MainSelector.length == 1) {
+            attributeValue = this.MainSelector[0].getAttribute(attributeKey);
+        }
+
+        return attributeValue;
+    }
 }

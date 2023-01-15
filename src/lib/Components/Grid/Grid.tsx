@@ -1,85 +1,128 @@
-import * as React from "react";
-import { StringBuilder, Utils } from "../../Utils";
+import React, { UIEvent } from "react";
+import { AjaxUtils, Selector, StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component";
 import { Column, ColumnProps } from "./Column";
 import { Row, RowProps } from "./Row";
-import { CellType } from "./Cell";
 import "./css/Grid.scss";
+import { EnumContentType } from "../../Enums";
+import ReactDOM from "react-dom";
 
 export interface GridProps extends ComponentProps {
+    RowsToLoadEachTime: number,
+    UseInfiniteScroll: boolean,
     Columns: Array<ColumnProps>,
     Rows: Array<RowProps>
 }
 
 export class Grid<Props extends GridProps> extends Component<Props & GridProps, {}> {
-
-
     render() {
         return (
             <div 
                 id={this.GetOwnContainerId()}
                 className="Grid-React"
             >
-                {this.getHeader()}
-                {this.getBody()}
+                <div 
+                id={this.GetOwnId()}
+                    className="Grid"
+                >
+                    <table className="grid">
+                        {this.getHeader()}
+                        {this.getBody()}
+                    </table>
+                </div>
             </div>
         );
     }
 
     private getHeader = () => {
-
         return (
-            <div className="grid_header">
-                <table>
-                    <colgroup>
+            <thead 
+                id={this.GetContainerId(this.props.Id + "_header")}
+                className="gridHeader"
+            >
+                <tr>
                     {
                         this.props.Columns.map((column) => {
                             return (
-                                <col className={CellType[column.ColType]}/>
+                                <Column {...column}/>
                             );
                         })
                     }
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            {
-                                this.props.Columns.map((column) => {
-                                    return (
-                                        <Column {...column}/>
-                                    );
-                                })
-                            }
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+                </tr>
+            </thead>
         );
     }
 
     private getBody = () => {
         return (
-            <div className="grid_body">
-            <table>
-                <colgroup>
-                    {
-                        this.props.Columns.map((column) => {
-                            return (
-                                <col className={CellType[column.ColType]}/>
-                            );
-                        })
-                    }
-                </colgroup>
-                <tbody>
-                    {
-                        this.props.Rows.map((row) => {
-                            return (
-                                <Row {...row}/>
-                            );
-                        })
-                    }
-                </tbody>
-            </table>
-            </div>
+            <tbody 
+                id={this.GetContainerId(this.props.Id + "_body")}
+                className="gridBody"
+                onScroll={this.handleScroll}
+            >
+                {
+                    this.props.Rows.map((row) => {
+                        return (
+                            <Row {...row}/>
+                        );
+                    })
+                }
+            </tbody>
         );
+    }
+
+    private handleScroll = (e: UIEvent<HTMLDivElement>) => {
+        if (this.props.UseInfiniteScroll) {
+            this.handleInfiniteScroll(e);
+        }
+    }
+
+    private handleInfiniteScroll = (e: UIEvent<HTMLDivElement>) => {
+        const body: Selector = new Selector(e.currentTarget);
+
+        if (Utils.IsNull(body.GetAttribute("ajaxIsUsed"))) {
+            body.SetAttribute("ajaxIsUsed", false);
+        }
+
+        if (!Utils.GetAsBoolean(body.GetAttribute("ajaxIsUsed"))) {
+            if ((e.currentTarget.scrollTop + e.currentTarget.offsetHeight) 
+            >= e.currentTarget.scrollHeight) {
+                body.SetAttribute("SetAttribute", true);
+                console.log("Scroll en bas réussi !");
+
+                try {
+                    AjaxUtils.PostData("https://localhost:7143", "Grid/AjxReactGrid", "getNextRows", {
+                        _gridId: this.props.Id
+                    }, new Array(), (response: any) => {
+
+                        const gridData: any = response.data;
+
+                        if (Utils.IsNotEmpty(gridData.MESSAGE)) {
+                            throw new Error(gridData.MESSAGE);
+                        } else {
+                            const newRowsProps: Array<RowProps> = gridData.ROWS;
+
+                            //body
+                            if (Utils.IsNotEmpty(newRowsProps)) {
+                                //e.currentTarget.appendChild()
+                                //const gridRoot = ReactDOM.createPortal("", e.currentTarget);
+                                newRowsProps.forEach((rowProps) => {
+                                    ReactDOM.createPortal(<Row {...rowProps}></Row>, e.currentTarget)
+                                })
+                            }
+                        }
+
+                        //this.props.Rows.push();
+
+                    }, (error: any) => {
+                        console.log(error);
+                    }, "");
+                } catch (e) {
+                    console.log(e);
+                } finally {
+                    body.SetAttribute("ajaxIsUsed", false);
+                }
+            }
+        }
     }
 }

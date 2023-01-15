@@ -1,6 +1,6 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.50",
+  "version": "0.1.52",
   "description": "Marquito React component library",
   "scripts": {
     "rollup": "rollup -c",
@@ -29,6 +29,7 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
+    "axios": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -52,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@rollup/plugin-json": "^6.0.0"
   }
 }

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import {Button, ButtonProps} from "./Button";
+import { Grid, GridProps } from "./Grid";
 import { Tabs, TabsProps } from "./Menu";
 import {CheckBox, RadioBox, CheckRadioBoxProps} from "./Select";
 import {TextBox, TextBoxProps} from "./TextArea";
@@ -73,5 +74,16 @@ export default class ReactWidgetFactory {
 		const _props: TabsProps = { ...props };
 		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
 		root.render(<Tabs {..._props} />);
+	}
+
+	/**
+	 * Create grid
+	 * 
+	 * @param props Grid properties
+	 */
+	public static createGrid(props: GridProps) {
+		const _props: GridProps = { ...props };
+		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		root.render(<Grid {..._props} />);
 	}
 }
