@@ -10,6 +10,7 @@ import ReactDOM from "react-dom";
 export interface GridProps extends ComponentProps {
     RowsToLoadEachTime: number,
     UseInfiniteScroll: boolean,
+    RootUrl: string,
     Columns: Array<ColumnProps>,
     Rows: Array<RowProps>
 }
@@ -91,7 +92,8 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                 console.log("Scroll en bas réussi !");
 
                 try {
-                    AjaxUtils.PostData("https://localhost:7143", "Grid/AjxReactGrid", "getNextRows", {
+                    // For testing only
+                    AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", {
                         _gridId: this.props.Id
                     }, new Array(), (response: any) => {
 

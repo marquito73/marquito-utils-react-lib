@@ -93,6 +93,7 @@ export const TestGrid = () => {
     const gridProps: GridProps = {
         RowsToLoadEachTime: 10,
         UseInfiniteScroll: true,
+        RootUrl: "https://localhost:7143",
         Columns: cols,
         Rows: rows,
         ContainerId: "grid",
