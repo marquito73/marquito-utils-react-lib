@@ -1,4 +1,3 @@
-import axios from "axios";
 import { StringBuilder } from "./Stringbuilder";
 
 export class AjaxUtils {
@@ -26,22 +25,44 @@ export class AjaxUtils {
                 }
             }
 
-            axios.post(ajaxUrl, formData)
+            // TODO Need to be replaced by fetch, axios dont work on application use webpack and this library
+            
+
+            fetch(ajaxUrl, {
+                method: "POST",
+                body: formData
+            })
                 .then((response) => {
                     try {
                         doneCallback?.(response);
                     } finally {
-                        //document.loading.hide();
+                        // TODO
                     }
                 })
                 .catch((error) => {
-                    //document.loading.hide();
                     try {
                         failCallback?.(error);
                     } finally {
                         console.error(`Error happens during Ajax's request : `, error);
                     }
                 });
+
+            // axios.post(ajaxUrl, formData)
+            //     .then((response) => {
+            //         try {
+            //             doneCallback?.(response);
+            //         } finally {
+            //             //document.loading.hide();
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         //document.loading.hide();
+            //         try {
+            //             failCallback?.(error);
+            //         } finally {
+            //             console.error(`Error happens during Ajax's request : `, error);
+            //         }
+            //     });
     }
     
     // Get constructed url for ajax

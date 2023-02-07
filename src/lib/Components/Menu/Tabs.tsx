@@ -5,7 +5,6 @@ import { Button, ButtonProps } from "../Button";
 import { EnumEvent } from "../../Enums";
 import { Component, ComponentProps } from "../Component";
 import { Tab, TabProps } from "./Tab";
-import axios from "axios";
 
 export interface TabsProps extends ComponentProps {
     Tabs: Array<TabProps>,

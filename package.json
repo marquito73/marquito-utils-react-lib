@@ -1,6 +1,6 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.53",
+  "version": "0.1.70",
   "description": "Marquito React component library",
   "scripts": {
     "rollup": "rollup -c",
@@ -13,6 +13,7 @@
     "@rollup/plugin-commonjs": "^21.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.5.0",
+    "@rollup/plugin-json": "^6.0.0",
     "@types/jest": "^28.1.6",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
@@ -29,7 +30,6 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "axios": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -53,8 +53,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "dependencies": {
-    "@rollup/plugin-json": "^6.0.0"
   }
 }

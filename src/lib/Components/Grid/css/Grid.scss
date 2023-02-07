@@ -82,8 +82,13 @@
     width: 3rem;
 }
 
+.Grid-React > .Grid tbody > tr {
+    background-color: white;
+    transition: background-color 0.3s;
+}
+
 .Grid-React > .Grid tbody > tr:nth-child(even) {
-    background: #f8f6ff;
+    background-color: #f8f6ff;
 }
 
 .Grid-React > .Grid tbody > tr:hover {

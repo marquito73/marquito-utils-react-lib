@@ -1,4 +1,4 @@
-import React, { UIEvent } from "react";
+import React/*, { UIEvent }*/ from "react";
 import { AjaxUtils, Selector, StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component";
 import { Column, ColumnProps } from "./Column";
@@ -72,13 +72,13 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
         );
     }
 
-    private handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    private handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (this.props.UseInfiniteScroll) {
             this.handleInfiniteScroll(e);
         }
     }
 
-    private handleInfiniteScroll = (e: UIEvent<HTMLDivElement>) => {
+    private handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const body: Selector = new Selector(e.currentTarget);
 
         if (Utils.IsNull(body.GetAttribute("ajaxIsUsed"))) {
@@ -87,8 +87,8 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
 
         if (!Utils.GetAsBoolean(body.GetAttribute("ajaxIsUsed"))) {
             if ((e.currentTarget.scrollTop + e.currentTarget.offsetHeight) 
-            >= e.currentTarget.scrollHeight) {
-                body.SetAttribute("SetAttribute", true);
+            == e.currentTarget.scrollHeight + 2) {
+                body.SetAttribute("ajaxIsUsed", true);
                 console.log("Scroll en bas réussi !");
 
                 try {
@@ -113,9 +113,6 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                                 })
                             }
                         }
-
-                        //this.props.Rows.push();
-
                     }, (error: any) => {
                         console.log(error);
                     }, "");

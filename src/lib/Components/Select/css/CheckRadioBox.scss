@@ -33,6 +33,21 @@ div.RadioBox-React > label > span {
     left: 0;
 }
 
+div.CheckBox-React:hover > label > span,
+div.RadioBox-React:hover > label > span,
+div.CheckBox-React > label > input:checked ~ span,
+div.RadioBox-React > label > input:checked ~ span {
+    border-color: royalblue;
+}
+
+div.CheckBox-React > label > span,
+div.RadioBox-React > label > span {
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    transition: all 0.3s;
+}
+
 div.CheckBox-React > label > input:checked ~ span,
 div.RadioBox-React > label > input:checked ~ span {
     background-color: #2196F3;
