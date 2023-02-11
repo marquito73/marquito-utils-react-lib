@@ -40,14 +40,14 @@ export default class App extends React.Component<{}, {}> {
     public buttonMethod() {
         console.log("Hello world !");
 
-        AjaxUtils.PostData("https://localhost:7143", "AjxTemplate", "Test", {
+        /*AjaxUtils.PostData("https://localhost:7143", "AjxTemplate", "Test", {
             _valeurTest: 154564
         }, new Array(), (response) => {
             const test = "";
             console.log(response);
         }, (error) => {
             console.log(error);
-        }, "");
+        }, "");*/
     }
 
     // Tabs

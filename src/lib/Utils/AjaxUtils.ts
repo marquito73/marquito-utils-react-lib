@@ -32,6 +32,7 @@ export class AjaxUtils {
                 method: "POST",
                 body: formData
             })
+                .then((response: Response) => response.json())
                 .then((response) => {
                     try {
                         doneCallback?.(response);
@@ -42,8 +43,8 @@ export class AjaxUtils {
                 .catch((error) => {
                     try {
                         failCallback?.(error);
-                    } finally {
-                        console.error(`Error happens during Ajax's request : `, error);
+                    } catch(err) {
+                        console.error(`Error happens during Ajax's request : `, err);
                     }
                 });
 

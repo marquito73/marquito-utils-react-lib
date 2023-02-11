@@ -1,5 +1,22 @@
 .GridColumn-React {
-    border: 1px solid red;
-    padding: 5px;
+    position: relative;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+}
+
+.GridColumn-React > .resizer {
+    //background-color: gray;
+    border-right: 1px solid gray;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 0;
+    width: 5px;
+    user-select: none;
+    cursor: col-resize;
+}
+
+.GridColumn-React > .resizer:hover {
+    border-right: 2px solid black;
 }

@@ -9,4 +9,5 @@ div.RadioBox-React > label > span:after {
 	height: 8px;
 	border-radius: 50%;
 	background: white;
+	box-sizing: content-box;
 }

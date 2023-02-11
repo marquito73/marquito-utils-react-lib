@@ -1,3 +1,4 @@
+import { StringBuilder } from "./Stringbuilder";
 import { Utils } from "./Utils";
 
 /**
@@ -78,8 +79,26 @@ export class Selector {
      * 
      * @returns All elements
      */
-    public Get = () => {
+    public GetAll = () => {
         return this.MainSelector;
+    }
+
+    /**
+     * Get an element
+     * 
+     * @returns An element
+     */
+    public Get = (elementNumber: number) => {
+        return this.MainSelector[elementNumber];
+    }
+
+    /**
+     * Get first element
+     * 
+     * @returns First element
+     */
+    public First = () => {
+        return this.Get(0);
     }
     
     /**
@@ -133,17 +152,17 @@ export class Selector {
      * @param parentSelector Selector
      * @returns Closest parents of elements
      */
-    /*public Closest = (parentSelector: string) => {
+    public Closest = (parentSelector: string) => {
         let parents: Array<Element> = new Array();
         
         if (Utils.IsNotEmpty(parentSelector)) {
             parents = this.GetElements(this.MainSelector, parentSelector, true);
         } else {
-            parents = this.GetElements(this.MainSelector, "*", true);
+            throw new Error("Cannot search the closest element without selector");
         }
 
         return new Selector(parents);
-    }*/
+    }
 
     /**
      * Add css class to all elements matching the selector
@@ -171,12 +190,6 @@ export class Selector {
         }
     }
 
-    public SetAttribute = (attributeKey: string, attributeValue: any) => {
-        this.MainSelector.forEach(element => {
-            element.setAttribute(attributeKey, Utils.GetAsString(attributeValue));
-        });
-    }
-
     public GetAttribute = (attributeKey: string) => {
         let attributeValue: any = null;
 
@@ -185,5 +198,38 @@ export class Selector {
         }
 
         return attributeValue;
+    }
+
+    public SetAttribute = (attributeKey: string, attributeValue: any) => {
+        this.MainSelector.forEach(element => {
+            element.setAttribute(attributeKey, Utils.GetAsString(attributeValue));
+        });
+    }
+
+    public RemoveAttribute = (attributeKey: string) => {
+        // TODO
+    }
+
+    public GetStyle = () => {
+        return this.GetAttribute("style");
+    }
+
+    public SetStyle = (styleName: string, styleValue: string) => {
+        const sbStyle: StringBuilder = new StringBuilder("");
+
+        let currentStyle: string = this.GetStyle();
+        //sbStyle.Append(this.GetStyle()).Append(styleName).Append(":").Append(styleValue).Append(";");
+
+        sbStyle.Append(styleName).Append(":").Append(styleValue).Append(";");
+        
+        this.SetAttribute("style", sbStyle.ToString());
+    }
+
+    public RemoveStyle = (styleName: string) => {
+        // TODO
+    }
+
+    public ForEach = (callback: (element: Element) => void) => {
+        this.MainSelector.forEach(callback);
     }
 }

@@ -9,6 +9,7 @@ div.TextBox-React > input {
     height: 20px;
     width: 99%;
     outline: none;
+    border-radius: 5px;
     border-width: 1px;
     border-style: solid;
     border-color: black;
@@ -17,5 +18,5 @@ div.TextBox-React > input {
 
 div.TextBox-React > input:hover, 
 div.TextBox-React > input:focus {
-    border-color: royalblue;
+    border-color: deepskyblue;
 }

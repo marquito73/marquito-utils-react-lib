@@ -41,7 +41,7 @@ export class Tabs<Props extends TabsProps> extends Component<Props & TabsProps, 
 
     private GetTab = (tabProps: TabProps) => {
         return (
-            <Tab {...tabProps}/>
+            <Tab {...tabProps} key={tabProps.Id}/>
         );
     }
 }

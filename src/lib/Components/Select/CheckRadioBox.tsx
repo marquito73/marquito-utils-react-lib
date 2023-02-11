@@ -74,6 +74,7 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
                     defaultValue={this.props.Value} 
                     defaultChecked={this.props.Selected}
                     {...this.props.Attributes}
+                    className="hidden"
                 />
                 <span 
                     id={this.props.Id + "Box"}

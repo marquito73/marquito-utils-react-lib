@@ -41,15 +41,16 @@ export class Label<Props extends LabelProps> extends Component<Props & LabelProp
         if (Utils.IsNotEmpty(this.props.TextSize)) {
             cssStyles.fontSize = this.props.TextSize + "px";
         }
+
+		this.props.CssClass.push("Label-React");
 		
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
-				className="Label-React"
+				className={this.GetOwnCssClass()}
 			>
 				<label 
 					id={this.props.Id} 
-					className="Label-React" 
 					htmlFor={this.props.For}
 					style={cssStyles}
 				>

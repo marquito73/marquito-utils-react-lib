@@ -19,7 +19,7 @@ export class Row<Props extends RowProps> extends Component<Props & RowProps, {}>
                 {
                         this.props.Cells.map((cell) => {
                             return (
-                                <Cell {...cell}/>
+                                <Cell {...cell} key={cell.Id}/>
                             );
                         })
                     }

@@ -3,7 +3,6 @@ import { Grid, GridProps, RowProps, ColumnProps, CellProps } from "../../lib";
 import { EnumCheckMode, EnumContentType } from "../../lib/Enums";
 
 export const TestGrid = () => {
-
     const getGridColumn = (caption: string, colNum: number, colType: EnumContentType) => {
         const colProps: ColumnProps = {
             Caption: caption,
@@ -82,13 +81,19 @@ export const TestGrid = () => {
     cells.push(getGridCell(cols[0], 2, "Test ligne 2"));
     cells.push(getGridCell(cols[1], 2, 78));
     cells.push(getGridCell(cols[2], 2, true));
-    rows.push(getGridRow(1, cells));
+    rows.push(getGridRow(2, cells));
     // Row fourth
     cells = new Array();
     cells.push(getGridCell(cols[0], 3, "Test ligne 3"));
     cells.push(getGridCell(cols[1], 3, 934));
     cells.push(getGridCell(cols[2], 3, false));
-    rows.push(getGridRow(1, cells));
+    rows.push(getGridRow(3, cells));
+    // Row fourth
+    cells = new Array();
+    cells.push(getGridCell(cols[0], 4, "Test ligne 4"));
+    cells.push(getGridCell(cols[1], 4, 934));
+    cells.push(getGridCell(cols[2], 4, false));
+    rows.push(getGridRow(4, cells));
 
     const gridProps: GridProps = {
         RowsToLoadEachTime: 10,
@@ -96,6 +101,7 @@ export const TestGrid = () => {
         RootUrl: "https://localhost:7143",
         Columns: cols,
         Rows: rows,
+        TotalOfRows: 40,
         ContainerId: "grid",
         Id: "gridTest",
         Name: "gridTest",

@@ -50,5 +50,6 @@
 }
 
 #testing > #content #gridTest_cnt {
-    height: 7rem;
+    height: 10rem;
+    width: 500px;
 }

@@ -4,6 +4,7 @@ import { StringBuilder, Utils } from "../../Utils";
 import { EnumContentType } from "../../Enums";
 import { CheckBox, CheckRadioBoxProps } from "../Select";
 import { TextBox, TextBoxProps } from "../TextArea/TextBox";
+import { Label, LabelProps } from "../TextArea";
 
 export interface CellProps extends ComponentProps {
     Value: Object,
@@ -20,13 +21,10 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         this.props.CssClass.push("GridCell-React");
         this.props.CssClass.push("grid_content_" + EnumContentType[this.props.CellType].toLowerCase());
 
+        this.props.Attributes.set("colNumber", Utils.GetAsString(this.props.ColNumber));
+
         return (
-            <td 
-                id={"td" + this.getCellExtensionId()}
-                className={this.GetOwnCssClass()}
-            >
-                <this.getCellComponent/>
-            </td>
+            <this.getCellComponent/>
         );
     }
 
@@ -34,29 +32,57 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
 
         let component: JSX.Element;
 
-        switch (this.props.CellType) {
-            case EnumContentType.Text:
-                const sVal: string = Utils.GetAsString(this.props.Value);
+        // TODO Gérer si cela est éditable ou non
 
-                component = this.getTextBox(sVal);
-                break;
-            case EnumContentType.Boolean:
-                const bVal: boolean = Utils.GetAsBoolean(this.props.Value);
+        if (this.props.IsEditable) {
+            switch (this.props.CellType) {
+                case EnumContentType.Text:
+                case EnumContentType.Number:
+                    const sVal: string = Utils.GetAsString(this.props.Value);
 
-                component = this.getCheckBox("TODO", bVal);
-                break;
-            case EnumContentType.Number:
-            default:
-                const nVal: string = Utils.GetAsString(this.props.Value);
+                    component = this.getTextBox(sVal);
+                    break;
+                case EnumContentType.Boolean:
+                    const bVal: boolean = Utils.GetAsBoolean(this.props.Value);
 
-                component = this.getTextBox(nVal);
-                break;
+                    component = this.getCheckBox("TODO", bVal);
+                    break;
+                default:
+                    component = this.getLabel(Utils.GetAsString(this.props.Value));
+                    break;
+            } 
+        } else {
+            component = this.getLabel(Utils.GetAsString(this.props.Value));
         }
 
         return (
-            <div>
+            <td 
+                id={"td" + this.getCellExtensionId()}
+                data-colnumber={Utils.GetAsString(this.props.ColNumber)}
+                className={this.GetOwnCssClass()}
+            >
                 {component}
-            </div>
+            </td>
+        );
+    }
+
+    private getLabel = (value: string) => {
+        const txtProps: LabelProps = {
+            Text: value,
+            BoldText: false,
+            TextColor: "red",
+            TextSize: 15,
+            For: "",
+            ContainerId: "td" + this.getCellExtensionId(),
+            Id: "lbl" + this.getCellExtensionId(),
+            Name: "lbl" + this.getCellExtensionName(),
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+
+        return (
+            <Label {...txtProps}></Label>
         );
     }
 

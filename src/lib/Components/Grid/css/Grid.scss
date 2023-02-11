@@ -1,11 +1,10 @@
 .Grid-React > .Grid {
     width: fit-content;
-    table-layout: fixed;
-    border-collapse: collapse;
     overflow-x: auto;
     width: inherit;
     height: inherit;
-
+    table-layout: fixed;
+    border-collapse: collapse;
     border-width: 0.1rem;
     border-style: solid;
 }
@@ -18,8 +17,8 @@
     border-color: black;
 }
 
-.Grid-React > .Grid tbody {
-    height: calc(100% - 1rem);
+.Grid-React > .Grid tbody.gridBody {
+    height: calc(100% - 2.8rem);
     display: block;
     width: 100%;
     overflow-y: scroll;
@@ -29,78 +28,115 @@
     margin-bottom: 0.5rem;
 }
 
-.Grid-React > .Grid > table.grid {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
+.Grid-React > .Grid thead.gridHeader,
+.Grid-React > .Grid thead.gridHeader > .GridRow-React {
+    display: flex;
+    flex-direction: row;
+    background-color: #66f2c8af;
 }
 
-.Grid-React > .Grid thead tr {
+.Grid-React > .Grid > table.grid {
+    width: 100%;
+    height: calc(100% - 1.5rem);
+    border-collapse: collapse;
     display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
+
+/*.Grid-React > .Grid thead .GridRow-React {
+    display: block;
+}*/
 
 .Grid-React > .Grid thead tr.gridHeaderRow {
     padding-top: 0.2rem;
 }
 
-.Grid-React > .Grid thead tr > th, div.grid thead tr > td {
-    border-right-width: 1px;
-    border-right-style: solid;
-    border-right-color: black;
-}
-
-.Grid-React > .Grid tr > th, div.grid tr:not(.grid_footer_row) > td {
-    padding: 5px 0px;
+.Grid-React > .Grid .GridRow-React > th {
+    padding: 5px;
+    //text-align: center;
     text-align: center;
+    background-color: inherit;
+    display: inline-block;
 }
 
-.Grid-React > .Grid tr > th.grid_content_text, tr > td.grid_content_text {
+.Grid-React > .Grid .GridRow-React > td {
+    text-align-last: center;
+    padding: 5px;
+}
+
+.Grid-React > .Grid .GridRow-React > td > * {
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+.Grid-React > .Grid .GridRow-React > .grid_content_text {
     width: 12rem;
+    min-width: 12rem;
+    // max-width: 12rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_password, tr > td.grid_content_password {
+.Grid-React > .Grid .GridRow-React > .grid_content_password {
     width: 12rem;
+    // max-width: 12rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_emailaddress, tr > td.grid_content_emailaddress {
+.Grid-React > .Grid .GridRow-React > .grid_content_emailaddress {
     width: 12rem;
+    // max-width: 12rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_phonenumber, tr > td.grid_content_phonenumber {
+.Grid-React > .Grid .GridRow-React > .grid_content_phonenumber {
     width: 8rem;
+    // max-width: 8rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_number, tr > td.grid_content_number {
+.Grid-React > .Grid .GridRow-React > .grid_content_number {
     width: 4rem;
+    min-width: 4rem;
+    // max-width: 4rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_currency, tr > td.grid_content_currency {
+.Grid-React > .Grid .GridRow-React > .grid_content_currency {
     width: 7rem;
+    // max-width: 7rem;
 }
 
-.Grid-React > .Grid tr > th.grid_content_boolean, tr > td.grid_content_boolean {
+.Grid-React > .Grid .GridRow-React > .grid_content_boolean {
     width: 3rem;
+    min-width: 3rem;
+    // max-width: 3rem;
 }
 
-.Grid-React > .Grid tbody > tr {
+.Grid-React > .Grid tbody.gridBody > .GridRow-React {
     background-color: white;
     transition: background-color 0.3s;
 }
 
-.Grid-React > .Grid tbody > tr:nth-child(even) {
+.Grid-React > .Grid tbody.gridBody > tr:nth-child(even) {
     background-color: #f8f6ff;
 }
 
-.Grid-React > .Grid tbody > tr:hover {
+.Grid-React > .Grid tbody.gridBody > tr:hover {
     background-color: antiquewhite;
 }
 
-/*Le footer*/
-.Grid-React > .Grid > div.grid_footer {
-    width: 100%;
-    background-color: yellow;
-    height: 2rem;
+// Align column names and cell values
+.Grid-React > .Grid
+
+// The footer
+.Grid-React > .Grid > div.gridFooter {
+    width: calc(100% - 2rem);
+    height: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+
+.Grid-React > .Grid > div.gridFooter
+
 
 .Grid-React > .Grid .resize-handle {
     position: absolute;
@@ -122,14 +158,19 @@
     height: inherit;
 }
 
-.Grid-React > .Grid > table > tbody > tr > td > .gridCheckbox {
+.Grid-React > .Grid > table > tbody.gridBody > .GridRow-React > td > .gridCheckbox {
     justify-content: center;
 }
 
-.Grid-React > .Grid > table > tbody > tr > td > label {
+.Grid-React > .Grid > table > tbody.gridBody > .GridRow-React > td > label {
     white-space: nowrap;
     overflow-x: hidden;
 }
+
+
+
+
+
 
 // .Grid-React {
 //     border: 1px solid blue;
