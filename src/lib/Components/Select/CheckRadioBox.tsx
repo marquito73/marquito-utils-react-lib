@@ -84,21 +84,4 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
             </>
         );
     }
-
-    /*protected getBoxLabel = () => {
-        const labelProps: LabelProps = {
-            Text: this.props.Caption,
-            For: this.props.Id,
-            Id: this.props.Id + "Label",
-            ContainerId: this.GetOwnContainerId(),
-            Name: this.props.Name + "Label",
-            CssClass: new Array(),
-            Attributes: new Map(),
-            Events: new Map()
-        };
-
-        return (
-            <Label {...labelProps}></Label>
-        );
-    }*/
 }

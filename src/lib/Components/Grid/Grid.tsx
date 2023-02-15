@@ -107,55 +107,6 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
         }
     }
 
-    private getGridRow = (rowNum: number, cells: Array<CellProps>) => {
-        const rowProps: RowProps = {
-            Cells: cells,
-            RowNumber: rowNum,
-            ContainerId: "",
-            Id: "rowTest" + rowNum,
-            Name: "rowTest",
-            CssClass: new Array(),
-            Attributes: new Map(),
-            Events: new Map()
-        }
-
-        return rowProps;
-    }
-
-    private getGridCell = (column: ColumnProps, rowNum: number, value: any) => {
-        const cellProps: CellProps = {
-            Value: value,
-            IsEditable: column.IsEditable,
-            RowNumber: rowNum,
-            ColNumber: column.ColNumber,
-            ColName: column.Name,
-            CellType: column.ColType,
-            ContainerId: "",
-            Id: "cellTest",
-            Name: "cellTest",
-            CssClass: new Array(),
-            Attributes: new Map(),
-            Events: new Map()
-        }
-
-        return cellProps;
-    } 
-
-    private testAddRow = () => {
-        let cells: Array<CellProps> = new Array();
-        cells.push(this.getGridCell(this.props.Columns[0], 4, "Test ligne 4"));
-        cells.push(this.getGridCell(this.props.Columns[1], 4, 946));
-        cells.push(this.getGridCell(this.props.Columns[2], 4, false));
-        const row: RowProps = this.getGridRow(4, cells);
-
-        this.props.Rows.push(row);
-
-        this.forceUpdate();
-        const test = "";
-    }
-
-    
-
     private handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const body: Selector = new Selector(e.currentTarget);
 
@@ -168,8 +119,6 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                 == e.currentTarget.scrollHeight + 2) {
                 body.SetAttribute("ajaxIsUsed", true);
                 try {
-                    //this.testAddRow();
-
                     // Call ajax of the grid for get next rows
                     AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", {
                         _gridId: this.props.Id
@@ -179,6 +128,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                         } else {
                             // New rows to add
                             const newRowsProps: Array<RowProps> = JSON.parse(gridData.ROWS);
+                            //const newRowsProps: Array<RowProps> = gridData.ROWS;
                             
                             if (Utils.IsNotEmpty(newRowsProps)) {
                                 newRowsProps.forEach((rowProps) => {
