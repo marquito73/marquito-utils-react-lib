@@ -51,14 +51,6 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		console.table(this.props);
     }
 
-	//protected CssClass: Array<string> = new Array();
-
-	/*private SecureMapsAndLists = () => {
-		if (this.props.CssClass instanceof Object && !(this.props.CssClass instanceof Array)) {
-			this.props.CssClass = new Array();
-		}
-	}*/
-
 	protected ExecuteFunction = (eventKey: EnumEvent) => {
 		return () => {
 			this.props.Events.get(eventKey)?.();

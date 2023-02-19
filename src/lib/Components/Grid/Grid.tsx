@@ -119,6 +119,8 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                 == e.currentTarget.scrollHeight + 2) {
                 body.SetAttribute("ajaxIsUsed", true);
                 try {
+                    let test: object = new Object();
+                    let test1 = Utils.NvlObject(test);
                     // Call ajax of the grid for get next rows
                     AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", {
                         _gridId: this.props.Id
@@ -126,9 +128,24 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                         if (Utils.IsNotEmpty(gridData.MESSAGE)) {
                             throw new Error(gridData.MESSAGE);
                         } else {
-                            // New rows to add
-                            const newRowsProps: Array<RowProps> = JSON.parse(gridData.ROWS);
-                            //const newRowsProps: Array<RowProps> = gridData.ROWS;
+                            let newRowsProps: Array<RowProps> = gridData.ROWS;
+                            newRowsProps = newRowsProps.map((row) => {
+                                row.CssClass = Utils.Nvl(row.CssClass);
+                                row.Events = Utils.Nvl(row.Events);
+                                row.Attributes = Utils.Nvl(row.Attributes);
+                                row.Cells = Utils.Nvl(row.Cells).map((cell: CellProps) => {
+                                    cell.CssClass = Utils.Nvl(cell.CssClass);
+                                    cell.Events = Utils.Nvl(cell.Events);
+                                    cell.Attributes = Utils.Nvl(cell.Attributes);
+                                    return cell;
+                                });
+                                return row;
+                            });
+                            
+                            // TODO A rendre fonctionnel, ne marche pas pour le moment
+                            /*newRowsProps = newRowsProps.map((row) => {
+                                return Utils.NvlObject(row) as RowProps;
+                            });*/
                             
                             if (Utils.IsNotEmpty(newRowsProps)) {
                                 newRowsProps.forEach((rowProps) => {

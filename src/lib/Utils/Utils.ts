@@ -19,7 +19,7 @@ export class Utils {
      * @returns Is not null and not undefined ?
      */
     public static IsNotNull = (value: any) => {
-        return value === undefined || value == null;
+        return !this.IsNull(value);
     }
 
     /**
@@ -60,7 +60,7 @@ export class Utils {
      * @param value Object
      * @returns Object as string
      */
-    public static GetAsString(value: any) {
+    public static GetAsString = (value: any) => {
         return String(value);
     }
 
@@ -70,7 +70,48 @@ export class Utils {
      * @param value Object
      * @returns Object as boolean
      */
-    public static GetAsBoolean(value: any) {
+    public static GetAsBoolean = (value: any) => {
         return value == true || value == "true" || value == "TRUE";
+    }
+
+    public static Nvl = (value: any) => {
+		let result: any = value;
+		
+		if (value instanceof Object) {
+			if (value instanceof Array) {
+                if (value.length == 0) {
+                    result = new Array();
+                }
+			} else {
+                if (Object.keys(value).length == 0) {
+                    result = new Map();
+                }
+			}
+		}
+
+		return result;
+    }
+
+    public static NvlObject = (value: Object) => {
+        if (Object.keys(value).length == 0) {
+            value = new Map();
+        } else {
+            value = Object.entries(value).map(([key, val]) => {
+                if (val instanceof Object) {
+                    if (val instanceof Array) {
+                        if (val.length == 0) {
+                            val = new Array();
+                        } else {
+                            val = this.NvlObject(val);
+                        }
+                    } else {
+                        val = this.NvlObject(val);
+                    }
+                }
+                return [key, val];
+            });
+        }
+
+        return value;
     }
 }
