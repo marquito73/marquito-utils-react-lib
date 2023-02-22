@@ -1,5 +1,6 @@
 import React from "react";
-import { CheckBox, CheckRadioBoxProps } from "../../lib";
+import { CheckBox } from "../../lib/Components/Select/CheckBox";
+import { CheckRadioBoxProps } from "../../lib/Components/Select/CheckRadioBox";
 import { EnumEvent } from "../../lib/Enums";
 
 

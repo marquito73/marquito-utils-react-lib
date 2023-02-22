@@ -1,0 +1,51 @@
+.ContentBox-React {
+    position: relative;
+}
+
+// Input
+.ContentBox-React > input {
+    width: calc(100% - 6px);
+    height: 20px;
+    outline: none;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    transition: border-color 0.3s;
+}
+
+.ContentBox-React > input:hover, 
+.ContentBox-React > input:focus {
+    border-color: deepskyblue;
+}
+
+// Options
+.ContentBox-React > .ContentBoxOptions {
+    width: calc(100% - 10px);
+    position: absolute;
+    transition: max-height 0.3s, padding 0.3s;
+    border: 1px solid black;
+    background-color: white;
+    overflow-y: overlay;
+    max-height: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.ContentBox-React > .ContentBoxOptions.opened {
+    border: 1px solid black;
+    max-height: 10rem !important;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.ContentBox-React > .ContentBoxOptions:not(.opened) {
+    border: 0px solid black;
+}
+
+.ContentBox-React > .ContentBoxOptions > * {
+    width: fit-content;
+}

@@ -38,15 +38,7 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
             this.IsChecked = event.target.checked;
             console.log(event.target.value + " : " + this.IsChecked);
 
-            test();
-        }
-
-        const test = () => {
-            const check = this.props.Events.get(EnumEvent.OnCheck);
-            if (check != undefined) {
-                const func: Function = check;
-                func();
-            }
+            this.ExecuteFunction(EnumEvent.OnCheck);
         }
 
         return (

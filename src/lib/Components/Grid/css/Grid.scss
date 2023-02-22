@@ -22,8 +22,8 @@
     display: block;
     width: 100%;
     overflow-y: scroll;
-    border-top: 0.1rem solid #F6A42C;
-    border-bottom: 0.1rem solid #F6A42C;
+    border-top: 0.1rem solid #17a0c6;
+    border-bottom: 0.1rem solid #17a0c6;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
@@ -40,7 +40,7 @@
     height: calc(100% - 1.5rem);
     border-collapse: collapse;
     display: block;
-    overflow-x: scroll;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -135,7 +135,7 @@
     justify-content: space-between;
 }
 
-.Grid-React > .Grid > div.gridFooter
+//.Grid-React > .Grid > div.gridFooter
 
 
 .Grid-React > .Grid .resize-handle {

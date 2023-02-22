@@ -7,6 +7,8 @@ import { AjaxUtils, Selector, Tabs } from "../lib";
 import { TestButton } from "./Button/Button";
 import { EnumEvent } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
+import { TestCheckListBox } from "./Select/CheckListBox";
+import { TestRadioListBox } from "./Select/RadioListBox";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -76,53 +78,23 @@ export default class App extends React.Component<{}, {}> {
         }
     }
 
+    // CheckListBox
+    public getTestCheckListBox = () => {
+        const selecteds: Array<boolean> = new Array(false, false, true, false);
+        const values: Array<string> = new Array("0", "1", "2", "3");
+        const captions: Array<string> = new Array("Checkbox 0", "Checkbox 1", "Checkbox 2", "Checkbox 3");
 
-    /*private test = () => {
+        return TestCheckListBox(selecteds, values, captions);
+    }
 
-        const props = {
-            Tabs:[{
-                OnClick:() => console.log('Tab one'),
-                Caption:"Tab one",
-                BoldCaption:false,
-                CaptionColor:"",
-                BackgroundColor:"",
-                BorderColor:"",
-                CaptionSize:15,
-                Link:"",
-                Id:"tabsReact0",
-                Name:"tabsReact0",
-                ContainerId:"",
-                CssClass:new Array(),
-                Attributes:new Map(),
-                Events:new Map()
-            },{
-                OnClick:() => console.log('Tab two'),
-                Caption:"Tab two",
-                BoldCaption:false,
-                CaptionColor:"",
-                BackgroundColor:"",
-                BorderColor:"",
-                CaptionSize:15,
-                Link:"",
-                Id:"tabsReact1",
-                Name:"tabsReact1",
-                ContainerId:"",
-                CssClass:new Array(),
-                Attributes:new Map(),
-                Events:new Map()
-            }],
-            Id:"tabsReact",
-            Name:"tabsReact",
-            ContainerId:"test",
-            CssClass:new Array(),
-            Attributes:new Map(),
-            Events:new Map()
-        }
+    // RadioListBox
+    public getTestRadioListBox = () => {
+        const selecteds: Array<boolean> = new Array(false, false, true, false);
+        const values: Array<string> = new Array("0", "1", "2", "3");
+        const captions: Array<string> = new Array("Radiobox 0", "Radiobox 1", "Radiobox 2", "Radiobox 3");
 
-        return (
-            <Tabs {...props}></Tabs>
-        );
-    }*/
+        return TestRadioListBox(selecteds, values, captions);
+    }
 
     render() {
         return (
@@ -150,6 +122,12 @@ export default class App extends React.Component<{}, {}> {
                             <div id="radiobox">
                                 <this.getTestRadioBoxOne/>
                                 <this.getTestRadioBoxTwo/>
+                            </div>
+                            <div id="checklistbox">
+                                <this.getTestCheckListBox/>
+                            </div>
+                            <div id="radiolistbox">
+                                <this.getTestRadioListBox/>
                             </div>
                         </div>
                         <div id="TextArea">

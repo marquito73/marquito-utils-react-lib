@@ -1,7 +1,8 @@
 import * as React from "react";
-import { StringBuilder } from "../../Utils";
+import { StringBuilder, Utils } from "../../Utils";
 import CSS from 'csstype';
 import { EnumEvent } from "../../Enums";
+import "./css/Component.scss"
 
 
 /**
@@ -53,7 +54,10 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 
 	protected ExecuteFunction = (eventKey: EnumEvent) => {
 		return () => {
-			this.props.Events.get(eventKey)?.();
+			const eventFunction: Function | undefined = this.props.Events.get(eventKey);
+			if (Utils.IsNotNull(eventFunction)) {
+				eventFunction?.();
+			}
 		}
 	}
 

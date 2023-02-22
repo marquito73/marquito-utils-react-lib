@@ -9,7 +9,7 @@ export class Utils {
      * @returns Is null or undefined ?
      */
     public static IsNull = (value: any) => {
-        return value === undefined || value == null;
+        return value == undefined || value == null;
     }
 
     /**
@@ -34,9 +34,9 @@ export class Utils {
         if (this.IsNull(value)) {
             isEmpty = true;
         } else {
-            if (value instanceof String || value == "") {
+            if (value instanceof String || value === "") {
                 isEmpty = true;
-            } else if (value instanceof Number || value == 0) {
+            } else if (value instanceof Number || value === 0) {
                 isEmpty = true;
             }
         }

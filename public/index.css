@@ -9,10 +9,6 @@
     text-align: center;
 }
 
-.hidden {
-    display: none !important;
-}
-
 #testing {
     display: flex;
     flex-direction: column;

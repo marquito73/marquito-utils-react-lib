@@ -20,6 +20,7 @@ export abstract class Option<Props extends OptionProps> extends Component<Props 
         return(
             <div
                 id={this.GetContainerId(this.props.Id + "_option")}
+                className={this.GetOwnCssClass()}
             >
                 <this.GetOptionComponent/>
             </div>
@@ -42,10 +43,10 @@ export abstract class Option<Props extends OptionProps> extends Component<Props 
             Events: this.props.Events
         }
         if (this.props.CheckType == EnumInputType.Radio) {
-            props.Type = "checkbox";
+            props.Type = "radio";
             component = (<RadioBox {...props}/>);
         } else if (this.props.CheckType == EnumInputType.Check) {
-            props.Type = "radio";
+            props.Type = "checkbox";
             component = (<CheckBox {...props}/>);
         } else {
             const optProps: LabelProps = {

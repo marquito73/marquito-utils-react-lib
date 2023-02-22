@@ -9,7 +9,7 @@ export class Selector {
     /**
      * Main selector
      */
-    private MainSelector: Array<Element> = new Array();
+    private MainSelector: Array<HTMLElement> = new Array();
 
     /**
      * A selector
@@ -37,16 +37,16 @@ export class Selector {
      */
     public constructor(mainSelector: any) {
         if (Utils.IsNotEmpty(mainSelector)) {
-            if (mainSelector instanceof Element) {
+            if (mainSelector instanceof HTMLElement) {
                 this.MainSelector.push(mainSelector);
-            } else if (mainSelector instanceof Array<Element>) {
+            } else if (mainSelector instanceof Array<HTMLElement>) {
                 mainSelector.forEach(element => this.MainSelector.push(element));
             } else {
-                const element: Element = document.querySelector(mainSelector)!;
+                const element: HTMLElement = document.querySelector(mainSelector)!;
                 this.MainSelector.push(element);
             }
         } else {
-            const element: Element = document.querySelector(mainSelector)!;
+            const element: HTMLElement = document.querySelector(mainSelector)!;
             this.MainSelector.push(element);
         }
     }
@@ -162,6 +162,16 @@ export class Selector {
         }
 
         return new Selector(parents);
+    }
+
+    /**
+     * Elements matching the selector has css class ?
+     * 
+     * @param className The class to search
+     * @returns Elements matching the selector has css class ?
+     */
+    public HasClass = (className: string) => {
+        return this.MainSelector.filter(element => element.classList.contains(className)).length > 0;
     }
 
     /**
