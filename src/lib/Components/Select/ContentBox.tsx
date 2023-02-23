@@ -18,6 +18,10 @@ extends Component<Props & ContentBoxProps, {}> {
         
         this.props.CssClass.push("ContentBox-React");
 
+        const valuesChecked: Array<string> = this.props.Options
+            .filter(option => option.Selected)
+            .map(option => option.Value);
+
         return(
             <div
                 id={this.GetContainerId(this.props.Id)}
@@ -29,6 +33,8 @@ extends Component<Props & ContentBoxProps, {}> {
                     readOnly
                     placeholder={this.props.PlaceHolder}
                     onClick={this.HandleInputClick}
+                    onMouseLeave={this.HandleMouseLeave}
+                    value={this.GetValuesSummary(valuesChecked)}
                 />
                 <this.GetSelectOptions/>
             </div>
@@ -36,23 +42,19 @@ extends Component<Props & ContentBoxProps, {}> {
     }
 
     private HandleChange = (event: React.ChangeEvent<HTMLDivElement>) => {
-        console.log("Change detected !");
-        
-        //const valuesChecked: Array<string> = new Array();
-
+        // Get checked inputs
         const optionsChecked: Selector = new Selector(event.currentTarget).Children(".ContentBoxOptions")
             .Children("").Children("").Children("").Children("input");
-        
+        // Values
         const valuesChecked: Array<string> = optionsChecked.GetAll().map(input => input as HTMLInputElement)
             .filter(input => input.checked).map(input => input.value);
-            console.log(valuesChecked);
-
+        // The input for the summary
         const input: HTMLInputElement = new Selector(event.currentTarget).Children("input").First() as HTMLInputElement;
-
-        input.value = this.GetInputValue(valuesChecked);
+        // Affect values to input summary
+        input.value = this.GetValuesSummary(valuesChecked);
     }
 
-    private GetInputValue = (values: Array<string>) => {
+    private GetValuesSummary = (values: Array<string>) => {
         const sbInput: StringBuilder = new StringBuilder("");
 
         values.forEach((value) => {
@@ -60,7 +62,7 @@ extends Component<Props & ContentBoxProps, {}> {
                 sbInput.Append(", ");
             }
             sbInput.Append(value);
-        })
+        });
         
         return sbInput.ToString();
     }
@@ -73,7 +75,6 @@ extends Component<Props & ContentBoxProps, {}> {
             contentBoxOptions.RemoveClass("opened");
         } else {
             contentBoxOptions.AddClass("opened");
-            contentBoxOptions.First().focus();
         }
     }
 
@@ -82,6 +83,7 @@ extends Component<Props & ContentBoxProps, {}> {
             <div
                 id={`${this.props.Id}_options`}
                 className="ContentBoxOptions"
+                onMouseLeave={this.HandleMouseLeave}
             >
                 {
                     this.props.Options.map((option) => {
@@ -92,5 +94,16 @@ extends Component<Props & ContentBoxProps, {}> {
                 }
             </div>
         );
+    }
+
+    private HandleMouseLeave = (event: React.MouseEvent<HTMLInputElement>) => {
+        const contentBox: Selector = new Selector(event.currentTarget).Closest(".ContentBox-React");
+
+        const summary: Selector = contentBox.Children("input:hover");
+        const options: Selector = contentBox.Children(".ContentBoxOptions:hover");
+
+        if (summary.Count() == 0 && options.Count() == 0) {
+            contentBox.Children(".ContentBoxOptions").RemoveClass("opened");
+        }
     }
 }

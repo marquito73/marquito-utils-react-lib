@@ -37,19 +37,10 @@ export default class App extends React.Component<{}, {}> {
 
         events.set(EnumEvent.OnClick, this.buttonMethod);
 
-        return TestButton("Test button", "#2196F3", "", "#2196F3", 20, "", events);
+        return TestButton("Test button", "#2196F3", "", "#2196F3", 20, "//www.google.fr", true, events);
     }
     public buttonMethod() {
         console.log("Hello world !");
-
-        /*AjaxUtils.PostData("https://localhost:7143", "AjxTemplate", "Test", {
-            _valeurTest: 154564
-        }, new Array(), (response) => {
-            const test = "";
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        }, "");*/
     }
 
     // Tabs
@@ -89,7 +80,7 @@ export default class App extends React.Component<{}, {}> {
 
     // RadioListBox
     public getTestRadioListBox = () => {
-        const selecteds: Array<boolean> = new Array(false, false, true, false);
+        const selecteds: Array<boolean> = new Array(false, false, false, false);
         const values: Array<string> = new Array("0", "1", "2", "3");
         const captions: Array<string> = new Array("Radiobox 0", "Radiobox 1", "Radiobox 2", "Radiobox 3");
 

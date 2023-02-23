@@ -48,9 +48,10 @@ export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
             BorderColor: this.props.BorderColor,
             CaptionSize: this.props.CaptionSize,
             Link: this.props.Link,
+            OpenOnNewTab: this.props.OpenOnNewTab,
             ContainerId: "button",
-            Id: this.props.Id + "Button",
-            Name: this.props.Name + "Button",
+            Id: this.props.Id + "Tab",
+            Name: this.props.Name + "Tab",
             CssClass: new Array(),
             Attributes: new Map(),
             Events: this.props.Events

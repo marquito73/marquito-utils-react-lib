@@ -29,7 +29,7 @@ export const TestCheckListBox = (selecteds: Array<boolean>, values: Array<string
         IsEditable: true,
         Options: optionsProps,
         SelectedValue: "",
-        PlaceHolder: "Test",
+        PlaceHolder: "Placeholder checklistbox",
         ContainerId: "",
         Id: "clbTest",
         Name: "clbTest",

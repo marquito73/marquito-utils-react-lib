@@ -29,7 +29,7 @@ export const TestRadioListBox = (selecteds: Array<boolean>, values: Array<string
         IsEditable: true,
         Options: optionsProps,
         SelectedValue: "",
-        PlaceHolder: "Test",
+        PlaceHolder: "Placeholder radiolistbox",
         ContainerId: "",
         Id: "crbTest",
         Name: "crbTest",

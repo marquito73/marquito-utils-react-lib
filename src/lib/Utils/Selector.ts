@@ -52,6 +52,15 @@ export class Selector {
     }
 
     /**
+     * Get the countof  elements on this selector
+     * 
+     * @returns The count of elements on this selector
+     */
+    public Count = () => {
+        return this.MainSelector.length;
+    }
+
+    /**
      * Get all elements corresponding to the selector and elements
      * 
      * @param elements Elements

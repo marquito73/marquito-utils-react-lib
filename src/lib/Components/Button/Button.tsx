@@ -14,7 +14,8 @@ export interface ButtonProps extends ComponentProps {
     BackgroundColor: string,
     BorderColor: string,
     CaptionSize: number,
-    Link: string
+    Link: string,
+    OpenOnNewTab: boolean
 }
 
 export class Button<Props extends ButtonProps> 
@@ -38,7 +39,9 @@ extends Component<Props & ButtonProps, {}> {
                 
             >
                 <a
-                    // href={this.props.Link}
+                    href={this.GetLink()}
+                    rel="noopener noreferrer"
+                    target={this.GetTarget()}
                     onClick={this.ExecuteFunction(EnumEvent.OnClick)}
                     onMouseEnter={this.ExecuteFunction(EnumEvent.OnMouseEnter)}
                 >
@@ -50,6 +53,26 @@ extends Component<Props & ButtonProps, {}> {
                 </a>
             </div>
         );
+    }
+
+    private GetLink = () => {
+        let link = undefined;
+
+        if (Utils.IsNotEmpty(this.props.Link)) {
+            link = this.props.Link;
+        }
+
+        return link;
+    }
+
+    private GetTarget = () => {
+        let target = undefined;
+
+        if (this.props.OpenOnNewTab) {
+            target = "_blank";
+        }
+
+        return target;
     }
 
     private GetButtonLabel = () => {
