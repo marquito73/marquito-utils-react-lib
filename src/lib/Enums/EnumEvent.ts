@@ -10,5 +10,9 @@ export enum EnumEvent {
     /**
      * Check event
      */
-    OnCheck
+    OnCheck,
+    /**
+     * Change event
+     */
+    OnChange
 }

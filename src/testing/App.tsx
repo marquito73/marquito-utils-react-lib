@@ -3,19 +3,16 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { AjaxUtils, Selector, Tabs } from "../lib";
+import { AjaxUtils, DatePickerProps, DatePickerState, Selector, Tabs } from "../lib";
 import { TestButton } from "./Button/Button";
 import { EnumEvent } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
 import { TestCheckListBox } from "./Select/CheckListBox";
 import { TestRadioListBox } from "./Select/RadioListBox";
+import { TestDatePicker } from "./TextArea/DatePicker";
 
 export default class App extends React.Component<{}, {}> {
 
-    // Textbox
-    private getTestTextBox = () => {
-        return TestTextBox("Test value", "Tap some text here ...");
-    }
     // Checkbox
     private getTestCheckBox = () => {
         return TestCheckBox(true, "0");
@@ -87,6 +84,20 @@ export default class App extends React.Component<{}, {}> {
         return TestRadioListBox(selecteds, values, captions);
     }
 
+    // Textbox
+    private getTestTextBox = () => {
+        return TestTextBox("Test value", "Tap some text here ...");
+    }
+    // DatePicker
+    private getTestDatePicker = () => {
+        return TestDatePicker(new Date("1998/07/16"), this.OnChangeDate);
+    }
+
+    private OnChangeDate = (props: DatePickerProps, state: DatePickerState) => {
+        console.log(props);
+        console.log(state);
+    }
+
     render() {
         return (
             <div>
@@ -124,6 +135,9 @@ export default class App extends React.Component<{}, {}> {
                         <div id="TextArea">
                             <div id="textbox">
                                 <this.getTestTextBox/>
+                            </div>
+                            <div id="datepicker">
+                                <this.getTestDatePicker/>
                             </div>
                         </div>
                     </div>

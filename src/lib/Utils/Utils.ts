@@ -1,3 +1,5 @@
+import { StringBuilder } from "./Stringbuilder";
+
 /**
  * Class with useful tools
  */
@@ -55,13 +57,52 @@ export class Utils {
     }
 
     /**
+     * Complete string with specified caracter at the left and specific length
+     * 
+     * @param value The string to complete
+     * @param length The length of the final string
+     * @param char The char used to complete the string
+     * @returns A string completed with specified caracter at the left and specific length
+     */
+    public static Lpad = (value: string, length: number, char: string) => {
+        return value.padStart(length, char);
+    }
+
+    /**
+     * Complete string with specified caracter at the right and specific length
+     * 
+     * @param value The string to complete
+     * @param length The length of the final string
+     * @param char The char used to complete the string
+     * @returns A string completed with specified caracter at the right and specific length
+     */
+    public static Rpad = (value: string, length: number, char: string) => {
+        return value.padEnd(length, char);
+    }
+
+    /**
      * Convert object to string
      * 
      * @param value Object
      * @returns Object as string
      */
     public static GetAsString = (value: any) => {
-        return String(value);
+        let result: string;
+
+        if (value instanceof Date) {
+            const sbDate: StringBuilder = new StringBuilder("-");
+            sbDate.Append(Utils.Lpad(Utils.GetAsString(value.getFullYear()), 4, "0"))
+            .Append(Utils.Lpad(Utils.GetAsString(value.getMonth() + 1), 2, "0"))
+            .Append(Utils.Lpad(Utils.GetAsString(value.getDate()), 2, "0"))
+            result = sbDate.ToString();
+        } else {
+            result = String(value);
+        }
+        return result;
+    }
+
+    public static GetAsDate = (value: any) => {
+        return new Date(value);
     }
 
     /**

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Component, ComponentProps } from "../Component";
 import { StringBuilder, Utils } from "../../Utils";
-import { EnumContentType } from "../../Enums";
+import { EnumContentType, EnumLang } from "../../Enums";
 import { CheckBox, CheckRadioBoxProps } from "../Select";
 import { TextBox, TextBoxProps } from "../TextArea/TextBox";
-import { Label, LabelProps } from "../TextArea";
+import { DatePicker, DatePickerProps, Label, LabelProps } from "../TextArea";
 
 export interface CellProps extends ComponentProps {
     Value: Object,
@@ -47,6 +47,11 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
 
                     component = this.getCheckBox("TODO", bVal);
                     break;
+                case EnumContentType.Date:
+                    const dVal: Date = Utils.GetAsDate(this.props.Value);
+
+                    component = this.GetDatePicker(dVal);
+                    break;
                 default:
                     component = this.getLabel(Utils.GetAsString(this.props.Value));
                     break;
@@ -66,30 +71,12 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         );
     }
 
-    private getLabel = (value: string) => {
-        const txtProps: LabelProps = {
-            Text: value,
-            BoldText: false,
-            TextColor: "red",
-            TextSize: 15,
-            For: "",
-            ContainerId: "td" + this.getCellExtensionId(),
-            Id: "lbl" + this.getCellExtensionId(),
-            Name: "lbl" + this.getCellExtensionName(),
-            CssClass: new Array(),
-            Attributes: new Map(),
-            Events: new Map()
-        }
-
-        return (
-            <Label {...txtProps}></Label>
-        );
-    }
-
     private getTextBox = (value: string) => {
         const txtProps: TextBoxProps = {
             Value: value,
             PlaceHolder: "",
+            ReadOnly: false,
+            SpellCheck: false,
             ContainerId: "td" + this.getCellExtensionId(),
             Id: "txt" + this.getCellExtensionId(),
             Name: "txt" + this.getCellExtensionName(),
@@ -99,7 +86,7 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         }
 
         return (
-            <TextBox {...txtProps}></TextBox>
+            <TextBox {...txtProps}/>
         );
     }
 
@@ -118,7 +105,47 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         }
 
         return (
-            <CheckBox {...chkProps}></CheckBox>
+            <CheckBox {...chkProps}/>
+        );
+    }
+
+    private GetDatePicker = (value: Date) => {
+        const dpProps: DatePickerProps = {
+            Date: value,
+            MinimumDate: undefined,
+            MaximumDate: undefined,
+            PlaceHolder: "",
+            Language: EnumLang.FR,
+            ContainerId: "td" + this.getCellExtensionId(),
+            Id: "dp" + this.getCellExtensionId(),
+            Name: "dp" + this.getCellExtensionName(),
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+
+        return (
+            <DatePicker {...dpProps}/>
+        );
+    }
+
+    private getLabel = (value: string) => {
+        const txtProps: LabelProps = {
+            Text: value,
+            BoldText: false,
+            TextColor: "red",
+            TextSize: 15,
+            For: "",
+            ContainerId: "td" + this.getCellExtensionId(),
+            Id: "lbl" + this.getCellExtensionId(),
+            Name: "lbl" + this.getCellExtensionName(),
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+
+        return (
+            <Label {...txtProps}/>
         );
     }
 

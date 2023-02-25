@@ -50,13 +50,14 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 
 	protected LogProperties = () => {
 		console.table(this.props);
+		console.table(this.state);
     }
 
 	protected ExecuteFunction = (eventKey: EnumEvent) => {
 		return () => {
 			const eventFunction: Function | undefined = this.props.Events.get(eventKey);
 			if (Utils.IsNotNull(eventFunction)) {
-				eventFunction?.();
+				eventFunction?.(this.props, this.state);
 			}
 		}
 	}

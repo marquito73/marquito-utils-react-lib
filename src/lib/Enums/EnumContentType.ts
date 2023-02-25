@@ -12,23 +12,31 @@ export enum EnumContentType {
      */
     EmailAddress,
     /**
-     * EmailAddress
+     * Phone number
      */
     PhoneNumber,
     /**
-     * EmailAddress
+     * Number
      */
     Number,
     /**
-     * EmailAddress
+     * Currency
      */
     Currency,
     /**
-     * EmailAddress
+     * Boolean
      */
     Boolean,
     /**
-     * EmailAddress
+     * Binary data
      */
-    Binary
+    Binary,
+    /**
+     * Date
+     */
+    Date,
+    /**
+     * Time
+     */
+    Time
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { EnumEvent } from "../../Enums";
 import {Component, ComponentProps} from "../Component";
 import "./css/TextBox.scss";
 
@@ -10,35 +11,40 @@ export interface TextBoxProps extends ComponentProps {
 	/**
 	 * Placeholder of textbox
 	 * */
-	PlaceHolder: string
+	PlaceHolder: string,
+	/**
+	 * Textbox is readonly ?
+	 */
+	ReadOnly: boolean,
+	/**
+	 * Check spelling ?
+	 */
+	SpellCheck: boolean
 }
 
 export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps, {}> {
 	render() {
-		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-			//this.LogProperties();
-			console.log("New value : " + event.target.value);
-		};
-
-		// let cssClass: Array<string> = new Array();
-		// cssClass.push("TextBox-React");
-		// cssClass = cssClass.concat(this.props.CssClass);
-
-		//const cssClass: Array<string> = new Array("TextBox-React").concat(this.props.CssClass);
-
+		this.props.CssClass.push("TextBox-React");
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
 				{...this.props.Attributes}
-				// {...this.GetCssAttribute(cssClass)}
-				className="TextBox-React"
+				className={this.GetOwnCssClass()}
 			>
 				<input
 					id={this.props.Id} 
 					defaultValue={this.props.Value}
 					placeholder={this.props.PlaceHolder}
-					onChange={handleChange} />
+					readOnly={this.props.ReadOnly}
+					spellCheck={this.props.SpellCheck}
+					onChange={this.HandleChange} 
+				/>
 			</div>
 		);
+	}
+
+	private HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log("New value : " + event.target.value);
+		this.ExecuteFunction(EnumEvent.OnChange);
 	}
 }

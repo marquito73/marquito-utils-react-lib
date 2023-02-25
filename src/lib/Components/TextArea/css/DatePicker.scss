@@ -1,0 +1,69 @@
+.DatePicker-React {
+    min-width: 4.5rem;
+    width: 4.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.DatePicker-React > .react-datepicker-wrapper,
+.DatePicker-React > .react-datepicker-wrapper > *,
+.DatePicker-React > .react-datepicker-wrapper > * > input {
+    min-width: inherit;
+    width: inherit;
+}
+
+.DatePicker-React > .react-datepicker-wrapper input {
+    height: 20px;
+    outline: none;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    transition: border-color 0.3s;
+}
+
+.DatePicker-React > .react-datepicker-wrapper input:hover, 
+.DatePicker-React > .react-datepicker-wrapper input:focus {
+    border-color: deepskyblue !important;
+}
+
+.DatePicker-React > .react-datepicker__tab-loop * {
+    transition: background-color 0.3s, color 0.3s;
+    user-select: none;
+}
+.DatePicker-React .react-datepicker__day {
+    border-radius: 25px;    
+}
+
+.DatePicker-React .react-datepicker__day--selected,
+.DatePicker-React .react-datepicker__day--keyboard-selected:hover {
+    background-color: deepskyblue;
+    color: white;
+}
+
+.DatePicker-React .react-datepicker__navigation *::before,
+.DatePicker-React .react-datepicker__year-read-view .react-datepicker__year-read-view--down-arrow, 
+.DatePicker-React .react-datepicker__month-read-view .react-datepicker__month-read-view--down-arrow {
+    transition: border-color 0.3s;
+}
+
+.DatePicker-React .react-datepicker__navigation:hover *::before,
+.DatePicker-React .react-datepicker__year-read-view:hover .react-datepicker__year-read-view--down-arrow, 
+.DatePicker-React .react-datepicker__month-read-view:hover .react-datepicker__month-read-view--down-arrow {
+    border-color: deepskyblue !important;
+}
+
+/*.DatePicker-React > .react-datepicker-wrapper input {
+    height: 20px;
+    outline: none;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    transition: border-color 0.3s;
+}
+
+.DatePicker-React > .react-datepicker-wrapper input:hover, 
+.DatePicker-React > .react-datepicker-wrapper input:focus {
+    border-color: deepskyblue !important;
+}*/

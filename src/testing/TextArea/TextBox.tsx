@@ -8,6 +8,8 @@ export const TestTextBox = (value: string, placeHolder: string) => {
     const txtProps: TextBoxProps = {
         Value: value,
         PlaceHolder: placeHolder,
+        ReadOnly: false,
+        SpellCheck: true,
         ContainerId: "textbox",
         Id: "txtTest" + value,
         Name: "txtTest",
