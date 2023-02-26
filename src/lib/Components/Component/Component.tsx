@@ -36,7 +36,7 @@ import "./css/Component.scss"
 }
 
 /**
- * Main components properties
+ * Main components states
  * */
 export interface ComponentState {
 

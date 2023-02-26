@@ -7,6 +7,7 @@ import {CheckBox, RadioBox, CheckRadioBoxProps} from "./Select";
 import {TextBox, TextBoxProps} from "./TextArea";
 
 export * from "./Button";
+export * from "./Chart";
 export * from "./Component";
 export * from "./Grid";
 export * from "./Menu";

@@ -10,6 +10,7 @@ import { TestTabs } from "./Menu/Tabs";
 import { TestCheckListBox } from "./Select/CheckListBox";
 import { TestRadioListBox } from "./Select/RadioListBox";
 import { TestDatePicker } from "./TextArea/DatePicker";
+import { TestLineChart } from "./Chart/LineChart";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -42,7 +43,7 @@ export default class App extends React.Component<{}, {}> {
 
     // Tabs
     private getTestTabs = () => {
-        const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea");
+        const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea", "Chart");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
         });
@@ -93,6 +94,11 @@ export default class App extends React.Component<{}, {}> {
         return TestDatePicker(new Date("1998/07/16"), this.OnChangeDate);
     }
 
+    // LineChart
+    private getTestLineChart = () => {
+        return TestLineChart();
+    }
+
     private OnChangeDate = (props: DatePickerProps, state: DatePickerState) => {
         console.log(props);
         console.log(state);
@@ -138,6 +144,11 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                             <div id="datepicker">
                                 <this.getTestDatePicker/>
+                            </div>
+                        </div>
+                        <div id="Chart">
+                            <div id="linechart">
+                                <this.getTestLineChart/>
                             </div>
                         </div>
                     </div>
