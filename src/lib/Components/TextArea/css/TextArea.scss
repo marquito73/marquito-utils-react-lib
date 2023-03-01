@@ -1,0 +1,33 @@
+div.TextArea-React {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+}
+
+div.TextArea-React > textarea {
+    height: 62px;
+    min-height: 62px;
+    // width: 99%;
+    min-width: 40px;
+    outline: none;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    transition: border-color 0.3s;
+}
+
+div.TextArea-React > textarea:hover, 
+div.TextArea-React > textarea:focus {
+    border-color: deepskyblue;
+}
+
+div.TextArea-React.horizontalResizeEnabled.verticalResizeEnabled > textarea {
+    resize: both;
+}
+div.TextArea-React.horizontalResizeEnabled > textarea {
+    resize: horizontal;
+}
+div.TextArea-React.verticalResizeEnabled > textarea {
+    resize: vertical;
+}

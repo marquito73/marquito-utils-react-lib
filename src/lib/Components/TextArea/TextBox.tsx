@@ -23,8 +23,12 @@ export interface TextBoxProps extends ComponentProps {
 }
 
 export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps, {}> {
-	render() {
+	constructor(props: Props & TextBoxProps) {
+		super(props);
 		this.props.CssClass.push("TextBox-React");
+	}
+
+	render() {
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
@@ -37,13 +41,13 @@ export class TextBox<Props extends TextBoxProps> extends Component<Props & TextB
 					placeholder={this.props.PlaceHolder}
 					readOnly={this.props.ReadOnly}
 					spellCheck={this.props.SpellCheck}
-					onChange={this.HandleChange} 
+					onChange={this.HandleTextBoxChange} 
 				/>
 			</div>
 		);
 	}
 
-	private HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	private HandleTextBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		console.log("New value : " + event.target.value);
 		this.ExecuteFunction(EnumEvent.Change);
 	}

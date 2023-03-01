@@ -12,6 +12,7 @@ import { TestRadioListBox } from "./Select/RadioListBox";
 import { TestDatePicker } from "./TextArea/DatePicker";
 import { TestLineChart } from "./Chart/LineChart";
 import { TestProgressBar } from "./Progress/ProgressBar";
+import { TestTextArea } from "./TextArea/TextArea";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -95,6 +96,10 @@ export default class App extends React.Component<{}, {}> {
     private getTestDatePicker = () => {
         return TestDatePicker(new Date("1998/07/16"), this.OnChangeDate);
     }
+    // Textarea
+    private getTestTextArea = () => {
+        return TestTextArea("Test value for textarea", "Tap some text here ...");
+    }
 
     // ProgressBar
     private getTestProgressBar = () => {
@@ -165,6 +170,9 @@ export default class App extends React.Component<{}, {}> {
                         <div id="TextArea">
                             <div id="textbox">
                                 <this.getTestTextBox/>
+                            </div>
+                            <div id="textarea">
+                                <this.getTestTextArea/>
                             </div>
                             <div id="datepicker">
                                 <this.getTestDatePicker/>
