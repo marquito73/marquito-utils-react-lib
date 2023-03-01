@@ -3,7 +3,7 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { AjaxUtils, DatePickerProps, DatePickerState, Selector, Tabs } from "../lib";
+import { AjaxUtils, DatePickerProps, DatePickerState, Selector, Tabs, Utils } from "../lib";
 import { TestButton } from "./Button/Button";
 import { EnumEvent } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
@@ -11,6 +11,7 @@ import { TestCheckListBox } from "./Select/CheckListBox";
 import { TestRadioListBox } from "./Select/RadioListBox";
 import { TestDatePicker } from "./TextArea/DatePicker";
 import { TestLineChart } from "./Chart/LineChart";
+import { TestProgressBar } from "./Progress/ProgressBar";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -33,9 +34,9 @@ export default class App extends React.Component<{}, {}> {
     private getTestButton = () => {
         const events: Map<EnumEvent, Function> = new Map();
 
-        events.set(EnumEvent.OnClick, this.buttonMethod);
+        events.set(EnumEvent.Click, this.buttonMethod);
 
-        return TestButton("Test button", "#2196F3", "", "#2196F3", 20, "//www.google.fr", true, events);
+        return TestButton("btnTest", "Test button", "#2196F3", "", "#2196F3", 20, "//www.google.fr", true, events);
     }
     public buttonMethod() {
         console.log("Hello world !");
@@ -43,7 +44,8 @@ export default class App extends React.Component<{}, {}> {
 
     // Tabs
     private getTestTabs = () => {
-        const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea", "Chart");
+        const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea", 
+            "Progress", "Chart");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
         });
@@ -92,6 +94,28 @@ export default class App extends React.Component<{}, {}> {
     // DatePicker
     private getTestDatePicker = () => {
         return TestDatePicker(new Date("1998/07/16"), this.OnChangeDate);
+    }
+
+    // ProgressBar
+    private getTestProgressBar = () => {
+        return TestProgressBar(5, "red", EnumEvent.Click, "btnProgress", (progressValue: number) => {
+            console.log("Test");
+
+            return progressValue + 10;
+        });
+    }
+    private getButtonIncreaseProgress = () => {
+        const events: Map<EnumEvent, Function> = new Map();
+        //pbTest
+
+        events.set(EnumEvent.Click, this.modifyProgress);
+        return TestButton("btnProgress", "Increase progress", "black", "gray", "", 20, "", false, events);
+    }
+    public modifyProgress = () => {
+        //const progressValueInput: HTMLInputElement = new Selector("#pbTest_cnt").Children(".ProgressBarValue")
+            // .First() as HTMLInputElement;
+
+        //progressValueInput.value = Utils.GetAsString(Utils.GetAsNumber(progressValueInput.value) + 10);
     }
 
     // LineChart
@@ -146,9 +170,15 @@ export default class App extends React.Component<{}, {}> {
                                 <this.getTestDatePicker/>
                             </div>
                         </div>
+                        <div id="Progress">
+                            <div id="progressbar">
+                                <this.getTestProgressBar/>
+                                <this.getButtonIncreaseProgress/>
+                            </div>
+                        </div>
                         <div id="Chart">
                             <div id="linechart">
-                                <this.getTestLineChart/>
+                                {/* <this.getTestLineChart/> */}
                             </div>
                         </div>
                     </div>

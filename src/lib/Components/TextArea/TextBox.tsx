@@ -45,6 +45,6 @@ export class TextBox<Props extends TextBoxProps> extends Component<Props & TextB
 
 	private HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		console.log("New value : " + event.target.value);
-		this.ExecuteFunction(EnumEvent.OnChange);
+		this.ExecuteFunction(EnumEvent.Change);
 	}
 }

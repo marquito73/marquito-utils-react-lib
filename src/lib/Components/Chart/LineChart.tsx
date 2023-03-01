@@ -36,10 +36,10 @@ export class LineChart<Props extends LineChartProps> extends Chart<Props & LineC
         Array.from(this.props.Points.keys())
             .sort((pointOne, pointTwo) =>  pointOne.x - pointTwo.x)
             .forEach((point) => {
-                this.DrawPoint(canvas, 20 + point.x, this.props.Height - 20 - point.y, "blue");
+                this.DrawPoint(canvas, this.DefaultMargin + point.x, this.props.Height - this.DefaultMargin - point.y, "blue");
                 if (Utils.IsNotNull(lastX) && Utils.IsNotNull(lastY)) {
-                    this.DrawLine(canvas, 20 + (lastX as number), this.props.Height - 20 - (lastY as number), 
-                    20 + point.x, this.props.Height - 20 - point.y, 1, "blue");
+                    this.DrawLine(canvas, this.DefaultMargin + (lastX as number), this.props.Height - this.DefaultMargin - (lastY as number), 
+                    this.DefaultMargin + point.x, this.props.Height - this.DefaultMargin - point.y, 1, "blue");
                 };
                 lastX = point.x;
                 lastY = point.y;

@@ -1,3 +1,4 @@
+import { EnumEvent } from "../Enums";
 import { StringBuilder } from "./Stringbuilder";
 import { Utils } from "./Utils";
 
@@ -189,7 +190,7 @@ export class Selector {
      * @param className The class to add
      */
     public AddClass = (className: string) => {
-        this.MainSelector.forEach(element => element.classList.add(className));
+        this.ForEach(element => element.classList.add(className));
     }
 
     /**
@@ -198,7 +199,7 @@ export class Selector {
      * @param className The class to remove
      */
     public RemoveClass = (className: string) => {
-        this.MainSelector.forEach(element => element.classList.remove(className));
+        this.ForEach(element => element.classList.remove(className));
     }
 
     public SetVisible = (visible: boolean) => {
@@ -220,7 +221,7 @@ export class Selector {
     }
 
     public SetAttribute = (attributeKey: string, attributeValue: any) => {
-        this.MainSelector.forEach(element => {
+        this.ForEach(element => {
             element.setAttribute(attributeKey, Utils.GetAsString(attributeValue));
         });
     }
@@ -248,7 +249,36 @@ export class Selector {
         // TODO
     }
 
+    /**
+     * Loop into each element, and call the callback function
+     * 
+     * @param callback The function called for each element
+     */
     public ForEach = (callback: (element: Element) => void) => {
         this.MainSelector.forEach(callback);
+    }
+
+    /**
+     * Add event to elements of this selector
+     * 
+     * @param event The event
+     * @param eventFunction The function call when event occur
+     */
+    public On = (event: EnumEvent, eventFunction: EventListenerOrEventListenerObject) => {
+        this.ForEach(element => {
+            element.addEventListener(EnumEvent[event].toLowerCase(), eventFunction);
+        });
+    }
+
+    /**
+     * Remove event to elements of this selector
+     * ²
+     * @param event The event
+     * @param eventFunction The function call when event occur
+     */
+    public Off = (event: EnumEvent, eventFunction: EventListenerOrEventListenerObject) => {
+        this.ForEach(element => {
+            element.removeEventListener(EnumEvent[event].toLowerCase(), eventFunction);
+        });
     }
 }

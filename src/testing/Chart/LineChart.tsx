@@ -10,6 +10,7 @@ export const TestLineChart = () => {
     points.set(new ChartPoint(50, 50), "Point 1");
     points.set(new ChartPoint(100, 100), "Point 2");
     points.set(new ChartPoint(150, 120), "Point 3");
+    points.set(new ChartPoint(110, 180), "Point 4");
 
     // Textbox
     const lineChartProps: LineChartProps = {

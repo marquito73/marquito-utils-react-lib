@@ -105,6 +105,10 @@ export class Utils {
         return new Date(value);
     }
 
+    public static GetAsNumber = (value: any) => {
+        return Number(value);
+    }
+
     /**
      * Convert object to boolean
      * 

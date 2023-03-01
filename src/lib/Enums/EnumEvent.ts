@@ -2,17 +2,17 @@ export enum EnumEvent {
     /**
      * Click event
      */
-    OnClick,
+    Click,
     /**
      * Mouse enter event
      */
-    OnMouseEnter,
+    MouseEnter,
     /**
      * Check event
      */
-    OnCheck,
+    Check,
     /**
      * Change event
      */
-    OnChange
+    Change
 }

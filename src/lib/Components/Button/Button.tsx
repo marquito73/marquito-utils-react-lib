@@ -42,8 +42,8 @@ extends Component<Props & ButtonProps, {}> {
                     href={this.GetLink()}
                     rel="noopener noreferrer"
                     target={this.GetTarget()}
-                    onClick={this.ExecuteFunction(EnumEvent.OnClick)}
-                    onMouseEnter={this.ExecuteFunction(EnumEvent.OnMouseEnter)}
+                    onClick={this.ExecuteFunction(EnumEvent.Click)}
+                    onMouseEnter={this.ExecuteFunction(EnumEvent.MouseEnter)}
                 >
                     <span
                         id={this.props.Id}

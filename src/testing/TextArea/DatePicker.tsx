@@ -5,7 +5,7 @@ import { DatePickerProps, DatePicker, EnumEvent, EnumLang } from "../../lib";
 export const TestDatePicker = (date: Date, onChangeCallback: Function) => {
 
     const events: Map<EnumEvent, Function> = new Map();
-    events.set(EnumEvent.OnChange, onChangeCallback);
+    events.set(EnumEvent.Change, onChangeCallback);
 
     // DatePicker
     const txtProps: DatePickerProps = {

@@ -1,0 +1,31 @@
+.ProgressBar-React {
+    border: 1px solid black;
+    border-radius: 5px;
+    min-width: 10rem;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.ProgressBar-React > .progress {
+    height: 20px;
+    opacity: 0.6;
+    // position: absolute;
+    border-radius: 5px;
+    transition: width 0.3s;
+    max-width: 100%;
+}
+
+.ProgressBar-React > .ProgressBarValue   {
+    height: 20px;
+    display: inline-block;
+    user-select: none;
+}
+
+.ProgressBar-React:not(.HiddenValue) > .progress {
+    position: absolute;
+}
+
+.ProgressBar-React.HiddenValue > .ProgressBarValue {
+    display: none;
+}

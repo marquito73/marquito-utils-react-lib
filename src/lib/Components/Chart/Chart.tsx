@@ -10,6 +10,8 @@ export interface ChartProps extends ComponentProps {
 
 export abstract class Chart<Props extends ChartProps> 
 extends Component<Props & ChartProps, {}> {
+
+    protected DefaultMargin: number = 40;
     
     render() {
         this.props.CssClass.push("Chart-React");
@@ -117,15 +119,15 @@ extends Component<Props & ChartProps, {}> {
     }
 
     protected DrawChartAxis = (canvas: CanvasRenderingContext2D, maxHeight: number, maxWidth: number) => {
-        const xStart: number = 20;
-        const yStart: number = maxHeight - 20;
+        const xStart: number = this.DefaultMargin;
+        const yStart: number = maxHeight - this.DefaultMargin;
         const axisColor: string = "blue";
 
         // Draw x axis
-        this.DrawLine(canvas, xStart, yStart, maxWidth - 20, yStart, 2, axisColor);
+        this.DrawLine(canvas, xStart, yStart, maxWidth - this.DefaultMargin, yStart, 2, axisColor);
         // Draw y axis
-        this.DrawLine(canvas, xStart, yStart, xStart, 20, 2, axisColor);
+        this.DrawLine(canvas, xStart, yStart, xStart, this.DefaultMargin, 2, axisColor);
         // Draw 0
-        this.DrawText(canvas, "0", 10, maxHeight - 5);
+        this.DrawText(canvas, "0", this.DefaultMargin - 20, maxHeight - this.DefaultMargin + 20);
     }
 }

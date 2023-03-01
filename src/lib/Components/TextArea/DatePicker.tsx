@@ -67,7 +67,7 @@ export class DatePicker<Props extends DatePickerProps> extends Component<Props &
                     placeholderText={this.props.PlaceHolder}
                     locale="lang"
                     onChange={(date: Date) => {
-                        this.setState({DateValue: date}, this.ExecuteFunction(EnumEvent.OnChange));
+                        this.setState({DateValue: date}, this.ExecuteFunction(EnumEvent.Change));
                     }}
                 />
             </div>
@@ -75,6 +75,6 @@ export class DatePicker<Props extends DatePickerProps> extends Component<Props &
     }
 
     private HandleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({DateValue: Utils.GetAsDate(event.target.value)}, this.ExecuteFunction(EnumEvent.OnChange));
+        this.setState({DateValue: Utils.GetAsDate(event.target.value)}, this.ExecuteFunction(EnumEvent.Change));
     }
 }

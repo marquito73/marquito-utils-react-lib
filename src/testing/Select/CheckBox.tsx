@@ -20,7 +20,7 @@ export const TestCheckBox = (selected: boolean, value: string) => {
         Events: new Map()
     };
 
-    chkProps.Events.set(EnumEvent.OnCheck, Function("document.testCheck()"));
+    chkProps.Events.set(EnumEvent.Check, Function("document.testCheck()"));
 
     return (
         <CheckBox {...chkProps}/>

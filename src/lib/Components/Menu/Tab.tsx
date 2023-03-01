@@ -25,8 +25,8 @@ export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
             cssStyles.fontSize = this.props.CaptionSize + "px";
         }
 
-        this.props.Events.set(EnumEvent.OnClick, this.HandleClick);
-        this.props.Events.set(EnumEvent.OnMouseEnter, this.HandleMouseEnter);
+        this.props.Events.set(EnumEvent.Click, this.HandleClick);
+        this.props.Events.set(EnumEvent.MouseEnter, this.HandleMouseEnter);
 
         return (
             <div

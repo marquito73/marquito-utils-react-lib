@@ -3,7 +3,7 @@ import { Button, ButtonProps, CheckBox, CheckRadioBoxProps } from "../../lib";
 import { EnumEvent } from "../../lib/Enums";
 
 
-export const TestButton = (caption: string, captionColor: string, backgroundColor: string, 
+export const TestButton = (id: string, caption: string, captionColor: string, backgroundColor: string, 
     borderColor: string, captionSize: number, link: string, openOnNewTab: boolean, events: Map<EnumEvent, Function>) => {
 
     // Button
@@ -17,8 +17,8 @@ export const TestButton = (caption: string, captionColor: string, backgroundColo
         Link: link,
         OpenOnNewTab: openOnNewTab,
         ContainerId: "button",
-        Id: "btnTest",
-        Name: "btnTest",
+        Id: id,
+        Name: id,
         CssClass: new Array(),
         Attributes: new Map(),
         Events: events
