@@ -13,6 +13,7 @@ import { TestDatePicker } from "./TextArea/DatePicker";
 import { TestLineChart } from "./Chart/LineChart";
 import { TestProgressBar } from "./Progress/ProgressBar";
 import { TestTextArea } from "./TextArea/TextArea";
+import { TestRangeSlider } from "./Range/RangeSlider";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -46,7 +47,7 @@ export default class App extends React.Component<{}, {}> {
     // Tabs
     private getTestTabs = () => {
         const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea", 
-            "Progress", "Chart");
+            "Progress", "Range", "Chart");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
         });
@@ -123,6 +124,11 @@ export default class App extends React.Component<{}, {}> {
         //progressValueInput.value = Utils.GetAsString(Utils.GetAsNumber(progressValueInput.value) + 10);
     }
 
+    // RangeSlider
+    private getTestRangeSlider = () => {
+        return TestRangeSlider(20, 1, 40, 0.2);
+    }
+
     // LineChart
     private getTestLineChart = () => {
         return TestLineChart();
@@ -182,6 +188,11 @@ export default class App extends React.Component<{}, {}> {
                             <div id="progressbar">
                                 <this.getTestProgressBar/>
                                 <this.getButtonIncreaseProgress/>
+                            </div>
+                        </div>
+                        <div id="Range">
+                            <div id="RangeSlider">
+                                <this.getTestRangeSlider/>
                             </div>
                         </div>
                         <div id="Chart">

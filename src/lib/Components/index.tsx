@@ -12,6 +12,7 @@ export * from "./Component";
 export * from "./Grid";
 export * from "./Menu";
 export * from "./Progress";
+export * from "./Range";
 export * from "./Select";
 export * from "./TextArea";
 export {ReactWidgetFactory};

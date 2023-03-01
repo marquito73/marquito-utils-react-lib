@@ -1,5 +1,5 @@
 import React from "react";
-import { TextBoxProps, TextArea, TextAreaProps } from "../../lib";
+import { TextArea, TextAreaProps } from "../../lib";
 
 export const TestTextArea = (value: string, placeHolder: string) => {
 

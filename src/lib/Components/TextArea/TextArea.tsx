@@ -44,13 +44,12 @@ export class TextArea<Props extends TextAreaProps> extends Component<Props & Tex
 			>
 				<textarea
 					id={this.props.Id} 
+					value={this.props.Value}
 					placeholder={this.props.PlaceHolder}
 					readOnly={this.props.ReadOnly}
 					spellCheck={this.props.SpellCheck}
 					onChange={this.HandleTextAreaChange}
-				>
-                    {this.props.Value}
-                </textarea>
+				/>
 			</div>
         );
     }
