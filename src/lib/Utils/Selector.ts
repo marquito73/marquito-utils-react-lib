@@ -174,6 +174,10 @@ export class Selector {
         return new Selector(parents);
     }
 
+    public GetDocument = () => {
+        return new Selector(this.MainSelector.map(element => element.ownerDocument.documentElement!));
+    }
+
     /**
      * Elements matching the selector has css class ?
      * 
@@ -231,17 +235,41 @@ export class Selector {
     }
 
     public GetStyle = () => {
-        return this.GetAttribute("style");
+        return this.GetAttribute("style") as string;
+    }
+
+    public GetStyleMap = () => {
+        const currentStyle: Map<string, string> = new Map();
+
+        const styles: Array<string> = this.GetStyle().split(";").filter(style => style !== "");
+
+        styles.forEach((style) => {
+            currentStyle.set(style.split(":", 2)[0], style.split(":", 2)[1]);
+        });
+
+        return currentStyle;
     }
 
     public SetStyle = (styleName: string, styleValue: string) => {
+        const newStyle: Map<string, string> = new Map();
+        newStyle.set(styleName, styleValue);
+        this.SetNewStyles(newStyle);
+    }
+
+    public SetStyles = (styles: Map<string, string>) => {
+        this.SetNewStyles(styles);
+    }
+
+    private SetNewStyles = (styles: Map<string, string>) => {
         const sbStyle: StringBuilder = new StringBuilder("");
 
-        let currentStyle: string = this.GetStyle();
-        //sbStyle.Append(this.GetStyle()).Append(styleName).Append(":").Append(styleValue).Append(";");
-
-        sbStyle.Append(styleName).Append(":").Append(styleValue).Append(";");
-        
+        const currentStyle: Map<string, string> = this.GetStyleMap();
+        styles.forEach((styleValue, styleName) => {
+            currentStyle.set(styleName, styleValue);
+        });
+        currentStyle.forEach((styleValue, styleName) => {
+            sbStyle.Append(styleName).Append(":").Append(styleValue).Append(";");
+        })
         this.SetAttribute("style", sbStyle.ToString());
     }
 
@@ -256,6 +284,7 @@ export class Selector {
      */
     public ForEach = (callback: (element: Element) => void) => {
         this.MainSelector.forEach(callback);
+        return this;
     }
 
     /**
@@ -268,6 +297,7 @@ export class Selector {
         this.ForEach(element => {
             element.addEventListener(EnumEvent[event].toLowerCase(), eventFunction);
         });
+        return this;
     }
 
     /**
@@ -280,5 +310,6 @@ export class Selector {
         this.ForEach(element => {
             element.removeEventListener(EnumEvent[event].toLowerCase(), eventFunction);
         });
+        return this;
     }
 }

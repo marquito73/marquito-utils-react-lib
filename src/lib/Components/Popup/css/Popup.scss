@@ -1,0 +1,53 @@
+.Popup-React {
+    min-width: 10rem;
+    min-height: 10rem;
+    background-color: beige;
+    position: absolute;
+    filter: drop-shadow(2px 4px 6px black);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 10px;
+    //transition: all 0.3s;
+    // For center the popup vertically and horizontally
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.Popup-React.PopupHide {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+}
+
+.Popup-React > * {
+    width: 100%;
+}
+
+.Popup-React > .PopupHeader {
+    height: 40px;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Popup-React > .PopupHeader > .PopupButtons {
+
+} 
+
+.Popup-React > .PopupContent {
+    height: -webkit-fill-available;
+    background-color: red;
+}
+
+.Popup-React > .PopupFooter {
+    height: 40px;
+    background-color: red;
+}

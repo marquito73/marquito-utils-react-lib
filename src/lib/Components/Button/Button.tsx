@@ -1,28 +1,25 @@
 import React, {useState} from "react";
-import { Component, ComponentProps } from "../Component";
-import CSS from 'csstype';
-
-import "./css/Button.scss";
 import { Utils } from "../../Utils";
 import { Label, LabelProps } from "../TextArea";
 import { EnumEvent } from "../../Enums";
+import CSS from 'csstype';
+import "./css/Button.scss";
+import { AbstractButton, AbstractButtonProps } from "./AbstractButton";
 
-export interface ButtonProps extends ComponentProps {
-    Caption: string,
+export interface ButtonProps extends AbstractButtonProps {
     BoldCaption: boolean
     CaptionColor: string,
     BackgroundColor: string,
     BorderColor: string,
-    CaptionSize: number,
-    Link: string,
-    OpenOnNewTab: boolean
+    CaptionSize: number
 }
 
-export class Button<Props extends ButtonProps> 
-extends Component<Props & ButtonProps, {}> {
+export class Button<Props extends ButtonProps> extends AbstractButton<Props & ButtonProps> {
+	constructor(props: Props & AbstractButtonProps) {
+		super(props);
+	}
     render() {
         this.props.CssClass.push("Button-React");
-
         const cssStyles: CSS.Properties = {};
         if (Utils.IsNotEmpty(this.props.BackgroundColor)) {
             cssStyles.backgroundColor = this.props.BackgroundColor;
@@ -53,26 +50,6 @@ extends Component<Props & ButtonProps, {}> {
                 </a>
             </div>
         );
-    }
-
-    private GetLink = () => {
-        let link = undefined;
-
-        if (Utils.IsNotEmpty(this.props.Link)) {
-            link = this.props.Link;
-        }
-
-        return link;
-    }
-
-    private GetTarget = () => {
-        let target = undefined;
-
-        if (this.props.OpenOnNewTab) {
-            target = "_blank";
-        }
-
-        return target;
     }
 
     private GetButtonLabel = () => {

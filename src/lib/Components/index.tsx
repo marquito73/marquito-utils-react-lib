@@ -8,9 +8,11 @@ import {TextBox, TextBoxProps} from "./TextArea";
 
 export * from "./Button";
 export * from "./Chart";
+export * from "./Common";
 export * from "./Component";
 export * from "./Grid";
 export * from "./Menu";
+export * from "./Popup";
 export * from "./Progress";
 export * from "./Range";
 export * from "./Select";

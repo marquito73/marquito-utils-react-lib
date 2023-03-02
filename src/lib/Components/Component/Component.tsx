@@ -96,6 +96,10 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		return this.GetCssClass(this.props.CssClass);
 	}
 
+	protected GetOwnCssClassWithOthers = (cssClass: Array<string>) => {
+		return this.GetCssClass(this.props.CssClass.concat(cssClass));
+	}
+
 	protected GetCssClass = (cssClass: Array<string>) => {
 		const sbCssClass: StringBuilder = new StringBuilder(" ");
 

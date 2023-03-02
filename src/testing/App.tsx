@@ -3,8 +3,9 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { AjaxUtils, DatePickerProps, DatePickerState, Selector, Tabs, Utils } from "../lib";
+import { AjaxUtils, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, Tabs, Utils } from "../lib";
 import { TestButton } from "./Button/Button";
+import { TestIconButton } from "./Button/IconButton";
 import { EnumEvent } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
 import { TestCheckListBox } from "./Select/CheckListBox";
@@ -28,10 +29,12 @@ export default class App extends React.Component<{}, {}> {
     private getTestRadioBoxTwo = () => {
         return TestRadioBox(true, "1");
     }
+
     // Grid
     private getTestGrid = () => {
         return TestGrid();
     }
+
     // Button 
     private getTestButton = () => {
         const events: Map<EnumEvent, Function> = new Map();
@@ -40,14 +43,40 @@ export default class App extends React.Component<{}, {}> {
 
         return TestButton("btnTest", "Test button", "#2196F3", "", "#2196F3", 20, "//www.google.fr", true, events);
     }
+    // IconButton
+    private getTestIconButton = () => {
+        const events: Map<EnumEvent, Function> = new Map();
+
+        events.set(EnumEvent.Click, this.buttonMethod);
+
+        return TestIconButton("ibtnTest", "Test icon button", "icon-cancel-circle", "red", "//www.google.fr", true, events);
+    }
     public buttonMethod() {
         console.log("Hello world !");
     }
 
+    // Icone
+    private getTestIcon = () => {
+        const iconProps: IconProps = {
+            IconClass: "icon-home",
+            IconColor: "blue",
+            ContainerId: "popup",
+            Id: "iTest",
+            Name: "iTest",
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+
+        return (
+            <Icon {...iconProps}/>
+        );
+    }
+
     // Tabs
     private getTestTabs = () => {
-        const captions: Array<string> = new Array("All", "Button", "Grid", "Select", "TextArea", 
-            "Progress", "Range", "Chart");
+        const captions: Array<string> = new Array("Component", "All", "Button", "Grid", "Select", "TextArea", 
+            "Progress", "Range", "Chart", "Popup");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
         });
@@ -129,6 +158,31 @@ export default class App extends React.Component<{}, {}> {
         return TestRangeSlider(20, 1, 40, 0.2);
     }
 
+    // Popup
+    private getTestPopup = () => {
+        const popupProps: PopupProps = {
+            Width: 100,
+            Height: 100,
+            ClosePopupCallback: this.HandleClosePopup,
+            ContainerId: "popup",
+            Id: "popupTest",
+            Name: "popupTest",
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+
+        return (
+            <Popup {...popupProps}>
+
+            </Popup>
+        );
+    }
+
+    private HandleClosePopup = (props) => {
+        console.log(props);
+    }
+
     // LineChart
     private getTestLineChart = () => {
         return TestLineChart();
@@ -151,6 +205,14 @@ export default class App extends React.Component<{}, {}> {
                         <div id="Button">
                             <div id="button">
                                 <this.getTestButton/>
+                            </div>
+                            <div id="iconbutton">
+                                <this.getTestIconButton/>
+                            </div>
+                        </div>
+                        <div id="Component">
+                            <div id="icon">
+                                <this.getTestIcon/>
                             </div>
                         </div>
                         <div id="Grid">
@@ -191,8 +253,13 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                         </div>
                         <div id="Range">
-                            <div id="RangeSlider">
+                            <div id="rangeslider">
                                 <this.getTestRangeSlider/>
+                            </div>
+                        </div>
+                        <div id="Popup">
+                            <div id="popup">
+                                <this.getTestPopup/>
                             </div>
                         </div>
                         <div id="Chart">

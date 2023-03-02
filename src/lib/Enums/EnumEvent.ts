@@ -8,6 +8,22 @@ export enum EnumEvent {
      */
     MouseEnter,
     /**
+     * Mouse leave event
+     */
+    MouseLeave,
+    /**
+     * Mouse move event
+     */
+    MouseMove,
+    /**
+     * Mouse down event
+     */
+    MouseDown,
+    /**
+     * Mouse up event
+     */
+    MouseUp,
+    /**
      * Check event
      */
     Check,

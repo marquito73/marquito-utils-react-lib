@@ -1,9 +1,5 @@
-export class ChartPoint {
-    public x: number;
-    public y: number;
+import { Point } from "../../Utils/Point";
 
-    constructor(x = 0, y = 0) {
-        this.x = x;
-        this.y = y;
-    }
+export class ChartPoint extends Point {
+    
 }
