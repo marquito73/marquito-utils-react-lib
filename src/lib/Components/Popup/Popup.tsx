@@ -157,12 +157,15 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             const popupElementPos = popupSelector.First().getBoundingClientRect();
 
             const mousePos: Point = new Point(event.clientX, event.clientY);
-            console.log(mousePos);
+            //console.table(["Mouse position : ", mousePos]);
             const popupPos: Point = new Point(popupElementPos.x, popupElementPos.y);
             //console.log(popupPos);
             // TODO Faux, trouver pourquoi
-            const newPopupPosition: Point = this.CalculateNewPopupPosition(mousePos, popupPos).SubstractPoint(this.state.DownPos);
-            //console.log(newPopupPosition);
+            const newPopupPosition: Point = this.CalculateNewPopupPosition(mousePos, popupPos);//.SubstractPoint(this.state.DownPos);
+            //console.table(["Popup position : ", newPopupPosition]);
+            if (newPopupPosition.X <= 0 || newPopupPosition.Y <= 0) {
+                console.log(newPopupPosition);
+            }
 
             const stylesMap: Map<string, string> = new Map();
             stylesMap.set("left", `${newPopupPosition.X}px !important`);
@@ -179,6 +182,14 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     }
 
     private CalculateNewPopupPosition = (mousePos: Point, popupPos: Point) => {
-        return mousePos.SubstractPoint(popupPos).GetAbsolutePoint();
+        const newPos: Point = new Point(mousePos.X, mousePos.Y).SubstractPoint(popupPos);
+        if (newPos.X < 0) {
+            newPos.X = 0;
+        }
+        if (newPos.Y < 0) {
+            newPos.Y = 0;
+        }
+
+        return newPos;
     }
 }

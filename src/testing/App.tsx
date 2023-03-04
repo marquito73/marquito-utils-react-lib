@@ -75,7 +75,7 @@ export default class App extends React.Component<{}, {}> {
 
     // Tabs
     private getTestTabs = () => {
-        const captions: Array<string> = new Array("Component", "All", "Button", "Grid", "Select", "TextArea", 
+        const captions: Array<string> = new Array("All", "Component", "Button", "Grid", "Select", "TextArea", 
             "Progress", "Range", "Chart", "Popup");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
