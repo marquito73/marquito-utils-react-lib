@@ -23,6 +23,9 @@ export enum EnumEvent {
      * Mouse up event
      */
     MouseUp,
+    TouchStart,
+    TouchEnd,
+    TouchMove,
     /**
      * Check event
      */

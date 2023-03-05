@@ -35,6 +35,10 @@ export interface PopupState extends ComponentState {
      */
     IsInMove: boolean,
     /**
+     * Last touch position
+     */
+    TouchMovePoint: Point,
+    /**
      * The popup is currently extended ?
      */
     IsExtended: boolean
@@ -49,19 +53,24 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         }
         this.state = {
             IsInMove: false,
+            TouchMovePoint: new Point(0, 0),
             IsExtended: this.props.ExtendedWhenOpen
         }
 	}
 
     componentDidMount() {
-        new Selector("html").On(EnumEvent.MouseUp, this.HandleMouseUp)
-            .On(EnumEvent.MouseMove, this.HandleMouseMove);
+        new Selector("html").On(EnumEvent.MouseUp, this.StopMoving)
+            .On(EnumEvent.MouseMove, this.Move)
+            .On(EnumEvent.TouchEnd, this.StopMoving)
+            .On(EnumEvent.TouchMove, this.Move);
     }
   
     componentWillUnmount() {
         // TODO Find a solution, for remove event without use id (not present in the DOM at this time)
-        new Selector(`#${this.props.Id}`).GetDocument().Off(EnumEvent.MouseUp, this.HandleMouseUp)
-            .Off(EnumEvent.MouseMove, this.HandleMouseMove);
+        new Selector(`#${this.props.Id}`).GetDocument().Off(EnumEvent.MouseUp, this.StopMoving)
+            .Off(EnumEvent.MouseMove, this.Move)
+            .Off(EnumEvent.TouchEnd, this.StopMoving)
+            .Off(EnumEvent.TouchMove, this.Move);
     }
 
 	render() {
@@ -104,6 +113,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}Header`}
                 className="PopupHeader"
                 onMouseDown={this.HandleMouseDown}
+                onTouchStart={this.HandleTouchStart}
             >
                 <div
                     id={`${this.props.Id}Title`}
@@ -243,8 +253,29 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param event The event of mouse down
      */
     private HandleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (!this.state.IsExtended && event.buttons === 1) {
-            this.setState({IsInMove: true}, () => {
+        if (event.buttons === 1) {
+            this.StartMoving(new Point(0, 0));
+        }
+    }
+
+    /**
+     * Handle the touch start in the popup header, for start moving the popup
+     * 
+     * @param event The event of touch start
+     */
+    private HandleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+        const touch: React.Touch = event.touches[0];
+        this.StartMoving(new Point(touch.screenX, touch.screenY));
+    }
+
+    /**
+     * Start moving the popup
+     * 
+     * @param movePoint The move point
+     */
+    private StartMoving = (movePoint: Point) => {
+        if (!this.state.IsExtended) {
+            this.setState({IsInMove: true, TouchMovePoint: movePoint}, () => {
                 if (!this.props.CssClass.includes("PopupMove")) {
                     this.props.CssClass.push("PopupMove");
                     this.forceUpdate();
@@ -258,9 +289,9 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * 
      * @param event The event of mouse up
      */
-    private HandleMouseUp = (event: Event) => {
+    private StopMoving = (event: Event) => {
         if (!this.state.IsExtended) {
-            this.setState({IsInMove: false}, () => {
+            this.setState({IsInMove: false, TouchMovePoint: new Point(0, 0)}, () => {
                 const index = this.props.CssClass.indexOf("PopupMove");
                 if (this.props.CssClass.includes("PopupMove") && index != -1) {
                     this.props.CssClass.splice(index, 1);
@@ -275,12 +306,12 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * 
      * @param event The event of mouse move
      */
-    private HandleMouseMove = (event: Event) => {
+    private Move = (event: Event) => {
         if (this.state.IsInMove && !this.state.IsExtended) {
             // The selector of the popup container
             const popupSelector: Selector = new Selector(`#${this.props.Id}_cnt`);
             // Get the new position (left top corner) of the popup
-            const newPopupPosition: Point = this.CalculateNewPopupPosition(event as MouseEvent);
+            const newPopupPosition: Point = this.CalculateNewPopupPosition(this.GetMovePoint(event));
             // Affect new position to the popup
             const stylesMap: Map<string, string> = new Map();
             stylesMap.set("left", `${newPopupPosition.X}px`);
@@ -288,7 +319,35 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             stylesMap.set("bottom", `auto`);
             stylesMap.set("right", `auto`);
             popupSelector.SetStyles(stylesMap);
+
+            if (event instanceof TouchEvent) {
+                const touch: Touch = event.touches[0];
+                this.setState({TouchMovePoint: new Point(touch.screenX, touch.screenY)});
+            }
         }
+    }
+
+    /**
+     * Get the move point
+     * 
+     * @param event Mouse or Touch event
+     * @returns The move point for calculate new popup position
+     */
+    private GetMovePoint = (event: Event) => {
+        let movePoint: Point;
+
+        if (event instanceof TouchEvent) {
+            const touch: Touch = event.touches[0];
+            // Get the last move Point
+            movePoint = new Point(touch.screenX, touch.screenY).SubstractPoint(this.state.TouchMovePoint);
+            console.log("Test");
+        } else {
+            const mouseEvent: MouseEvent = event as MouseEvent;
+
+            movePoint = new Point(mouseEvent.movementX, mouseEvent.movementY);
+        }
+
+        return movePoint;
     }
 
     /**
@@ -297,15 +356,15 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param event The event contain the movement x and y
      * @returns The new position of the popup
      */
-    private CalculateNewPopupPosition = (event: MouseEvent) => {
+    private CalculateNewPopupPosition = (movePoint: Point) => {
         // The selector of the popup container
         const popupSelector: Selector = new Selector(`#${this.props.Id}_cnt`);
         // Calculate the new position of 
         const newPopupPosition: Point = new Point(popupSelector.First().offsetLeft, popupSelector.First().offsetTop);
         // Add the x movement
-        newPopupPosition.AddX(event.movementX);
+        newPopupPosition.AddX(movePoint.X);
         // Add the y movement
-        newPopupPosition.AddY(event.movementY);
+        newPopupPosition.AddY(movePoint.Y);
 
         return newPopupPosition;
     }

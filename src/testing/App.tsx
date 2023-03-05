@@ -165,7 +165,7 @@ export default class App extends React.Component<{}, {}> {
             Height: 100,
             Title: "Popup de test",
             ClosePopupCallback: this.HandleClosePopup,
-            ExtendedWhenOpen: true,
+            ExtendedWhenOpen: false,
             ContainerId: "popup",
             Id: "popupTest",
             Name: "popupTest",
