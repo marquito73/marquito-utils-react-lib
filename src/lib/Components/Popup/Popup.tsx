@@ -29,7 +29,14 @@ export interface PopupProps extends ComponentProps {
      * Init the popup in extended size ?
      */
     ExtendedWhenOpen: boolean,
-    ContentUrl: string
+    /**
+     * The url for get the popup content
+     */
+    ContentUrl: string,
+    /**
+     * The element, when clicked, open and load the popup
+     */
+    ElementIdForOpenPopup: string
 }
 
 export interface PopupState extends ComponentState {
@@ -46,7 +53,7 @@ export interface PopupState extends ComponentState {
      */
     IsExtended: boolean,
     /**
-     * 
+     * The popup content
      */
     PopupContent: string
 }
@@ -55,6 +62,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 	constructor(props: Props & PopupProps, state: Props & PopupState) {
 		super(props);
 		this.props.CssClass.push("Popup-React");
+        this.props.CssClass.push("PopupHide");
         if (this.props.ExtendedWhenOpen) {
             this.props.CssClass.push("PopupMaxSize");
         }
@@ -71,6 +79,9 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             .On(EnumEvent.MouseMove, this.Move)
             .On(EnumEvent.TouchEnd, this.StopMoving)
             .On(EnumEvent.TouchMove, this.Move);
+
+            new Selector(`#${this.props.ElementIdForOpenPopup}`)
+                .On(EnumEvent.Click, this.OpenPopup);
     }
   
     componentWillUnmount() {
@@ -79,6 +90,9 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             .Off(EnumEvent.MouseMove, this.Move)
             .Off(EnumEvent.TouchEnd, this.StopMoving)
             .Off(EnumEvent.TouchMove, this.Move);
+
+            new Selector(`#${this.props.ElementIdForOpenPopup}`)
+                .Off(EnumEvent.Click, this.OpenPopup);
     }
 
 	render() {
@@ -229,13 +243,14 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * Open the popup
      */
     private OpenPopup = () => {
+        console.log("Test load popup 1");
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
             this.props.CssClass.splice(index, 1);
             
             if (Utils.IsNotEmpty(this.props.ContentUrl) && Utils.IsEmpty(this.state.PopupContent)) {
                 AjaxUtils.PostDataWithUrl(this.props.ContentUrl, {}, new Array, (popupContent: string) => {
-                    console.log("Test load popup");
+                    console.log("Test load popup 2");
                     this.setState({PopupContent: popupContent}, this.forceUpdate);
                 }, (error: any) => {
 
