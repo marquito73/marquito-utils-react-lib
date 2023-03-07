@@ -1,10 +1,12 @@
 import * as React from "react";
-import { EnumEvent } from "../../Enums";
+import ReactHtmlParser from "html-react-parser";
+import { EnumEvent, EnumTitleType } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import CSS from 'csstype';
 import "./css/Popup.scss";
-import { Point, Selector, Utils } from "../../Utils";
+import { AjaxUtils, Point, Selector, Utils } from "../../Utils";
 import { IconButton, IconButtonProps } from "../Button";
+import { Title, TitleProps } from "../TextArea";
 
 export interface PopupProps extends ComponentProps {
     /**
@@ -26,7 +28,8 @@ export interface PopupProps extends ComponentProps {
     /**
      * Init the popup in extended size ?
      */
-    ExtendedWhenOpen: boolean
+    ExtendedWhenOpen: boolean,
+    ContentUrl: string
 }
 
 export interface PopupState extends ComponentState {
@@ -41,7 +44,11 @@ export interface PopupState extends ComponentState {
     /**
      * The popup is currently extended ?
      */
-    IsExtended: boolean
+    IsExtended: boolean,
+    /**
+     * 
+     */
+    PopupContent: string
 }
 
 export class Popup<Props extends PopupProps> extends Component<Props & PopupProps, PopupState> {
@@ -54,7 +61,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         this.state = {
             IsInMove: false,
             TouchMovePoint: new Point(0, 0),
-            IsExtended: this.props.ExtendedWhenOpen
+            IsExtended: this.props.ExtendedWhenOpen,
+            PopupContent: ""
         }
 	}
 
@@ -101,6 +109,21 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @returns The header of the popup
      */
     private GetHeader = () => {
+        // The popup title
+        const popupTitle: TitleProps = {
+            Text: this.props.Title,
+            BoldText: true,
+            TextColor: "deepskyblue",
+            TextSize: 15,
+            TitleType: EnumTitleType.H2,
+            ContainerId: "",
+            Id: `${this.props.Id}Title`,
+            Name: `${this.props.Name}Title`,
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        }
+        popupTitle.CssClass.push("PopupTitle");
         // Min size popup button
         const minSizePopupButton = this.getHeaderPopupButton("icon-shrink2", "ReducePopup", "Reduce popup size", this.ReducePopupSize);
         // Max size popup button
@@ -115,12 +138,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 onMouseDown={this.HandleMouseDown}
                 onTouchStart={this.HandleTouchStart}
             >
-                <div
-                    id={`${this.props.Id}Title`}
-                    className="PopupTitle"
-                >
-                    {this.props.Title}
-                </div>
+                <Title {...popupTitle}/>
                 <div
                     id={`${this.props.Id}PopupButtons`}
                     className="PopupButtons"
@@ -173,7 +191,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}Content`}
                 className="PopupContent"
             >
-
+                {ReactHtmlParser(this.state.PopupContent)}
             </div>
         );
     }
@@ -214,7 +232,15 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
             this.props.CssClass.splice(index, 1);
-            this.forceUpdate();
+            
+            if (Utils.IsNotEmpty(this.props.ContentUrl) && Utils.IsEmpty(this.state.PopupContent)) {
+                AjaxUtils.PostDataWithUrl(this.props.ContentUrl, {}, new Array, (popupContent: string) => {
+                    console.log("Test load popup");
+                    this.setState({PopupContent: popupContent}, this.forceUpdate);
+                }, (error: any) => {
+
+                }, "");
+            }
         }
     }
 

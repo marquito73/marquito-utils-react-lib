@@ -161,11 +161,12 @@ export default class App extends React.Component<{}, {}> {
     // Popup
     private getTestPopup = () => {
         const popupProps: PopupProps = {
-            Width: 100,
-            Height: 100,
+            Width: 300,
+            Height: 150,
             Title: "Popup de test",
             ClosePopupCallback: this.HandleClosePopup,
             ExtendedWhenOpen: false,
+            ContentUrl: "",
             ContainerId: "popup",
             Id: "popupTest",
             Name: "popupTest",

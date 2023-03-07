@@ -2,17 +2,14 @@ import * as React from "react";
 import {Component, ComponentProps} from "../Component";
 import { Utils } from "../../Utils";
 import CSS from 'csstype';
-import "./css/Label.scss";
+import { EnumTitleType } from "../../Enums";
+import "./css/Title.scss";
 
-export interface LabelProps extends ComponentProps {
+export interface TitleProps extends ComponentProps {
 	/**
-	 * Caption of label
+	 * Caption of title
 	 * */
 	Text: string,
-    /**
-     * For which element this label is ?
-     */
-    For: string,
 	/**
 	 * Text is bold ?
 	 */
@@ -24,10 +21,14 @@ export interface LabelProps extends ComponentProps {
 	/**
 	 * Text size
 	 */
-    TextSize: number
+    TextSize: number,
+    /**
+     * Title type
+     */
+    TitleType: EnumTitleType
 }
 
-export class Label<Props extends LabelProps> extends Component<Props & LabelProps, {}> {
+export class Title<Props extends TitleProps> extends Component<Props & TitleProps, {}> {
 	render() {
         const cssStyles: CSS.Properties = {};
         if (Utils.IsNotEmpty(this.props.BoldText)) {
@@ -40,21 +41,29 @@ export class Label<Props extends LabelProps> extends Component<Props & LabelProp
             cssStyles.fontSize = this.props.TextSize + "px";
         }
 
-		this.props.CssClass.push("Label-React");
+		this.props.CssClass.push("Title-React");
 		
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
 				className={this.GetOwnCssClass()}
 			>
-				<label 
+				<h1 
 					id={this.props.Id} 
-					htmlFor={this.props.For}
 					style={cssStyles}
 				>
                     {this.props.Text}
-                </label>
+                </h1>
 			</div>
 		);
 	}
+
+    /*private GetTitle = () => {
+        return(
+            {...switch() {
+                case EnumTitleType.H1:
+                    break;
+            }}
+        );
+    }*/
 }

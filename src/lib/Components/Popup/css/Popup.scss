@@ -54,6 +54,17 @@
     justify-content: space-between;
 }
 
+.Popup-React > .PopupHeader > .PopupTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.Popup-React > .PopupHeader > .PopupTitle > * {
+    overflow: inherit;
+    text-overflow: inherit;
+    white-space: inherit;
+}
+
 .Popup-React > .PopupHeader > .PopupButtons {
     display: flex;
     flex-direction: row;
