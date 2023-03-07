@@ -7,8 +7,7 @@ import { Component, ComponentProps } from "../Component";
 import { Tab, TabProps } from "./Tab";
 
 export interface TabsProps extends ComponentProps {
-    Tabs: Array<TabProps>,
-    TabsContainerId: string
+    Tabs: Array<TabProps>
 }
 
 export class Tabs<Props extends TabsProps> extends Component<Props & TabsProps, {}> {

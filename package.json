@@ -1,6 +1,6 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.94",
+  "version": "0.1.103",
   "description": "Marquito React component library",
   "scripts": {
     "rollup": "rollup -c",
@@ -19,7 +19,6 @@
     "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "^18.0.9",
     "css-loader": "^6.5.1",
-    "date-fns": "^2.29.3",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "react-datepicker": "^4.10.0",
@@ -34,7 +33,9 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "date-fns": "^2.29.3",
+    "html-react-parser": "^3.0.11"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -56,8 +57,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "dependencies": {
-    "html-react-parser": "^3.0.11"
   }
 }

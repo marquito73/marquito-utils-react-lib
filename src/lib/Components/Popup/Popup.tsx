@@ -180,7 +180,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             IconColor: "black",
             Caption: caption,
             Link: "",
-            OpenOnNewTab: false,
+            OpenInNewTab: false,
             ContainerId: "",
             Id: `${this.props.Id}${buttonName}`,
             Name: `${this.props.Name}${buttonName}`,
@@ -246,15 +246,18 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         console.log("Test load popup 1");
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
+            console.log("Test load popup 2");
             this.props.CssClass.splice(index, 1);
             
             if (Utils.IsNotEmpty(this.props.ContentUrl) && Utils.IsEmpty(this.state.PopupContent)) {
-                AjaxUtils.PostDataWithUrl(this.props.ContentUrl, {}, new Array, (popupContent: string) => {
-                    console.log("Test load popup 2");
+                console.log("Test load popup 3");
+                AjaxUtils.GetViewWithUrl(this.props.ContentUrl, (popupContent: string) => {
+                    console.log("Test load popup 6 - done");
                     this.setState({PopupContent: popupContent}, this.forceUpdate);
                 }, (error: any) => {
-
-                }, "");
+                    console.log("Test load popup 6 - fail");
+                    console.log(error);
+                });
             }
         }
     }

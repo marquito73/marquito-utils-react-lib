@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {Button, ButtonProps} from "./Button";
 import { Grid, GridProps } from "./Grid";
 import { Tabs, TabsProps } from "./Menu";
+import { Popup, PopupProps } from "./Popup";
 import {CheckBox, RadioBox, CheckRadioBoxProps} from "./Select";
 import {TextBox, TextBoxProps} from "./TextArea";
 
@@ -89,5 +90,16 @@ export default class ReactWidgetFactory {
 		const _props: GridProps = { ...props };
 		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
 		root.render(<Grid {..._props} />);
+	}
+
+	/**
+	 * Create popup
+	 * 
+	 * @param props Popup properties
+	 */
+	public static createPopup(props: PopupProps) {
+		const _props: PopupProps = { ...props };
+		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		root.render(<Popup {..._props} />);
 	}
 }

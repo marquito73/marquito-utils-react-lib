@@ -6,7 +6,7 @@ import "./css/Button.scss";
 export interface AbstractButtonProps extends ComponentProps {
     Caption: string,
     Link: string,
-    OpenOnNewTab: boolean
+    OpenInNewTab: boolean
 }
 
 export abstract class AbstractButton<Props extends AbstractButtonProps> extends Component<Props & AbstractButtonProps, {}> {
@@ -27,7 +27,7 @@ export abstract class AbstractButton<Props extends AbstractButtonProps> extends 
     protected GetTarget = () => {
         let target = undefined;
 
-        if (this.props.OpenOnNewTab) {
+        if (this.props.OpenInNewTab) {
             target = "_blank";
         }
 

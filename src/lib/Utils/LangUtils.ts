@@ -1,6 +1,4 @@
 import { EnumLang } from "../Enums";
-//import Locale from "date-fns/locale";
-import Locale from "date-fns/locale";
 import US from "date-fns/locale/en-US";
 import EN from "date-fns/locale/en-GB";
 import FR from "date-fns/locale/fr";

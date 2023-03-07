@@ -6,8 +6,7 @@ import CSS from 'csstype';
 import { Selector, Utils } from "../../Utils";
 
 export interface TabProps extends ButtonProps {
-    OnClick: Function,
-    TabContainerId: string
+    OnClick: Function
 }
 
 export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
@@ -48,7 +47,7 @@ export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
             BorderColor: this.props.BorderColor,
             CaptionSize: this.props.CaptionSize,
             Link: this.props.Link,
-            OpenOnNewTab: this.props.OpenOnNewTab,
+            OpenInNewTab: this.props.OpenInNewTab,
             ContainerId: "button",
             Id: this.props.Id + "Tab",
             Name: this.props.Name + "Tab",
