@@ -1,6 +1,6 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.106",
+  "version": "0.1.107",
   "description": "Marquito React component library",
   "scripts": {
     "rollup": "rollup -c",

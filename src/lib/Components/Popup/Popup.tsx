@@ -70,7 +70,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             IsInMove: false,
             TouchMovePoint: new Point(0, 0),
             IsExtended: this.props.ExtendedWhenOpen,
-            PopupContent: "<label>Test</label>"
+            PopupContent: ""
         }
 	}
 
