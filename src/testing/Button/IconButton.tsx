@@ -4,7 +4,7 @@ import { EnumEvent } from "../../lib/Enums";
 
 
 export const TestIconButton = (id: string, caption: string, iconClass: string, iconColor: string, link: string, 
-    openOnNewTab: boolean, events: Map<EnumEvent, Function>) => {
+    openInNewTab: boolean, events: Map<EnumEvent, Function>) => {
 
     // Button
     const btnProps: IconButtonProps = {
@@ -12,7 +12,7 @@ export const TestIconButton = (id: string, caption: string, iconClass: string, i
         IconColor: iconColor,
         Caption: caption,
         Link: link,
-        OpenOnNewTab: openOnNewTab,
+        OpenInNewTab: openInNewTab,
         ContainerId: "button",
         Id: id,
         Name: id,

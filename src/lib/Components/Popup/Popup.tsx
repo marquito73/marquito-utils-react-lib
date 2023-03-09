@@ -96,13 +96,18 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     }
 
 	render() {
+        let width: number = this.props.Width;
+        if (Utils.IsEmpty(width) || width < 300) {
+            width = 300;
+        }
+        let height: number = this.props.Height;
+        if (Utils.IsEmpty(height) || height < 250) {
+            height = 250;
+        }
         const cssStyles: CSS.Properties = {};
-        if (Utils.IsNotEmpty(this.props.Width)) {
-            cssStyles.width = `${this.props.Width}px`;
-        }
-        if (Utils.IsNotEmpty(this.props.Height)) {
-            cssStyles.height = `${this.props.Height}px`;
-        }
+        cssStyles.width = `${width}px`;
+        cssStyles.height = `${height}px`;
+
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
@@ -205,7 +210,12 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}Content`}
                 className="PopupContent"
             >
-                {ReactHtmlParser(this.state.PopupContent)}
+                <iframe
+                    id={`${this.props.Id}Iframe`}
+                    className="PopupIframe"
+                >
+                    {ReactHtmlParser(this.state.PopupContent)}
+                </iframe>
             </div>
         );
     }
