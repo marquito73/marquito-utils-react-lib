@@ -11,7 +11,6 @@ export const TestTextArea = (value: string, placeHolder: string) => {
         SpellCheck: true,
         CanHorizontallyResize: false,
         CanVerticalResize: true,
-        ContainerId: "textarea",
         Id: "taTest",
         Name: "taTest",
         CssClass: new Array(),

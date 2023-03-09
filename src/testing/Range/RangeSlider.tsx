@@ -9,7 +9,6 @@ export const TestRangeSlider = (value: number, min: number, max: number, step: n
         MinValue: min,
         MaxValue: max,
         Step: step,
-        ContainerId: "rangeslider",
         Id: "rsTest",
         Name: "rsTest",
         CssClass: new Array(),

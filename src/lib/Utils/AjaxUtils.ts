@@ -21,7 +21,6 @@ export class AjaxUtils {
         })
             .then((response: Response) => response.text())
             .then((response) => {
-                console.log("Test load popup 5 - done");
                 try {
                     doneCallback?.(response);
                 } finally {
@@ -29,7 +28,6 @@ export class AjaxUtils {
                 }
             })
             .catch((error) => {
-                console.log("Test load popup 5 - fail");
                 try {
                     failCallback?.(error);
                 } catch(err) {

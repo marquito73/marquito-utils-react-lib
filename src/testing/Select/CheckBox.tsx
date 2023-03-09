@@ -12,7 +12,6 @@ export const TestCheckBox = (selected: boolean, value: string) => {
         Value: value,
         Selected: selected,
         Type: "checkbox",
-        ContainerId: "checkbox",
         Id: "chkTest" + value,
         Name: "chkTest",
         CssClass: new Array(),

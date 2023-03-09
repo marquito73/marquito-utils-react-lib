@@ -13,7 +13,6 @@ export const TestIconButton = (id: string, caption: string, iconClass: string, i
         Caption: caption,
         Link: link,
         OpenInNewTab: openInNewTab,
-        ContainerId: "button",
         Id: id,
         Name: id,
         CssClass: new Array(),

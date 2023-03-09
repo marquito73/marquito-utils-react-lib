@@ -17,7 +17,6 @@ export const TestLineChart = () => {
         Points: points,
         Width: 300,
         Height: 150,
-        ContainerId: "linechart",
         Id: "chartTest",
         Name: "chartTest",
         CssClass: new Array(),

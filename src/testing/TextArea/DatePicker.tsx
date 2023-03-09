@@ -14,7 +14,6 @@ export const TestDatePicker = (date: Date, onChangeCallback: Function) => {
         MaximumDate: new Date("1998/07/30"),
         PlaceHolder: "Select a date",
         Language: EnumLang.FR,
-        ContainerId: "textbox",
         Id: "txtDate",
         Name: "txtDate",
         CssClass: new Array(),

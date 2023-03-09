@@ -60,7 +60,6 @@ export default class App extends React.Component<{}, {}> {
         const iconProps: IconProps = {
             IconClass: "icon-home",
             IconColor: "blue",
-            ContainerId: "popup",
             Id: "iTest",
             Name: "iTest",
             CssClass: new Array(),
@@ -83,7 +82,7 @@ export default class App extends React.Component<{}, {}> {
         const tabContainerIds: Array<string> = captions.map(caption => {
             return "Test";
         });
-        return TestTabs("", captions, tabContainerIds, events, "#2196F3", "", "#2196F3", 20);
+        return TestTabs("", captions, events, "#2196F3", "", "#2196F3", 20);
     }
     public tabsTest = (tabsName) => {
         return () => {
@@ -168,7 +167,6 @@ export default class App extends React.Component<{}, {}> {
             ExtendedWhenOpen: false,
             ElementIdForOpenPopup: "ibtnTest_cnt",
             ContentUrl: "",
-            ContainerId: "popup",
             Id: "popupTest",
             Name: "popupTest",
             CssClass: new Array(),

@@ -33,7 +33,6 @@ export const TestGridCell = (value: any, cellType: EnumContentType, colName: str
         ColNumber: 0,
         ColName: colName,
         CellType: cellType,
-        ContainerId: "gridCell",
         Id: getCellExtensionId(colName, 0, 0),
         Name: getCellExtensionName(colName),
         CssClass: new Array(),

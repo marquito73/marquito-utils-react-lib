@@ -40,7 +40,6 @@ export class IconButton<Props extends IconButtonProps> extends AbstractButton<Pr
         const lblProps: IconProps = {
             IconClass: this.props.IconClass,
             IconColor: this.props.IconColor,
-            ContainerId: "",
             Id: this.props.Id + "Icon",
             Name: this.props.Name + "Icon",
             CssClass: new Array(),

@@ -15,7 +15,6 @@ export const TestProgressBar = (value: number, progressColor: string, changeElem
         ChangeElementId: changeElementId,
         ChangeValueFunction: changeValueFunction,
         HideValue: false,
-        ContainerId: "progressbar",
         Id: "pbTest",
         Name: "pbTest",
         CssClass: new Array(),

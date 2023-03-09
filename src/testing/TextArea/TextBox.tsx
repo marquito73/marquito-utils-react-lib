@@ -10,7 +10,6 @@ export const TestTextBox = (value: string, placeHolder: string) => {
         PlaceHolder: placeHolder,
         ReadOnly: false,
         SpellCheck: true,
-        ContainerId: "textbox",
         Id: "txtTest" + value,
         Name: "txtTest",
         CssClass: new Array(),

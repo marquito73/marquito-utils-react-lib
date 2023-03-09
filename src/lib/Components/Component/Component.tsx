@@ -10,10 +10,6 @@ import "./css/Component.scss"
  * */
  export interface ComponentProps {
 	/**
-	 * Id of the container of component
-	 */
-	ContainerId: string,
-	/**
 	 * Id of the component
 	 */
 	Id: string,

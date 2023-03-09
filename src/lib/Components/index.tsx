@@ -31,9 +31,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Textbox properties
 	 */
-	public static createTextBox(props: TextBoxProps) {
+	public static createTextBox(props: TextBoxProps, containerId: string) {
 		const _props: TextBoxProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<TextBox {..._props} />);
     }
 
@@ -42,9 +42,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Checkbox properties
 	 */
-	public static createCheckBox(props: CheckRadioBoxProps) {
+	public static createCheckBox(props: CheckRadioBoxProps, containerId: string) {
 		const _props: CheckRadioBoxProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<CheckBox {..._props} />);
 	}
 
@@ -53,9 +53,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Radiobox properties
 	 */
-	public static createRadioBox(props: CheckRadioBoxProps) {
+	public static createRadioBox(props: CheckRadioBoxProps, containerId: string) {
 		const _props: CheckRadioBoxProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<RadioBox {..._props} />);
 	}
 
@@ -64,9 +64,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Button properties
 	 */
-	public static createButton(props: ButtonProps) {
+	public static createButton(props: ButtonProps, containerId: string) {
 		const _props: ButtonProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Button {..._props} />);
 	}
 
@@ -75,9 +75,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Tabs properties
 	 */
-	public static createTabs(props: TabsProps) {
+	public static createTabs(props: TabsProps, containerId: string) {
 		const _props: TabsProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Tabs {..._props} />);
 	}
 
@@ -86,9 +86,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Grid properties
 	 */
-	public static createGrid(props: GridProps) {
+	public static createGrid(props: GridProps, containerId: string) {
 		const _props: GridProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Grid {..._props} />);
 	}
 
@@ -97,9 +97,9 @@ export default class ReactWidgetFactory {
 	 * 
 	 * @param props Popup properties
 	 */
-	public static createPopup(props: PopupProps) {
+	public static createPopup(props: PopupProps, containerId: string) {
 		const _props: PopupProps = { ...props };
-		const root = createRoot(document.getElementById(_props.ContainerId) as HTMLElement);
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Popup {..._props} />);
 	}
 }

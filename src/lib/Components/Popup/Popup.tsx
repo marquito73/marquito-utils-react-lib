@@ -70,7 +70,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             IsInMove: false,
             TouchMovePoint: new Point(0, 0),
             IsExtended: this.props.ExtendedWhenOpen,
-            PopupContent: ""
+            PopupContent: "<label>Test</label>"
         }
 	}
 
@@ -86,13 +86,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
   
     componentWillUnmount() {
         // TODO Find a solution, for remove event without use id (not present in the DOM at this time)
-        new Selector(`#${this.props.Id}`).GetDocument().Off(EnumEvent.MouseUp, this.StopMoving)
+        new Selector("html").Off(EnumEvent.MouseUp, this.StopMoving)
             .Off(EnumEvent.MouseMove, this.Move)
             .Off(EnumEvent.TouchEnd, this.StopMoving)
             .Off(EnumEvent.TouchMove, this.Move);
 
-            new Selector(`#${this.props.ElementIdForOpenPopup}`)
-                .Off(EnumEvent.Click, this.OpenPopup);
+            /*new Selector(`#${this.props.ElementIdForOpenPopup}`)
+                .Off(EnumEvent.Click, this.OpenPopup);*/
     }
 
 	render() {
@@ -135,7 +135,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             TextColor: "deepskyblue",
             TextSize: 15,
             TitleType: EnumTitleType.H2,
-            ContainerId: "",
             Id: `${this.props.Id}Title`,
             Name: `${this.props.Name}Title`,
             CssClass: new Array(),
@@ -186,7 +185,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             Caption: caption,
             Link: "",
             OpenInNewTab: false,
-            ContainerId: "",
             Id: `${this.props.Id}${buttonName}`,
             Name: `${this.props.Name}${buttonName}`,
             CssClass: new Array(),
@@ -253,21 +251,20 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * Open the popup
      */
     private OpenPopup = () => {
-        console.log("Test load popup 1");
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
-            console.log("Test load popup 2");
             this.props.CssClass.splice(index, 1);
-            
-            if (Utils.IsNotEmpty(this.props.ContentUrl) && Utils.IsEmpty(this.state.PopupContent)) {
-                console.log("Test load popup 3");
-                AjaxUtils.GetViewWithUrl(this.props.ContentUrl, (popupContent: string) => {
-                    console.log("Test load popup 6 - done");
-                    this.setState({PopupContent: popupContent}, this.forceUpdate);
-                }, (error: any) => {
-                    console.log("Test load popup 6 - fail");
-                    console.log(error);
-                });
+
+            if (Utils.IsEmpty(this.state.PopupContent)) {
+                if (Utils.IsNotEmpty(this.props.ContentUrl)) {
+                    AjaxUtils.GetViewWithUrl(this.props.ContentUrl, (popupContent: string) => {
+                        this.setState({PopupContent: popupContent}, this.forceUpdate);
+                    }, (error: any) => {
+                        console.log(error);
+                    });
+                }
+            } else {
+                this.forceUpdate();
             }
         }
     }

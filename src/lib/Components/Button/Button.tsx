@@ -59,7 +59,6 @@ export class Button<Props extends ButtonProps> extends AbstractButton<Props & Bu
             BoldText: this.props.BoldCaption,
             TextColor: this.props.CaptionColor,
             TextSize: this.props.CaptionSize,
-            ContainerId: "",
             Id: this.props.Id + "Label",
             Name: this.props.Name + "Label",
             CssClass: new Array(),

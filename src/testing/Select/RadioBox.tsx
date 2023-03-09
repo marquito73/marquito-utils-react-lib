@@ -10,7 +10,6 @@ export const TestRadioBox = (selected: boolean, value: string) => {
         Value: value,
         Selected: selected,
         Type: "radio",
-        ContainerId: "radiobox",
         Id: "rbTest" + value,
         Name: "rbTest",
         CssClass: new Array(),

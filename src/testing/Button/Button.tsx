@@ -16,7 +16,6 @@ export const TestButton = (id: string, caption: string, captionColor: string, ba
         CaptionSize: captionSize,
         Link: link,
         OpenInNewTab: openInNewTab,
-        ContainerId: "button",
         Id: id,
         Name: id,
         CssClass: new Array(),
