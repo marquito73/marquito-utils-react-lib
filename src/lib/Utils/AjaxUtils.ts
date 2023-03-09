@@ -10,32 +10,6 @@ export class AjaxUtils {
             AjaxUtils.PostDataWithUrl(constructedUrl, parameters, filesUpload, doneCallback, failCallback, loadingText);
     }
 
-    public static GetViewWithUrl = (ajaxUrl: string, doneCallback: Function, failCallback: Function) => {
-        const urlSearchParams = new URLSearchParams(ajaxUrl);
-        // Need to be replaced by fetch, axios dont work on application use webpack and this library
-        fetch(ajaxUrl, {
-            method: "POST",
-            body: JSON.stringify({
-                frag_name: urlSearchParams.get("viewName") as string
-            })
-        })
-            .then((response: Response) => response.text())
-            .then((response) => {
-                try {
-                    doneCallback?.(response);
-                } finally {
-                    // TODO
-                }
-            })
-            .catch((error) => {
-                try {
-                    failCallback?.(error);
-                } catch(err) {
-                    console.error(`Error happens during Ajax's request : `, err);
-                }
-            });
-    }
-
     public static PostDataWithUrl = (ajaxUrl: string, parameters: Object, filesUpload: Array<File>, 
         doneCallback: Function, failCallback: Function, loadingText: string) => {
             // Manage files
@@ -68,7 +42,31 @@ export class AjaxUtils {
                 });
     }
 
-
+    public static GetViewWithUrl = (ajaxUrl: string, doneCallback: Function, failCallback: Function) => {
+        const urlSearchParams = new URLSearchParams(ajaxUrl);
+        // Need to be replaced by fetch, axios dont work on application use webpack and this library
+        fetch(ajaxUrl, {
+            method: "POST",
+            body: JSON.stringify({
+                frag_name: urlSearchParams.get("viewName") as string
+            })
+        })
+            .then((response: Response) => response.text())
+            .then((response) => {
+                try {
+                    doneCallback?.(response);
+                } finally {
+                    // TODO
+                }
+            })
+            .catch((error) => {
+                try {
+                    failCallback?.(error);
+                } catch(err) {
+                    console.error(`Error happens during Ajax's request : `, err);
+                }
+            });
+    }
     
     // Get constructed url for ajax
     private static GetConstructedUrl = (rootUrl: string, url: string, ajaxName: string, ajaxAction: string, parameters: Object) => {

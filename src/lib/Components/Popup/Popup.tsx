@@ -7,6 +7,15 @@ import "./css/Popup.scss";
 import { AjaxUtils, Point, Selector, Utils } from "../../Utils";
 import { IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
+import { createPortal } from "react-dom";
+import ReactWidgetFactory from "..";
+
+declare global {
+	interface Window {
+		ReactWidgetFactory: ReactWidgetFactory
+	}
+}
+//window.ReactWidgetFactory = ReactWidgetFactory;
 
 export interface PopupProps extends ComponentProps {
     /**
@@ -55,10 +64,12 @@ export interface PopupState extends ComponentState {
     /**
      * The popup content
      */
-    PopupContent: string
+    PopupContent: string,
+    CurrentContentUrl: string
 }
 
 export class Popup<Props extends PopupProps> extends Component<Props & PopupProps, PopupState> {
+    iframeRef: React.RefObject<HTMLIFrameElement>;
 	constructor(props: Props & PopupProps, state: Props & PopupState) {
 		super(props);
 		this.props.CssClass.push("Popup-React");
@@ -70,8 +81,10 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             IsInMove: false,
             TouchMovePoint: new Point(0, 0),
             IsExtended: this.props.ExtendedWhenOpen,
-            PopupContent: ""
+            PopupContent: "",
+            CurrentContentUrl: ""
         }
+        this.iframeRef = React.createRef();
 	}
 
     componentDidMount() {
@@ -211,8 +224,11 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 <iframe
                     id={`${this.props.Id}Iframe`}
                     className="PopupIframe"
+                    ref={this.iframeRef}
+                    src={this.state.CurrentContentUrl}
                 >
-                    {ReactHtmlParser(this.state.PopupContent)}
+                    {/* {this.iframeRef.current?.contentWindow?.document.documentElement
+                        && createPortal(ReactHtmlParser(this.state.PopupContent), this.iframeRef.current?.contentWindow?.document.documentElement)} */}
                 </iframe>
             </div>
         );
@@ -229,7 +245,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}Footer`}
                 className="PopupFooter"
             >
-
+                
             </div>
         );
     }
@@ -255,12 +271,26 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
             this.props.CssClass.splice(index, 1);
 
-            if (Utils.IsEmpty(this.state.PopupContent)) {
+            /*if (Utils.IsEmpty(this.state.PopupContent)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
                     AjaxUtils.GetViewWithUrl(this.props.ContentUrl, (popupContent: string) => {
+                        console.log(popupContent);
                         this.setState({PopupContent: popupContent}, this.forceUpdate);
                     }, (error: any) => {
                         console.log(error);
+                    });
+                }
+            } else {
+                this.forceUpdate();
+            }*/
+            if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
+                if (Utils.IsNotEmpty(this.props.ContentUrl)) {
+                    this.setState({CurrentContentUrl: this.props.ContentUrl}, () => {
+                        
+                        //this.iframeRef.current?.contentWindow?.
+                        window.ReactWidgetFactory = new ReactWidgetFactory();
+
+                        this.forceUpdate();
                     });
                 }
             } else {
