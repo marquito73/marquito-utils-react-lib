@@ -1,11 +1,13 @@
 import * as React from "react";
 import { createRoot } from 'react-dom/client';
-import {Button, ButtonProps} from "./Button";
+import {Button, ButtonProps, IconButton, IconButtonProps} from "./Button";
+import { Icon, IconProps } from "./Common";
 import { Grid, GridProps } from "./Grid";
 import { Tabs, TabsProps } from "./Menu";
 import { Popup, PopupProps } from "./Popup";
-import {CheckBox, RadioBox, CheckRadioBoxProps} from "./Select";
-import {TextBox, TextBoxProps} from "./TextArea";
+import { ProgressBar, ProgressBarProps } from "./Progress";
+import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox} from "./Select";
+import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
 
 export * from "./Button";
 export * from "./Chart";
@@ -22,20 +24,82 @@ export {ReactWidgetFactory};
 
 
 export default class ReactWidgetFactory {
-	public static test() {
-		console.log("Test react réussi !");
+	/**
+	 * Create button
+	 * 
+	 * @param props Button properties
+	 */
+	public static createButton(props: ButtonProps, containerId: string) {
+		const _props: ButtonProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Button {..._props} />);
 	}
 
 	/**
-	 * Create textbox
+	 * Create icon button
 	 * 
-	 * @param props Textbox properties
+	 * @param props Icon button properties
 	 */
-	public static createTextBox(props: TextBoxProps, containerId: string) {
-		const _props: TextBoxProps = { ...props };
+	public static createIconButton(props: IconButtonProps, containerId: string) {
+		const _props: IconButtonProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
-		root.render(<TextBox {..._props} />);
-    }
+		root.render(<IconButton {..._props} />);
+	}
+
+	/**
+	 * Create icon
+	 * 
+	 * @param props Icon properties
+	 */
+	public static createIcon(props: IconProps, containerId: string) {
+		const _props: IconProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Icon {..._props} />);
+	}
+
+	/**
+	 * Create grid
+	 * 
+	 * @param props Grid properties
+	 */
+	public static createGrid(props: GridProps, containerId: string) {
+		const _props: GridProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Grid {..._props} />);
+	}
+
+	/**
+	 * Create tabs
+	 * 
+	 * @param props Tabs properties
+	 */
+	public static createTabs(props: TabsProps, containerId: string) {
+		const _props: TabsProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Tabs {..._props} />);
+	}
+
+	/**
+	 * Create popup
+	 * 
+	 * @param props Popup properties
+	 */
+	public static createPopup(props: PopupProps, containerId: string) {
+		const _props: PopupProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Popup {..._props} />);
+	}
+
+	/**
+	 * Create progress bar
+	 * 
+	 * @param props Progress bar properties
+	 */
+	public static createProgressBar(props: ProgressBarProps, containerId: string) {
+		const _props: ProgressBarProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<ProgressBar {..._props} />);
+	}
 
 	/**
 	 * Create checkbox
@@ -60,46 +124,79 @@ export default class ReactWidgetFactory {
 	}
 
 	/**
-	 * Create button
+	 * Create checklistbox
 	 * 
-	 * @param props Button properties
+	 * @param props Checklistbox properties
 	 */
-	public static createButton(props: ButtonProps, containerId: string) {
-		const _props: ButtonProps = { ...props };
+	public static createCheckListBox(props: ContentBoxProps, containerId: string) {
+		const _props: ContentBoxProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
-		root.render(<Button {..._props} />);
+		root.render(<CheckListBox {..._props} />);
 	}
 
 	/**
-	 * Create tabs
+	 * Create radiolistbox
 	 * 
-	 * @param props Tabs properties
+	 * @param props Radiolistbox properties
 	 */
-	public static createTabs(props: TabsProps, containerId: string) {
-		const _props: TabsProps = { ...props };
+	public static createRadioListBox(props: ContentBoxProps, containerId: string) {
+		const _props: ContentBoxProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
-		root.render(<Tabs {..._props} />);
+		root.render(<RadioListBox {..._props} />);
 	}
 
 	/**
-	 * Create grid
+	 * Create datepicker
 	 * 
-	 * @param props Grid properties
+	 * @param props Datepicker properties
 	 */
-	public static createGrid(props: GridProps, containerId: string) {
-		const _props: GridProps = { ...props };
+	public static createDatePicker(props: DatePickerProps, containerId: string) {
+		const _props: DatePickerProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
-		root.render(<Grid {..._props} />);
-	}
+		root.render(<DatePicker {..._props} />);
+    }
 
 	/**
-	 * Create popup
+	 * Create label
 	 * 
-	 * @param props Popup properties
+	 * @param props Label properties
 	 */
-	public static createPopup(props: PopupProps, containerId: string) {
-		const _props: PopupProps = { ...props };
+	public static createLabel(props: LabelProps, containerId: string) {
+		const _props: LabelProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
-		root.render(<Popup {..._props} />);
-	}
+		root.render(<Label {..._props} />);
+    }
+
+	/**
+	 * Create textarea
+	 * 
+	 * @param props Textarea properties
+	 */
+	public static createTextArea(props: TextAreaProps, containerId: string) {
+		const _props: TextAreaProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<TextArea {..._props} />);
+    }
+
+	/**
+	 * Create textbox
+	 * 
+	 * @param props Textbox properties
+	 */
+	public static createTextBox(props: TextBoxProps, containerId: string) {
+		const _props: TextBoxProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<TextBox {..._props} />);
+    }
+
+	/**
+	 * Create title
+	 * 
+	 * @param props Title properties
+	 */
+	public static createTitle(props: TitleProps, containerId: string) {
+		const _props: TitleProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Title {..._props} />);
+    }
 }
