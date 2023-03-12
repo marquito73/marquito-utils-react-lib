@@ -1,7 +1,7 @@
 .Popup-React {
     min-width: 10rem;
     min-height: 10rem;
-    background-color: beige;
+    background-color: #fafafa;
     position: absolute;
     filter: drop-shadow(2px 4px 6px black);
     border-radius: 5px;
@@ -9,7 +9,6 @@
     flex-direction: column;
     row-gap: 10px;
     padding: 10px;
-    //transition: width 0.3s, height 0.3s;
     transition: all 0.3s;
     // For center the popup vertically and horizontally
     left: 0;
@@ -49,7 +48,6 @@
 .Popup-React > .PopupHeader {
     height: 40px;
     border-radius: 5px;
-    background-color: red;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -78,7 +76,11 @@
 .Popup-React > .PopupContent {
     height: -webkit-fill-available;
     border-radius: 5px;
-    background-color: red;
+    
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 0.1rem 0.6rem rgb(0 0 0 / 40%);
+    box-shadow: 0 0.1rem 0.6rem rgb(0 0 0 / 40%);
+    -moz-box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.4);
 }
 
 .Popup-React > .PopupContent > .PopupIframe {
@@ -86,10 +88,10 @@
     height: 100%;
     border: none;
     user-select: none;
+    border-radius: inherit;
 }
 
 .Popup-React > .PopupFooter {
     height: 40px;
     border-radius: 5px;
-    background-color: red;
 }
