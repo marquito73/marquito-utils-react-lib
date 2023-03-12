@@ -16,13 +16,15 @@ export interface CellProps extends ComponentProps {
 }
 
 export class Cell<Props extends CellProps> extends Component<Props & CellProps, {}> {
-    render() {
 
+    constructor(props: Props & CellProps) {
+        super(props);
         this.props.CssClass.push("GridCell-React");
         this.props.CssClass.push("grid_content_" + EnumContentType[this.props.CellType].toLowerCase());
-
         this.props.Attributes.set("colNumber", Utils.GetAsString(this.props.ColNumber));
+    }
 
+    render() {
         return (
             <this.getCellComponent/>
         );

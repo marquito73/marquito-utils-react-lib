@@ -46,8 +46,7 @@ export class DatePicker<Props extends DatePickerProps> extends Component<Props &
     }
 
 	render() {
-        this.props.CssClass.push("DatePicker-React");
-        this.props.Attributes.set("Test", "true");
+        this.AddCssClass("DatePicker-React");
         // Register the language choosen
         registerLocale("lang", LangUtils.GetLocalForLang(this.props.Language));
         return(

@@ -9,6 +9,12 @@ export interface RowProps extends ComponentProps {
 }
 
 export class Row<Props extends RowProps> extends Component<Props & RowProps, {}> {
+
+    constructor(props: Props & RowProps) {
+        super(props);
+        this.props.CssClass.push("GridRow-React");
+    }
+
     render() {
         this.props.CssClass.push("GridRow-React");
         return (
