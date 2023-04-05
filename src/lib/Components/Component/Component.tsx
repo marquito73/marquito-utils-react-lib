@@ -104,6 +104,15 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		return sbCssClass.ToString();
 	}
 
+	protected AddCssClass = (cssClass: string) => {
+		let classAdded: boolean = false;
+		if (!this.props.CssClass.includes(cssClass)) {
+			this.props.CssClass.push(cssClass);
+			classAdded = true;
+		}
+		return classAdded;
+	}
+
 	protected GetOwnCssAttribute = () => {
 		return this.GetCssAttribute(this.props.CssClass);
 	}

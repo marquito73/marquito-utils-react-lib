@@ -235,17 +235,19 @@ export class Selector {
     }
 
     public GetStyle = () => {
-        return this.GetAttribute("style") as string;
+        return Utils.Nvl(this.GetAttribute("style") as string);
     }
 
     public GetStyleMap = () => {
         const currentStyle: Map<string, string> = new Map();
 
-        const styles: Array<string> = this.GetStyle().split(";").filter(style => style !== "");
-
-        styles.forEach((style) => {
-            currentStyle.set(style.split(":", 2)[0], style.split(":", 2)[1]);
-        });
+        if (Utils.IsNotNull(this.GetStyle())) {
+            const styles: Array<string> = this.GetStyle().split(";").filter(style => style !== "");
+    
+            styles.forEach((style) => {
+                currentStyle.set(style.split(":", 2)[0], style.split(":", 2)[1]);
+            });
+        }
 
         return currentStyle;
     }

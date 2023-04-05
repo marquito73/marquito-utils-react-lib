@@ -254,7 +254,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * Close the popup
      */
     private ClosePopup = () => {
-        if (!this.props.CssClass.includes("PopupHide")) {
+        if (this.AddCssClass("PopupHide")) {
             this.props.CssClass.push("PopupHide");
 			if (Utils.IsNotNull(this.props.ClosePopupCallback)) {
 				this.props.ClosePopupCallback?.(this.props);
@@ -320,8 +320,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private ExtendsPopupSize = () => {
         if (!this.state.IsExtended) {
             this.setState({IsExtended: true}, () => {
-                if (!this.props.CssClass.includes("PopupMaxSize")) {
-                    this.props.CssClass.push("PopupMaxSize");
+                if (this.AddCssClass("PopupMaxSize")) {
                     this.forceUpdate();
                 }
             });
@@ -357,8 +356,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private StartMoving = (movePoint: Point) => {
         if (!this.state.IsExtended) {
             this.setState({IsInMove: true, TouchMovePoint: movePoint}, () => {
-                if (!this.props.CssClass.includes("PopupMove")) {
-                    this.props.CssClass.push("PopupMove");
+                if (this.AddCssClass("PopupMove")) {
                     this.forceUpdate();
                 }
             });

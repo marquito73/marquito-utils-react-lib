@@ -77,6 +77,15 @@
     // max-width: 12rem;
 }
 
+.Grid-React > .Grid .GridRow-React > .grid_content_date {
+    width: 12rem;
+    min-width: 12rem;
+    // max-width: 12rem;
+}
+.Grid-React > .Grid .GridRow-React > .grid_content_date > * {
+    width: inherit !important;
+}
+
 .Grid-React > .Grid .GridRow-React > .grid_content_password {
     width: 12rem;
     // max-width: 12rem;
@@ -123,7 +132,7 @@
 }
 
 // Align column names and cell values
-.Grid-React > .Grid
+//.Grid-React > .Grid
 
 // The footer
 .Grid-React > .Grid > div.gridFooter {

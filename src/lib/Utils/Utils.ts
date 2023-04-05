@@ -119,7 +119,7 @@ export class Utils {
         return value == true || value == "true" || value == "TRUE";
     }
 
-    public static Nvl = (value: any) => {
+    public static Nvl = <T> (value: T): T => {
 		let result: any = value;
 		
 		if (value instanceof Object) {

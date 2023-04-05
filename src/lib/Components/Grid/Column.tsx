@@ -14,8 +14,15 @@ export interface ColumnProps extends ComponentProps {
 }
 
 export class Column<Props extends ColumnProps> extends Component<Props & ColumnProps, {}> {
-    render() {
 
+    constructor(props: Props & ColumnProps) {
+        super(props);
+        this.props.CssClass.push("GridColumn-React");
+        this.props.CssClass.push("grid_" + EnumCheckMode[this.props.CheckMode].toLowerCase());
+        this.props.CssClass.push("grid_content_" + EnumContentType[this.props.ColType].toLowerCase());
+    }
+
+    render() {
         this.props.CssClass.push("GridColumn-React");
         this.props.CssClass.push("grid_" + EnumCheckMode[this.props.CheckMode].toLowerCase());
         this.props.CssClass.push("grid_content_" + EnumContentType[this.props.ColType].toLowerCase());

@@ -25,10 +25,10 @@ export interface TextBoxProps extends ComponentProps {
 export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps, {}> {
 	constructor(props: Props & TextBoxProps) {
 		super(props);
-		this.props.CssClass.push("TextBox-React");
 	}
 
 	render() {
+        this.AddCssClass("TextBox-React");
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 

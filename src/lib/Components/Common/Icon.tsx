@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import "./css/Icon.scss";
-
 export interface IconProps extends ComponentProps {
     IconClass: string,
     IconColor: string
