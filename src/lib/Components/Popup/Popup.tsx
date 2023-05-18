@@ -43,6 +43,10 @@ export interface PopupProps extends ComponentProps {
      */
     ContentUrl: string,
     /**
+     * Reload the content of the popup each time the popup is open ?
+     */
+    ReloadEachTimeOpened: boolean,
+    /**
      * The element, when clicked, open and load the popup
      */
     ElementIdForOpenPopup: string
@@ -258,6 +262,10 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             this.props.CssClass.push("PopupHide");
 			if (Utils.IsNotNull(this.props.ClosePopupCallback)) {
 				this.props.ClosePopupCallback?.(this.props);
+                if (this.props.ReloadEachTimeOpened) {
+                    // We need to reload the popup content next time popup is opened
+                    this.setState({CurrentContentUrl: ""});
+                }
 			}
             this.forceUpdate();
         }

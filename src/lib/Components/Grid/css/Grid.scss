@@ -69,6 +69,7 @@
 .Grid-React > .Grid .GridRow-React > td > * {
     justify-content: center !important;
     padding: 0 !important;
+    width: 100%;
 }
 
 .Grid-React > .Grid .GridRow-React > .grid_content_text {
@@ -81,9 +82,6 @@
     width: 12rem;
     min-width: 12rem;
     // max-width: 12rem;
-}
-.Grid-React > .Grid .GridRow-React > .grid_content_date > * {
-    width: inherit !important;
 }
 
 .Grid-React > .Grid .GridRow-React > .grid_content_password {
