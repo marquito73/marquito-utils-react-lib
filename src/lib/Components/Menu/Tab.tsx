@@ -25,7 +25,6 @@ export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
         }
 
         this.props.Events.set(EnumEvent.Click, this.HandleClick);
-        this.props.Events.set(EnumEvent.MouseEnter, this.HandleMouseEnter);
 
         return (
             <div
@@ -66,9 +65,5 @@ export class Tab<Props extends TabProps> extends Button<Props & TabProps> {
         tab.AddClass("active");
 
         this.props.OnClick();
-    }
-
-    private HandleMouseEnter = () => {
-        console.log("Test hover");
     }
 }
