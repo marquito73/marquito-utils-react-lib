@@ -1,4 +1,5 @@
 import { StringBuilder } from "./Stringbuilder";
+import * as signalR from "@microsoft/signalr";
 
 export class AjaxUtils {
     public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Object, filesUpload: Array<File>, 
@@ -87,5 +88,31 @@ export class AjaxUtils {
         }
 
         return sbUrl.ToString();
+    }
+
+    /**
+     * Get connection with signalR
+     * 
+     * @param url Url of the hub
+     * @param methodName Method name in hub
+     * @param callback Callback function when hub send data
+     * @returns Connection with signalR
+     */
+    public static GetSignalRConnection(url: string, methodName: string, callback: Function)/* : HubConnection*/ {
+        // Prepare the connection to the signalR hub
+        const connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl(url).build();
+        // Execute this function on message reception
+        connection.on(methodName, (message) => {
+            callback?.(message);
+            try {
+                callback?.(message);
+            } catch(err) {
+                console.error(`Error happens when receiving message from ${url} : `, err);
+            }
+        });
+        // Start the connection
+        connection.start();
+
+        return connection;
     }
 }

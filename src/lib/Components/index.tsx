@@ -8,6 +8,7 @@ import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
 import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox} from "./Select";
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
+import { AjaxUtils } from "../Utils";
 
 export * from "./Button";
 export * from "./Chart";
@@ -21,6 +22,7 @@ export * from "./Range";
 export * from "./Select";
 export * from "./TextArea";
 export {ReactWidgetFactory};
+export {AjaxUtils};
 
 
 export default class ReactWidgetFactory {

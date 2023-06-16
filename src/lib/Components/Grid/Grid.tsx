@@ -115,7 +115,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
 
         if (!Utils.GetAsBoolean(body.GetAttribute("ajaxIsUsed"))) {
             if ((e.currentTarget.scrollTop + e.currentTarget.offsetHeight) 
-                == e.currentTarget.scrollHeight + 2) {
+                >= e.currentTarget.scrollHeight) {
                 body.SetAttribute("ajaxIsUsed", true);
                 try {
                     let test: object = new Object();
