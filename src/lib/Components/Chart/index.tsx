@@ -1,3 +1,2 @@
-export * from "./Chart";
-export * from "./ChartPoint";
-export * from "./LineChart";
+export * from "./old/Chart";
+export * from "./old/LineChart";

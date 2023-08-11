@@ -1,16 +1,16 @@
 import React from "react";
-import { ChartPoint, LineChart, LineChartProps } from "../../lib";
+import { Point, LineChart, LineChartProps } from "../../lib";
 
 
 export const TestLineChart = () => {
 
-    const points: Map<ChartPoint, string> = new Map();
+    const points: Map<Point, string> = new Map();
 
-    points.set(new ChartPoint(0, 0), "Point 0");
-    points.set(new ChartPoint(50, 50), "Point 1");
-    points.set(new ChartPoint(100, 100), "Point 2");
-    points.set(new ChartPoint(150, 120), "Point 3");
-    points.set(new ChartPoint(110, 180), "Point 4");
+    points.set(new Point(0, 0), "Point 0");
+    points.set(new Point(50, 50), "Point 1");
+    points.set(new Point(100, 100), "Point 2");
+    points.set(new Point(150, 120), "Point 3");
+    points.set(new Point(110, 180), "Point 4");
 
     // Textbox
     const lineChartProps: LineChartProps = {

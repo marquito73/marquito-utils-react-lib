@@ -171,7 +171,8 @@ export default class App extends React.Component<{}, {}> {
             Name: "popupTest",
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            ReloadEachTimeOpened: false
         }
 
         return (

@@ -1,10 +1,9 @@
 import { MouseEvent } from "react";
-import { Utils } from "../../Utils";
+import { Point, Utils } from "../../../Utils";
 import { Chart, ChartProps } from "./Chart";
-import { ChartPoint } from "./ChartPoint";
 
 export interface LineChartProps extends ChartProps {
-    Points: Map<ChartPoint, string>
+    Points: Map<Point, string>
 }
 
 export class LineChart<Props extends LineChartProps> extends Chart<Props & LineChartProps> {
