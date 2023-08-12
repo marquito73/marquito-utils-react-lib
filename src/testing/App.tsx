@@ -15,6 +15,7 @@ import { TestLineChart } from "./Chart/LineChart";
 import { TestProgressBar } from "./Progress/ProgressBar";
 import { TestTextArea } from "./TextArea/TextArea";
 import { TestRangeSlider } from "./Range/RangeSlider";
+import { TestChip } from "./Chip/Chip";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -74,7 +75,7 @@ export default class App extends React.Component<{}, {}> {
 
     // Tabs
     private getTestTabs = () => {
-        const captions: Array<string> = new Array("All", "Component", "Button", "Grid", "Select", "TextArea", 
+        const captions: Array<string> = new Array("All", "Component", "Button", "Grid", "Select", "TextArea", "Chip", 
             "Progress", "Range", "Chart", "Popup");
         const events: Array<Function> = captions.map(caption => {
             return this.tabsTest(caption);
@@ -128,6 +129,11 @@ export default class App extends React.Component<{}, {}> {
     // Textarea
     private getTestTextArea = () => {
         return TestTextArea("Test value for textarea", "Tap some text here ...");
+    }
+    
+    // Chip
+    private getTestChip = () => {
+        return TestChip("rgba(45,212,191,0.1)");
     }
 
     // ProgressBar
@@ -247,6 +253,11 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                             <div id="datepicker">
                                 <this.getTestDatePicker/>
+                            </div>
+                        </div>
+                        <div id="Chip">
+                            <div id="chip">
+                                <this.getTestChip/>
                             </div>
                         </div>
                         <div id="Progress">

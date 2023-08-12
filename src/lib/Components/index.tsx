@@ -9,9 +9,11 @@ import { ProgressBar, ProgressBarProps } from "./Progress";
 import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox} from "./Select";
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
 import { AjaxUtils } from "../Utils";
+import { Chip, ChipProps } from "./Chip";
 
 export * from "./Button";
 export * from "./Chart";
+export * from "./Chip";
 export * from "./Common";
 export * from "./Component";
 export * from "./Grid";
@@ -200,5 +202,16 @@ export default class ReactWidgetFactory {
 		const _props: TitleProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Title {..._props} />);
+    }
+
+	/**
+	 * Create chip
+	 * 
+	 * @param props Chip properties
+	 */
+	public static createChip(props: ChipProps, containerId: string) {
+		const _props: ChipProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Chip {..._props} />);
     }
 }

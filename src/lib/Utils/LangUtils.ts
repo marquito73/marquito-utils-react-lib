@@ -1,8 +1,6 @@
 import { EnumLang } from "../Enums";
-import US from "date-fns/locale/en-US";
-import EN from "date-fns/locale/en-GB";
-import FR from "date-fns/locale/fr";
-import ES from "date-fns/locale/es";
+
+import {enUS, enGB, fr, es} from "date-fns/locale";
 
 export class LangUtils {
     public static GetLocalForLang = (language: EnumLang) => {
@@ -10,17 +8,17 @@ export class LangUtils {
 
         switch (language) {
             case EnumLang.US:
-                locale = US;
+                locale = enUS;
                 break;
             case EnumLang.FR:
-                locale = FR;
+                locale = fr;
                 break;
             case EnumLang.ES:
-                locale = ES;
+                locale = es;
                 break;
             case EnumLang.EN:
             default:
-                locale = EN;
+                locale = enGB;
                 break;
         }
 
