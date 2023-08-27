@@ -294,10 +294,12 @@ export class Selector {
      * 
      * @param event The event
      * @param eventFunction The function call when event occur
+     * @param selector The children selector to macth (can be undefined)
      */
-    public On = (event: EnumEvent, eventFunction: EventListenerOrEventListenerObject) => {
+    public On = (event: EnumEvent, eventFunction: Function, selector?: string) => {
         this.ForEach(element => {
-            element.addEventListener(EnumEvent[event].toLowerCase(), eventFunction);
+            //element.addEventListener(EnumEvent[event].toLowerCase(), eventFunction);
+            element.addEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector));
         });
         return this;
     }
@@ -308,10 +310,30 @@ export class Selector {
      * @param event The event
      * @param eventFunction The function call when event occur
      */
-    public Off = (event: EnumEvent, eventFunction: EventListenerOrEventListenerObject) => {
+    public Off = (event: EnumEvent, eventFunction: Function) => {
         this.ForEach(element => {
-            element.removeEventListener(EnumEvent[event].toLowerCase(), eventFunction);
+            element.removeEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction));
         });
         return this;
+    }
+
+    /**
+     * Return a function for on / off an event for the selector
+     * 
+     * @param element The event element
+     * @param eventFunction The function call when event occur
+     * @param selector The children selector to macth (can be undefined)
+     * @returns A function for on / off an event for the selector
+     */
+    private OnEvent = (element: Element, eventFunction: Function, selector?: string) => {
+        return (event: Event) => {
+            if (Utils.IsNotNull(selector)) {
+                if (new Selector(element).Find(selector!).Count() > 0) {
+                    eventFunction(event);
+                }
+            } else {
+                eventFunction(event);
+            }
+        }
     }
 }

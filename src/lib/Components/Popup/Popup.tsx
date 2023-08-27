@@ -95,10 +95,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         new Selector("html").On(EnumEvent.MouseUp, this.StopMoving)
             .On(EnumEvent.MouseMove, this.Move)
             .On(EnumEvent.TouchEnd, this.StopMoving)
-            .On(EnumEvent.TouchMove, this.Move);
-
-            new Selector(`#${this.props.ElementIdForOpenPopup}`)
-                .On(EnumEvent.Click, this.OpenPopup);
+            .On(EnumEvent.TouchMove, this.Move)
+            .On(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
     }
   
     componentWillUnmount() {
