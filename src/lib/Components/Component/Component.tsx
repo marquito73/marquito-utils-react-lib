@@ -58,6 +58,15 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		}
 	}
 
+	/*protected ExecuteParamFunction = (eventKey: EnumEvent, ...params: any) => {
+		return () => {
+			const eventFunction: Function | undefined = this.props.Events.get(eventKey);
+			if (Utils.IsNotNull(eventFunction)) {
+				eventFunction?.(this.props, this.state);
+			}
+		}
+	}*/
+
 	protected GetOwnId = () => {
 		return this.props.Id;
 	}

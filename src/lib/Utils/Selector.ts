@@ -47,8 +47,12 @@ export class Selector {
                 this.MainSelector.push(element);
             }
         } else {
-            const element: HTMLElement = document.querySelector(mainSelector)!;
-            this.MainSelector.push(element);
+            if (mainSelector instanceof Array<HTMLElement>) {
+                mainSelector.forEach(element => this.MainSelector.push(element));
+            } else {
+                const element: HTMLElement = document.querySelector(mainSelector)!;
+                this.MainSelector.push(element);
+            }
         }
     }
 

@@ -40,6 +40,10 @@ export class Utils {
                 isEmpty = true;
             } else if (value instanceof Number || value === 0) {
                 isEmpty = true;
+            } else if (value instanceof Array) {
+                isEmpty = value.length <= 0;
+            } else if (value instanceof Map) {
+                isEmpty = value.keys.length <= 0;
             }
         }
 

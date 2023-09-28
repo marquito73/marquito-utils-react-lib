@@ -8,5 +8,6 @@ export enum EnumInputType {
     Date,
     Check,
     Radio,
-    Toogle
+    Toogle,
+    Country,
 }

@@ -1,0 +1,8 @@
+.CountryListBox-React > .ContentBoxOptions > * {
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.CountryListBox-React > .ContentBoxOptions > *:hover {
+    background-color: #00aeff40;
+}

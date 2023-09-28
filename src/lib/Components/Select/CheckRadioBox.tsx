@@ -56,7 +56,7 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
         );
     }
 
-    protected getBoxInput = () => {
+    private getBoxInput = () => {
         return (
             <>
                 <input 

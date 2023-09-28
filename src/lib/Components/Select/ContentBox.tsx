@@ -1,5 +1,4 @@
 import React, { RefObject, useRef } from "react";
-import { EnumInputType } from "../../Enums";
 import { Selector, StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component/Component";
 import { Option, OptionProps } from "./Option";
@@ -52,9 +51,20 @@ extends Component<Props & ContentBoxProps, {}> {
         const input: HTMLInputElement = new Selector(event.currentTarget).Children("input").First() as HTMLInputElement;
         // Affect values to input summary
         input.value = this.GetValuesSummary(valuesChecked);
+
+        this.SetInputValue(valuesChecked, new Selector(event.currentTarget));
     }
 
-    private GetValuesSummary = (values: Array<string>) => {
+    protected SetInputValue = (values: Array<string>, listBoxSelector: Selector) => {
+        // The input for the summary
+        const input: HTMLInputElement = listBoxSelector.Children("input").First() as HTMLInputElement;
+        // Affect values to input summary
+        input.value = this.GetValuesSummary(values);
+    }
+
+    // Passer le type de checklistbox a cette fonction
+    // et dans le cas d'une countrybox
+    protected GetValuesSummary = (values: Array<string>) => {
         const sbInput: StringBuilder = new StringBuilder("");
 
         values.forEach((value) => {

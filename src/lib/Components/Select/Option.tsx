@@ -5,6 +5,7 @@ import { Label, LabelProps } from "../TextArea";
 import { CheckBox } from "./CheckBox";
 import { CheckRadioBoxProps } from "./CheckRadioBox";
 import { RadioBox } from "./RadioBox";
+import { CountryBox } from "./Country/CountryBox";
 
 export interface OptionProps extends ComponentProps {
     Caption: string,
@@ -27,6 +28,8 @@ export abstract class Option<Props extends OptionProps> extends Component<Props 
         );
     }
 
+    protected abstract RenderOptionComponent(props: CheckRadioBoxProps) : JSX.Element;
+
     private GetOptionComponent = () => {
         let component: JSX.Element;
 
@@ -47,6 +50,9 @@ export abstract class Option<Props extends OptionProps> extends Component<Props 
         } else if (this.props.CheckType == EnumInputType.Check) {
             props.Type = "checkbox";
             component = (<CheckBox {...props}/>);
+        } else if (this.props.CheckType == EnumInputType.Country) {
+            props.Type = "country";
+            component = (<CountryBox {...props}/>);
         } else {
             const optProps: LabelProps = {
                 Text: this.props.Caption,

@@ -1,0 +1,12 @@
+.CountryBox-React {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.3rem;
+    max-width: inherit;
+}
+
+.CountryBox-React > svg {
+    max-width: 2em;
+    height: 2em;
+}

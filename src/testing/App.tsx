@@ -16,6 +16,7 @@ import { TestProgressBar } from "./Progress/ProgressBar";
 import { TestTextArea } from "./TextArea/TextArea";
 import { TestRangeSlider } from "./Range/RangeSlider";
 import { TestChip } from "./Chip/Chip";
+import { TestCountryListBox } from "./Select/CountryListBox";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -116,6 +117,10 @@ export default class App extends React.Component<{}, {}> {
         const captions: Array<string> = new Array("Radiobox 0", "Radiobox 1", "Radiobox 2", "Radiobox 3");
 
         return TestRadioListBox(selecteds, values, captions);
+    }
+
+    public getTestCountryListBox = () => {
+        return TestCountryListBox();
     }
 
     // Textbox
@@ -242,6 +247,9 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                             <div id="radiolistbox">
                                 <this.getTestRadioListBox/>
+                            </div>
+                            <div id="countrylistbox">
+                                <this.getTestCountryListBox/>
                             </div>
                         </div>
                         <div id="TextArea">
