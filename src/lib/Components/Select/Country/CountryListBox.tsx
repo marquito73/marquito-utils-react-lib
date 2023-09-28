@@ -4,7 +4,7 @@ import { countries } from "countries-list";
 import { OptionProps } from "../Option";
 import { EnumEvent, EnumInputType } from "../../../Enums";
 import { Selector, Utils } from "../../../Utils";
-import "./css/CountryListBox.scss"
+import "./css/CountryListBox.scss";
 
 export interface CountryListBoxProps extends ContentBoxProps {
     FilterCountries: Array<string>,

@@ -17,6 +17,7 @@ import { TestTextArea } from "./TextArea/TextArea";
 import { TestRangeSlider } from "./Range/RangeSlider";
 import { TestChip } from "./Chip/Chip";
 import { TestCountryListBox } from "./Select/CountryListBox";
+import { TestCountryFlagListBox } from "./Select/CountryFlagListBox";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -121,6 +122,10 @@ export default class App extends React.Component<{}, {}> {
 
     public getTestCountryListBox = () => {
         return TestCountryListBox();
+    }
+
+    public getTestCountryFlagListBox = () => {
+        return TestCountryFlagListBox();
     }
 
     // Textbox
@@ -250,6 +255,9 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                             <div id="countrylistbox">
                                 <this.getTestCountryListBox/>
+                            </div>
+                            <div id="countryflaglistbox">
+                                <this.getTestCountryFlagListBox/>
                             </div>
                         </div>
                         <div id="TextArea">
