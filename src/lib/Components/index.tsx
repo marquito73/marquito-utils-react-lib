@@ -6,7 +6,7 @@ import { Grid, GridProps } from "./Grid";
 import { Tabs, TabsProps } from "./Menu";
 import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
-import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox} from "./Select";
+import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox} from "./Select";
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
 import { AjaxUtils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
@@ -213,5 +213,16 @@ export default class ReactWidgetFactory {
 		const _props: ChipProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<Chip {..._props} />);
+    }
+
+	/**
+	 * Create country flag list box
+	 * 
+	 * @param props Country flag list box properties
+	 */
+	public static createCountryFlagListBox(props: CountryFlagListBoxProps, containerId: string) {
+		const _props: CountryFlagListBoxProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<CountryFlagListBox {..._props} />);
     }
 }
