@@ -119,7 +119,7 @@ extends Component<Props & CountryFlagListBoxProps, CountryFlagListBoxState> {
 				{...this.props.Attributes}
                 className={this.GetOwnCssClass()}
                 onClick={this.OnOptionClick}
-                data-countryCode={option.Value}
+                data-countrycode={option.Value}
             >
                 {FlagUtils.GetFlagComponent(option.Value)}
             </div>
@@ -132,8 +132,9 @@ extends Component<Props & CountryFlagListBoxProps, CountryFlagListBoxState> {
      * @param event Click event on a flag
      */
     private OnOptionClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const countryCode: string = new Selector(event.currentTarget).GetAttribute("data-countryCode");
+        const countryCode: string = new Selector(event.currentTarget).GetAttribute("data-countrycode");
         this.setState({SelectedFlagValue: countryCode}, () => {
+            this.ExecuteFunction(EnumEvent.Change)();
             this.forceUpdate();
         });
     }

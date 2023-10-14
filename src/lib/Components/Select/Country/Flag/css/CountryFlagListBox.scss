@@ -7,6 +7,18 @@
     border-color: black;
     transition: border-color 0.3s;
     text-align-last: center;
+    overflow: hidden;
+}
+
+.CountryFlagListBox-React > .SelectedFlag:hover, 
+.CountryFlagListBox-React > .SelectedFlag:focus {
+    border-color: deepskyblue;
+}
+
+.CountryFlagListBox-React > .SelectedFlag > svg {
+    width: 100%;
+    height: calc(100% + 4px);
+    margin-top: -2px;
 }
 
 .CountryFlagListBox-React > .ContentBoxOptions {
@@ -34,14 +46,4 @@
 
 .CountryFlagListBox-React > .ContentBoxOptions > *:hover {
     background-color: #00aeff40;
-}
-
-.CountryFlagListBox-React > .SelectedFlag:hover, 
-.CountryFlagListBox-React > .SelectedFlag:focus {
-    border-color: deepskyblue;
-}
-
-.CountryFlagListBox-React > .SelectedFlag > svg {
-    width: inherit;
-    height: inherit;
 }

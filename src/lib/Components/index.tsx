@@ -225,4 +225,8 @@ export default class ReactWidgetFactory {
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<CountryFlagListBox {..._props} />);
     }
+
+	public static AjaxUtils(): AjaxUtils {
+		return new AjaxUtils();
+	}
 }
