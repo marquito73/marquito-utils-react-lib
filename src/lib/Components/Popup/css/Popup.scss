@@ -94,4 +94,18 @@
 .Popup-React > .PopupFooter {
     height: 40px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.Popup-React > .PopupFooter > .PopupFooterButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(100% - 5rem);
+    column-gap: 1rem;
+}
+
+.Popup-React > .PopupFooter > .PopupFooterButtons > .Button-React {
+    flex-grow: 1;
 }

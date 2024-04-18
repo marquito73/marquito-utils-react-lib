@@ -23,8 +23,17 @@ export enum EnumEvent {
      * Mouse up event
      */
     MouseUp,
+    /**
+     * Start touch the screen event
+     */
     TouchStart,
+    /**
+     * Stop touch the screen event
+     */
     TouchEnd,
+    /**
+     * Move while touch the screen event
+     */
     TouchMove,
     /**
      * Check event
@@ -33,5 +42,9 @@ export enum EnumEvent {
     /**
      * Change event
      */
-    Change
+    Change,
+    /**
+     * Event triggered when DOM has been completely parsed
+     */
+    DOMContentLoaded,
 }

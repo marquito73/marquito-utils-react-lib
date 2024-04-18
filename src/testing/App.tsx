@@ -3,7 +3,7 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { AjaxUtils, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, Tabs, Utils } from "../lib";
+import { AjaxUtils, ButtonProps, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, Tabs, Utils } from "../lib";
 import { TestButton } from "./Button/Button";
 import { TestIconButton } from "./Button/IconButton";
 import { EnumEvent } from "../lib/Enums";
@@ -175,20 +175,69 @@ export default class App extends React.Component<{}, {}> {
 
     // Popup
     private getTestPopup = () => {
+        const okButtonProps: ButtonProps = {
+            BoldCaption: false,
+            CaptionColor: "red",
+            BackgroundColor: "white",
+            BorderColor: "",
+            CaptionSize: 20,
+            Caption: "Ok",
+            Link: "",
+            OpenInNewTab: false,
+            Id: "btnOkPopup",
+            Name: "btnOkPopup",
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map(),
+        };
+        const cancelButtonProps: ButtonProps = {
+            BoldCaption: false,
+            CaptionColor: "red",
+            BackgroundColor: "white",
+            BorderColor: "",
+            CaptionSize: 20,
+            Caption: "Cancel",
+            Link: "",
+            OpenInNewTab: false,
+            Id: "btnCancelPopup",
+            Name: "btnCancelPopup",
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map(),
+        };
+        const validateButtonProps: ButtonProps = {
+            BoldCaption: false,
+            CaptionColor: "red",
+            BackgroundColor: "white",
+            BorderColor: "",
+            CaptionSize: 20,
+            Caption: "Validate",
+            Link: "",
+            OpenInNewTab: false,
+            Id: "btnValidatePopup",
+            Name: "btnValidatePopup",
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map(),
+        };
+
         const popupProps: PopupProps = {
             Width: 300,
             Height: 150,
             Title: "Popup de test",
             ClosePopupCallback: this.HandleClosePopup,
             ExtendedWhenOpen: false,
-            ElementIdForOpenPopup: "ibtnTest_cnt",
+            ElementIdForOpenPopup: "iTest_cnt",
             ContentUrl: "",
             Id: "popupTest",
             Name: "popupTest",
             CssClass: new Array(),
             Attributes: new Map(),
             Events: new Map(),
-            ReloadEachTimeOpened: false
+            ReloadEachTimeOpened: false,
+            OkButton: okButtonProps,
+            CancelButton: cancelButtonProps,
+            ValidateButton: validateButtonProps,
         }
 
         return (

@@ -1,13 +1,11 @@
 import * as React from "react";
-import ReactHtmlParser from "html-react-parser";
 import { EnumEvent, EnumTitleType } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import CSS from 'csstype';
 import "./css/Popup.scss";
-import { AjaxUtils, Point, Selector, Utils } from "../../Utils";
-import { IconButton, IconButtonProps } from "../Button";
+import { Point, Selector, Utils } from "../../Utils";
+import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
-import { createPortal } from "react-dom";
 import ReactWidgetFactory from "..";
 
 declare global {
@@ -15,7 +13,6 @@ declare global {
 		ReactWidgetFactory: ReactWidgetFactory
 	}
 }
-//window.ReactWidgetFactory = ReactWidgetFactory;
 
 export interface PopupProps extends ComponentProps {
     /**
@@ -49,7 +46,19 @@ export interface PopupProps extends ComponentProps {
     /**
      * The element, when clicked, open and load the popup
      */
-    ElementIdForOpenPopup: string
+    ElementIdForOpenPopup: string,
+    /**
+     * The ok button
+     */
+    OkButton?: ButtonProps,
+    /**
+     * The cancel button
+     */
+    CancelButton?: ButtonProps,
+    /**
+     * The validate button
+     */
+    ValidateButton?: ButtonProps,
 }
 
 export interface PopupState extends ComponentState {
@@ -69,6 +78,9 @@ export interface PopupState extends ComponentState {
      * The popup content
      */
     PopupContent: string,
+    /**
+     * Current content url
+     */
     CurrentContentUrl: string
 }
 
@@ -247,9 +259,38 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}Footer`}
                 className="PopupFooter"
             >
-                
+            <div
+                id={`${this.props.Id}PopupFooterButtons`}
+                className="PopupFooterButtons"
+            >
+                {this.getFooterPopupButton(this.props.OkButton)}
+                {this.getFooterPopupButton(this.props.CancelButton)}
+                {this.getFooterPopupButton(this.props.ValidateButton)}
+            </div>
             </div>
         );
+    }
+
+    /**
+     * Get footer button
+     * 
+     * @param button The button to add to footer
+     * @returns A footer button
+     */
+    private getFooterPopupButton = (button?: ButtonProps) => {
+        if (Utils.IsNotNull(button)) {
+            const buttonProps: ButtonProps = button!;
+
+            buttonProps.Events.set(EnumEvent.Click, () => {
+                this.ClosePopup();
+            });
+
+            return (
+                <Button {...buttonProps!}/>
+            );
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -292,8 +333,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
                     this.setState({CurrentContentUrl: this.props.ContentUrl}, () => {
-                        
-                        //this.iframeRef.current?.contentWindow?.
                         window.ReactWidgetFactory = new ReactWidgetFactory();
 
                         this.forceUpdate();

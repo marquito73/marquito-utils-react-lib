@@ -301,23 +301,43 @@ export class Selector {
      * @param selector The children selector to macth (can be undefined)
      */
     public On = (event: EnumEvent, eventFunction: Function, selector?: string) => {
+        // Bind this event on each elements inside this selector, matching selector if specified
         this.ForEach(element => {
-            //element.addEventListener(EnumEvent[event].toLowerCase(), eventFunction);
-            element.addEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector));
+            element.addEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector), true);
         });
+        // And for future elements
+        if (Utils.IsNotNull(selector)) {
+            this.GetDocument().First().addEventListener(EnumEvent[EnumEvent.DOMContentLoaded] as string, () => {
+                this.Find(selector!).ForEach(childElement => {
+                    childElement.addEventListener(EnumEvent[event].toLowerCase(), this.OnChildEvent(childElement, eventFunction), true);
+                })
+            })
+        }
+
         return this;
     }
 
     /**
      * Remove event to elements of this selector
-     * ²
+     * 
      * @param event The event
      * @param eventFunction The function call when event occur
+     * @param selector The children selector to macth (can be undefined)
      */
-    public Off = (event: EnumEvent, eventFunction: Function) => {
+    public Off = (event: EnumEvent, eventFunction: Function, selector?: string) => {
+        // Unbind this event on each elements inside this selector, matching selector if specified
         this.ForEach(element => {
-            element.removeEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction));
+            element.removeEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector), true);
         });
+        // And for future elements
+        if (Utils.IsNotNull(selector)) {
+            this.GetDocument().First().addEventListener(EnumEvent[EnumEvent.DOMContentLoaded] as string, () => {
+                this.Find(selector!).ForEach(childElement => {
+                    childElement.removeEventListener(EnumEvent[event].toLowerCase(), this.OnChildEvent(childElement, eventFunction), true);
+                })
+            })
+        }
+
         return this;
     }
 
@@ -332,12 +352,27 @@ export class Selector {
     private OnEvent = (element: Element, eventFunction: Function, selector?: string) => {
         return (event: Event) => {
             if (Utils.IsNotNull(selector)) {
-                if (new Selector(element).Find(selector!).Count() > 0) {
-                    eventFunction(event);
+                const target = (event.target as HTMLElement).closest(selector!);
+    
+                if (target) {
+                    eventFunction.call(target, event);
                 }
             } else {
-                eventFunction(event);
+                eventFunction.call(element, event);
             }
+        }
+    }
+
+    /**
+     * Return a function for on / off an event for a child element
+     * 
+     * @param childElement The child element
+     * @param eventFunction The function call when event occur
+     * @returns A function for on / off an event for a child element
+     */
+    private OnChildEvent = (childElement: Element, eventFunction: Function) => {
+        return (event: Event) => {
+            eventFunction.call(childElement, event);
         }
     }
 }

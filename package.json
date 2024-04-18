@@ -1,9 +1,9 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.149",
+  "version": "0.1.150",
   "description": "Marquito React component library",
   "scripts": {
-    "rollup": "rollup -c",
+    "build": "rimraf ./dist && rollup -c",
     "start": "react-scripts start"
   },
   "author": "Marquito73",
@@ -63,6 +63,7 @@
     "countries-list": "^2.6.1",
     "country-flag-icons": "^1.5.7",
     "recharts": "^2.7.2",
+    "rimraf": "^5.0.5",
     "rollup-plugin-copy": "^3.4.0"
   }
 }
