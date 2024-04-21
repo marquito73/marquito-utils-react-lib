@@ -83,7 +83,8 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
             Name: "txt" + this.getCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            Type: "text",
         }
 
         return (

@@ -3,23 +3,28 @@ import * as signalR from "@microsoft/signalr";
 import { Utils } from "./Utils";
 
 export class AjaxUtils {
-    public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Object, filesUpload: Array<File>, 
+    public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>, filesUpload: Array<File>, 
         doneCallback: Function, failCallback: Function, loadingText: string) => {
             const url = "/home/ajax";
 
             const constructedUrl = AjaxUtils.GetAjaxConstructedUrl(rootUrl, url, ajaxName, ajaxAction, parameters);
             
-            AjaxUtils.PostDataWithUrl(constructedUrl, parameters, filesUpload, doneCallback, failCallback, loadingText);
+            AjaxUtils.PostDataWithUrl(constructedUrl, undefined, filesUpload, doneCallback, failCallback, loadingText);
     }
 
-    public static PostDataWithUrl = (ajaxUrl: string, parameters: Object, filesUpload: Array<File>, 
+    public static PostDataWithUrl = (ajaxUrl: string, parameters: Record<string, any> | undefined, filesUpload: Array<File>, 
         doneCallback: Function, failCallback: Function, loadingText: string) => {
             // Manage files
             const formData = new FormData();
             
             if (Utils.IsNotEmpty(filesUpload)) {
-                for (var i = 0; i < filesUpload.length; i++) {
+                for (let i = 0; i < filesUpload.length; i++) {
                     formData.append("file" + i, filesUpload[i]);
+                }
+            }
+            if (Utils.IsNotEmpty(parameters)) {
+                for (const key in parameters) {
+                    formData.append(key, parameters[key]);
                 }
             }
             // Need to be replaced by fetch, axios dont work on application use webpack and this library
@@ -84,44 +89,32 @@ export class AjaxUtils {
             });
     }
 
-    private static GetConstructedUrl = (rootUrl: string, url: string, parameters: Object) => {
+    private static GetConstructedUrl = (rootUrl: string, url: string, parameters: Record<string, any>) => {
         const sbUrl: StringBuilder = new StringBuilder("");
 
         sbUrl.Append(rootUrl).Append(url);
-
-        const keys = Object.keys(parameters);
-        const values = Object.values(parameters);
-
-        const len = keys.length;
-
-        for (let i = 0; i < len; i++) {
-            if (i == 0) {
-                sbUrl.Append("?")
+        for (const key in parameters) {
+            if (!sbUrl.Contains("?")) {
+                sbUrl.Append("?").Append(key).Append("=").Append(parameters[key]);
             } else {
-                sbUrl.Append("&")
+                sbUrl.Append("&").Append(key).Append("=").Append(parameters[key]);
             }
-            sbUrl.Append(keys[i]).Append("=").Append(values[i]);
         }
 
         return sbUrl.ToString();
     }
     
     // Get constructed url for ajax
-    private static GetAjaxConstructedUrl = (rootUrl: string, url: string, ajaxName: string, ajaxAction: string, parameters: Object) => {
+    private static GetAjaxConstructedUrl = (rootUrl: string, url: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>) => {
         const sbUrl: StringBuilder = new StringBuilder("");
 
         sbUrl.Append(rootUrl).Append(url).Append("?")
             .Append("ajax_name").Append("=").Append(ajaxName)
             .Append("&")
             .Append("ajax_action").Append("=").Append(ajaxAction);
-
-        const keys = Object.keys(parameters);
-        const values = Object.values(parameters);
-
-        const len = keys.length;
-
-        for (let i = 0; i < len; i++) {
-            sbUrl.Append("&").Append(keys[i]).Append("=").Append(values[i]);
+            
+        for (const key in parameters) {
+            sbUrl.Append("&").Append(key).Append("=").Append(parameters[key]);
         }
 
         return sbUrl.ToString();

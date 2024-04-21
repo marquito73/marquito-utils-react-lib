@@ -1,3 +1,5 @@
+import { Utils } from "./Utils";
+
 /**
  * Simple StringBuilder
  */
@@ -44,6 +46,34 @@ export class StringBuilder {
      */
     public AppendReturn = () => {
         this.Append("\n");
+    }
+
+    /**
+     * Stringbuilder is empty ?
+     * 
+     * @returns True if Stringbuilder is empty
+     */
+    public IsEmpty = (): boolean => {
+        return Utils.IsEmpty(this.Values);
+    }
+
+    /**
+     * Stringbuilder contain search value ?
+     * 
+     * @param searchValue Search value
+     * @returns True if Stringbuilder contain search value
+     */
+    public Contains = (searchValue: string): boolean => {
+        let result: boolean = false;
+
+        for (const value in this.Values) {
+            if (value.includes(searchValue)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 
     /**
