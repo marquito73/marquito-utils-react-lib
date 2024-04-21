@@ -6,13 +6,6 @@ import "./css/Popup.scss";
 import { Point, Selector, Utils } from "../../Utils";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
-import ReactWidgetFactory from "..";
-
-declare global {
-	interface Window {
-		ReactWidgetFactory: ReactWidgetFactory
-	}
-}
 
 export interface PopupProps extends ComponentProps {
     /**
@@ -281,8 +274,11 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         if (Utils.IsNotNull(button)) {
             const buttonProps: ButtonProps = button!;
 
+            const clickEvent: Function = buttonProps.Events.get(EnumEvent.Click)!;
+
             buttonProps.Events.set(EnumEvent.Click, () => {
                 this.ClosePopup();
+                clickEvent();
             });
 
             return (
@@ -333,8 +329,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
                     this.setState({CurrentContentUrl: this.props.ContentUrl}, () => {
-                        window.ReactWidgetFactory = new ReactWidgetFactory();
-
                         this.forceUpdate();
                     });
                 }

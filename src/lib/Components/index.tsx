@@ -8,7 +8,7 @@ import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
 import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox} from "./Select";
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
-import { AjaxUtils } from "../Utils";
+import { AjaxUtils, Selector } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
 
 export * from "./Button";
@@ -227,6 +227,6 @@ export default class ReactWidgetFactory {
     }
 
 	public static AjaxUtils(): AjaxUtils {
-		return new AjaxUtils();
+		return AjaxUtils;
 	}
 }

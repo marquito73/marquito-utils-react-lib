@@ -1,5 +1,6 @@
 import { StringBuilder } from "./Stringbuilder";
 import * as signalR from "@microsoft/signalr";
+import { Utils } from "./Utils";
 
 export class AjaxUtils {
     public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Object, filesUpload: Array<File>, 
@@ -16,7 +17,7 @@ export class AjaxUtils {
             // Manage files
             const formData = new FormData();
             
-            if (filesUpload.length > 0) {
+            if (Utils.IsNotEmpty(filesUpload)) {
                 for (var i = 0; i < filesUpload.length; i++) {
                     formData.append("file" + i, filesUpload[i]);
                 }

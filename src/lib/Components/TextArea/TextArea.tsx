@@ -1,6 +1,6 @@
 import React from "react";
 import { EnumEvent } from "../../Enums";
-import { Component, ComponentProps } from "../Component";
+import { Component, ComponentProps, ComponentState } from "../Component";
 import "./css/TextArea.scss";
 
 export interface TextAreaProps extends ComponentProps {
@@ -20,12 +20,29 @@ export interface TextAreaProps extends ComponentProps {
 	 * Check spelling ?
 	 */
 	SpellCheck: boolean,
+	/**
+	 * TextArea can be resized horizontally ?
+	 */
     CanHorizontallyResize: boolean,
+	/**
+	 * TextArea can be resized verticaly ?
+	 */
     CanVerticalResize: boolean
 }
-export class TextArea<Props extends TextAreaProps> extends Component<Props & TextAreaProps, {}> {
-	constructor(props: Props & TextAreaProps) {
-		super(props);
+
+export interface TextAreaState extends ComponentState {
+    /**
+     * Value updated when change
+     */
+    Value: string
+}
+
+export class TextArea<Props extends TextAreaProps> extends Component<Props & TextAreaProps, TextAreaState> {
+	constructor(props: Props & TextAreaProps, state: TextAreaState) {
+		super(props, state);
+        this.state = {
+            Value: this.props.Value
+        }
 		this.props.CssClass.push("TextArea-React");
         if (this.props.CanHorizontallyResize) {
             this.props.CssClass.push("horizontalResizeEnabled");
@@ -44,7 +61,7 @@ export class TextArea<Props extends TextAreaProps> extends Component<Props & Tex
 			>
 				<textarea
 					id={this.props.Id} 
-					value={this.props.Value}
+					value={this.state.Value}
 					placeholder={this.props.PlaceHolder}
 					readOnly={this.props.ReadOnly}
 					spellCheck={this.props.SpellCheck}
@@ -55,7 +72,7 @@ export class TextArea<Props extends TextAreaProps> extends Component<Props & Tex
     }
 
 	private HandleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-		console.log("New value : " + event.target.value);
-		this.ExecuteFunction(EnumEvent.Change);
+		this.setState({Value: event.currentTarget.value}, this.ExecuteFunction(EnumEvent.Change));
+		
 	}
 }
