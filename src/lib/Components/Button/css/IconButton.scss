@@ -2,6 +2,10 @@
     height: fit-content;
 }
 
+.IconButton-React.disabled {
+    pointer-events: none;
+}
+
 .IconButton-React > a {
     text-decoration: none;
     cursor: pointer;
@@ -14,6 +18,10 @@
     width: 29px;
     height: 29px;
     text-align: center;
+}
+
+.IconButton-React.disabled > a > .Icon-React {
+    filter: contrast(0);
 }
 
 .IconButton-React > a > .Icon-React:hover {

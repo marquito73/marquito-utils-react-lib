@@ -41,6 +41,10 @@ export interface PopupProps extends ComponentProps {
      */
     ElementIdForOpenPopup: string,
     /**
+     * The popup can be resized ?
+     */
+    CanBeResized: boolean,
+    /**
      * The ok button
      */
     OkButton?: ButtonProps,
@@ -173,11 +177,14 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         }
         popupTitle.CssClass.push("PopupTitle");
         // Min size popup button
-        const minSizePopupButton = this.getHeaderPopupButton("icon-shrink2", "ReducePopup", "Reduce popup size", this.ReducePopupSize);
+        const minSizePopupButton = this.getHeaderPopupButton("icon-shrink2", "ReducePopup", "Reduce popup size", 
+            this.props.CanBeResized, this.ReducePopupSize);
         // Max size popup button
-        const maxSizePopupButton = this.getHeaderPopupButton("icon-enlarge2", "ExtendsPopup", "Extends popup size", this.ExtendsPopupSize);
+        const maxSizePopupButton = this.getHeaderPopupButton("icon-enlarge2", "ExtendsPopup", "Extends popup size", 
+            this.props.CanBeResized, this.ExtendsPopupSize);
         // Close popup button
-        const closePopupButton = this.getHeaderPopupButton("icon-cancel-circle", "ClosePopup", "Close popup", this.ClosePopup);
+        const closePopupButton = this.getHeaderPopupButton("icon-cancel-circle", "ClosePopup", "Close popup", 
+            true, this.ClosePopup);
 
         return (
             <div
@@ -208,7 +215,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param clicFunction The function called when mouse clic the button
      * @returns A header button
      */
-    private getHeaderPopupButton = (iconClass: string, buttonName: string, caption: string, clicFunction: Function) => {
+    private getHeaderPopupButton = (iconClass: string, buttonName: string, caption: string, isEnabled: boolean, clicFunction: Function) => {
         const closePopupProps: IconButtonProps = {
             IconClass: iconClass,
             IconColor: "black",
@@ -221,7 +228,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             Attributes: new Map(),
             Events: new Map()
         }
+
+        if (!isEnabled) {
+            closePopupProps.CssClass.push("disabled");
+        }
+
         closePopupProps.Events.set(EnumEvent.Click, clicFunction);
+
         return (
             <IconButton {...closePopupProps}/>
         );
