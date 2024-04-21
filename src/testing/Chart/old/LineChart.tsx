@@ -1,5 +1,5 @@
 import React from "react";
-import { Point, LineChart, LineChartProps } from "../../lib";
+import { Point, LineChart, LineChartProps } from "../../../lib";
 
 
 export const TestLineChart = () => {

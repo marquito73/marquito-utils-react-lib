@@ -10,6 +10,7 @@ import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, R
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
 import { AjaxUtils, Selector } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
+import { CustomRadarChart, RadarChartProps } from "./Chart";
 
 export * from "./Button";
 export * from "./Chart";
@@ -224,6 +225,17 @@ export default class ReactWidgetFactory {
 		const _props: CountryFlagListBoxProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<CountryFlagListBox {..._props} />);
+    }
+
+	/**
+	 * Create radar chart
+	 * 
+	 * @param props Radar chart properties
+	 */
+	public static createRadarChart(props: RadarChartProps, containerId: string) {
+		const _props: RadarChartProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<CustomRadarChart {..._props} />);
     }
 
 	public static AjaxUtils(): AjaxUtils {

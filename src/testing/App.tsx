@@ -11,13 +11,13 @@ import { TestTabs } from "./Menu/Tabs";
 import { TestCheckListBox } from "./Select/CheckListBox";
 import { TestRadioListBox } from "./Select/RadioListBox";
 import { TestDatePicker } from "./TextArea/DatePicker";
-import { TestLineChart } from "./Chart/LineChart";
 import { TestProgressBar } from "./Progress/ProgressBar";
 import { TestTextArea } from "./TextArea/TextArea";
 import { TestRangeSlider } from "./Range/RangeSlider";
 import { TestChip } from "./Chip/Chip";
 import { TestCountryListBox } from "./Select/CountryListBox";
 import { TestCountryFlagListBox } from "./Select/CountryFlagListBox";
+import { TestRadarChart } from "./Chart/CustomRadarChart";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -253,9 +253,9 @@ export default class App extends React.Component<{}, {}> {
         console.log(props);
     }
 
-    // LineChart
-    private getTestLineChart = () => {
-        return TestLineChart();
+    // RadarChart
+    private getTestRadarChart = () => {
+        return TestRadarChart();
     }
 
     private OnChangeDate = (props: DatePickerProps, state: DatePickerState) => {
@@ -344,8 +344,8 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                         </div>
                         <div id="Chart">
-                            <div id="linechart">
-                                {/* <this.getTestLineChart/> */}
+                            <div id="radarchart">
+                                {<this.getTestRadarChart/>}
                             </div>
                         </div>
                     </div>
