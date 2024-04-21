@@ -25,9 +25,12 @@ div.TextArea-React > textarea:focus {
 div.TextArea-React.horizontalResizeEnabled.verticalResizeEnabled > textarea {
     resize: both;
 }
-div.TextArea-React.horizontalResizeEnabled > textarea {
+div.TextArea-React.horizontalResizeEnabled:not(.verticalResizeEnabled) > textarea {
     resize: horizontal;
 }
-div.TextArea-React.verticalResizeEnabled > textarea {
+div.TextArea-React.verticalResizeEnabled:not(.horizontalResizeEnabled) > textarea {
     resize: vertical;
+}
+div.TextArea-React:not(.horizontalResizeEnabled):not(.verticalResizeEnabled) > textarea {
+    resize: none;
 }

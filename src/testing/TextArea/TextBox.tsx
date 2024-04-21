@@ -14,7 +14,8 @@ export const TestTextBox = (value: string, placeHolder: string) => {
         Name: "txtTest",
         CssClass: new Array(),
         Attributes: new Map(),
-        Events: new Map()
+        Events: new Map(),
+        Type: "text"
     };
 
     return (

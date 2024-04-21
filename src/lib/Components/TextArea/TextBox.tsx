@@ -23,7 +23,7 @@ export interface TextBoxProps extends ComponentProps {
 	/**
 	 * Textbox type
 	 */
-	Type: string
+	Type: string,
 }
 
 export interface TextBoxState extends ComponentState {
