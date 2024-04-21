@@ -45,6 +45,10 @@ export interface PopupProps extends ComponentProps {
      */
     CanBeResized: boolean,
     /**
+     * The popup can be moved ?
+     */
+    CanBeMoved: boolean,
+    /**
      * The ok button
      */
     OkButton?: ButtonProps,
@@ -384,7 +388,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param event The event of mouse down
      */
     private HandleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (event.buttons === 1) {
+        if (event.buttons === 1 && this.props.CanBeMoved) {
             this.StartMoving(new Point(0, 0));
         }
     }
@@ -395,8 +399,10 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param event The event of touch start
      */
     private HandleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-        const touch: React.Touch = event.touches[0];
-        this.StartMoving(new Point(touch.screenX, touch.screenY));
+        if (this.props.CanBeMoved) {
+            const touch: React.Touch = event.touches[0];
+            this.StartMoving(new Point(touch.screenX, touch.screenY));
+        }
     }
 
     /**

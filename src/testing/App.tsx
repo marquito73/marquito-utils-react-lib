@@ -3,7 +3,7 @@ import { TestTextBox } from "./TextArea/TextBox";
 import { TestCheckBox } from "./Select/CheckBox";
 import { TestRadioBox } from "./Select/RadioBox";
 import { TestGrid } from "./Grid/Grid";
-import { AjaxUtils, ButtonProps, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, Tabs, Utils } from "../lib";
+import { ButtonProps, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, Tabs, Utils } from "../lib";
 import { TestButton } from "./Button/Button";
 import { TestIconButton } from "./Button/IconButton";
 import { EnumEvent } from "../lib/Enums";
@@ -238,7 +238,8 @@ export default class App extends React.Component<{}, {}> {
             OkButton: okButtonProps,
             CancelButton: cancelButtonProps,
             ValidateButton: validateButtonProps,
-            CanBeResized: false
+            CanBeResized: false,
+            CanBeMoved: false,
         }
 
         return (
