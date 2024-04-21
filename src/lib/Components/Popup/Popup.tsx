@@ -3,7 +3,7 @@ import { EnumEvent, EnumTitleType } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import CSS from 'csstype';
 import "./css/Popup.scss";
-import { Point, Selector, Utils } from "../../Utils";
+import { AjaxUtils, Point, Selector, Utils } from "../../Utils";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
 
@@ -45,13 +45,25 @@ export interface PopupProps extends ComponentProps {
      */
     OkButton?: ButtonProps,
     /**
+     * The ok button url
+     */
+    OkButtonUrl?: string,
+    /**
      * The cancel button
      */
     CancelButton?: ButtonProps,
     /**
+     * The cancel button url
+     */
+    CancelButtonUrl?: string,
+    /**
      * The validate button
      */
     ValidateButton?: ButtonProps,
+    /**
+     * The validate button url
+     */
+    ValidateButtonUrl?: string,
 }
 
 export interface PopupState extends ComponentState {
@@ -82,7 +94,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 	constructor(props: Props & PopupProps, state: Props & PopupState) {
 		super(props);
 		this.props.CssClass.push("Popup-React");
-        this.props.CssClass.push("PopupHide");
+        this.AddCssClass("PopupHide");
         if (this.props.ExtendedWhenOpen) {
             this.props.CssClass.push("PopupMaxSize");
         }
@@ -109,10 +121,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         new Selector("html").Off(EnumEvent.MouseUp, this.StopMoving)
             .Off(EnumEvent.MouseMove, this.Move)
             .Off(EnumEvent.TouchEnd, this.StopMoving)
-            .Off(EnumEvent.TouchMove, this.Move);
-
-            /*new Selector(`#${this.props.ElementIdForOpenPopup}`)
-                .Off(EnumEvent.Click, this.OpenPopup);*/
+            .Off(EnumEvent.TouchMove, this.Move)
+            .Off(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
     }
 
 	render() {
@@ -234,8 +244,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                     ref={this.iframeRef}
                     src={this.state.CurrentContentUrl}
                 >
-                    {/* {this.iframeRef.current?.contentWindow?.document.documentElement
-                        && createPortal(ReactHtmlParser(this.state.PopupContent), this.iframeRef.current?.contentWindow?.document.documentElement)} */}
+                    
                 </iframe>
             </div>
         );
@@ -256,9 +265,9 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}PopupFooterButtons`}
                 className="PopupFooterButtons"
             >
-                {this.getFooterPopupButton(this.props.OkButton)}
-                {this.getFooterPopupButton(this.props.CancelButton)}
-                {this.getFooterPopupButton(this.props.ValidateButton)}
+                {this.getFooterPopupButton(this.props.OkButton, this.props.OkButtonUrl)}
+                {this.getFooterPopupButton(this.props.CancelButton, this.props.CancelButtonUrl)}
+                {this.getFooterPopupButton(this.props.ValidateButton, this.props.ValidateButtonUrl)}
             </div>
             </div>
         );
@@ -270,15 +279,18 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param button The button to add to footer
      * @returns A footer button
      */
-    private getFooterPopupButton = (button?: ButtonProps) => {
+    private getFooterPopupButton = (button?: ButtonProps, buttonUrl?: string) => {
         if (Utils.IsNotNull(button)) {
             const buttonProps: ButtonProps = button!;
 
-            const clickEvent: Function = buttonProps.Events.get(EnumEvent.Click)!;
-
             buttonProps.Events.set(EnumEvent.Click, () => {
-                this.ClosePopup();
-                clickEvent();
+                if (Utils.IsNotNull(buttonUrl)) {
+                    AjaxUtils.PostDataWithUrl(buttonUrl!, undefined, new Array(), this.ClosePopup, (error: any) => {
+                        console.error(error);
+                    }, "");
+                } else {
+                    this.ClosePopup();
+                }
             });
 
             return (
@@ -294,7 +306,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      */
     private ClosePopup = () => {
         if (this.AddCssClass("PopupHide")) {
-            this.props.CssClass.push("PopupHide");
 			if (Utils.IsNotNull(this.props.ClosePopupCallback)) {
 				this.props.ClosePopupCallback?.(this.props);
                 if (this.props.ReloadEachTimeOpened) {
@@ -312,20 +323,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private OpenPopup = () => {
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
-            this.props.CssClass.splice(index, 1);
-
-            /*if (Utils.IsEmpty(this.state.PopupContent)) {
-                if (Utils.IsNotEmpty(this.props.ContentUrl)) {
-                    AjaxUtils.GetViewWithUrl(this.props.ContentUrl, (popupContent: string) => {
-                        console.log(popupContent);
-                        this.setState({PopupContent: popupContent}, this.forceUpdate);
-                    }, (error: any) => {
-                        console.log(error);
-                    });
-                }
-            } else {
-                this.forceUpdate();
-            }*/
+            this.props.CssClass.splice(index);
+            this.forceUpdate();
             if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
                     this.setState({CurrentContentUrl: this.props.ContentUrl}, () => {
