@@ -61,12 +61,15 @@ export const TestRadarChart = () => {
     // Chart
     const radarChartProps: RadarChartProps = {
       Data: data,
-      RadarTypes: [],
+      RadarTypes: radarTypes,
       Id: "radarChart",
       Name: "",
       CssClass: new Array(),
       Attributes: new Map(),
       Events: new Map(),
+      LabelColor: "gray",
+      LabelSize: 20,
+      RadarGridColor: "gray"
     };
 
     return (

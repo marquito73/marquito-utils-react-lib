@@ -4,8 +4,8 @@ import { Chart, ChartProps } from "../Chart";
 import { RadarType } from "./RadarType";
 
 export interface RadarChartProps extends ChartProps {
-    Data: Array<object>,
-    RadarTypes: Array<RadarType>
+    RadarTypes: Array<RadarType>,
+    RadarGridColor: string
 }
 
 export class CustomRadarChart<Props extends RadarChartProps> 
@@ -25,9 +25,17 @@ extends Chart<Props & RadarChartProps> {
             >
                 <ResponsiveContainer width="100%" height="100%">
                     <RadarChart cx="50%" cy="50%" outerRadius="80%" data={this.props.Data}>
-                        <PolarGrid />
-                        <PolarAngleAxis dataKey="Subject" />
-                        <PolarRadiusAxis />
+                        <PolarGrid
+                            stroke={this.props.RadarGridColor} />
+                        <PolarAngleAxis 
+                            dataKey="Subject" 
+                            tick={{
+                                fill: this.props.LabelColor, 
+                                fontSize: this.props.LabelSize
+                            }} />
+                        <PolarRadiusAxis tick={{
+                                fill: this.props.LabelColor
+                                }} />
                         {
                             this.props.RadarTypes.map((radarType) => {
                                 return (
