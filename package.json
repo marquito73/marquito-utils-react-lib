@@ -1,6 +1,6 @@
 {
   "name": "@marquito73/marquito-utils-react-lib",
-  "version": "0.1.167",
+  "version": "0.1.178",
   "description": "Marquito React component library",
   "scripts": {
     "build": "rimraf ./dist && rollup -c",

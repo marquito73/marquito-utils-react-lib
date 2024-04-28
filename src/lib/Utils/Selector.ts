@@ -23,13 +23,13 @@ export class Selector {
      * 
      * @param element Element
      */
-    public constructor(element: Element);
+    public constructor(element: HTMLElement);
     /**
      * A selector
      * 
      * @param elements Elements
      */
-    public constructor(elements: Array<Element>);
+    public constructor(elements: Array<HTMLElement>);
 
     /**
      * A selector
@@ -38,17 +38,21 @@ export class Selector {
      */
     public constructor(mainSelector: any) {
         if (Utils.IsNotEmpty(mainSelector)) {
-            if (mainSelector instanceof HTMLElement) {
+            if (this.IsHtmlElement(mainSelector)) {
                 this.MainSelector.push(mainSelector);
-            } else if (mainSelector instanceof Array<HTMLElement>) {
-                mainSelector.forEach(element => this.MainSelector.push(element));
+            } else if (this.IsHtmlElementArray(mainSelector)) {
+                const selector: Array<HTMLElement> = mainSelector as Array<HTMLElement>;
+                selector.forEach(element => this.MainSelector.push(element));
+            } else if (Utils.IsNotNull(mainSelector.constructor) && mainSelector.constructor.name === "HTMLFormElement") {
+                this.MainSelector.push(mainSelector);
             } else {
                 const element: HTMLElement = document.querySelector(mainSelector)!;
                 this.MainSelector.push(element);
             }
         } else {
-            if (mainSelector instanceof Array<HTMLElement>) {
-                mainSelector.forEach(element => this.MainSelector.push(element));
+            if (this.IsHtmlElementArray(mainSelector)) {
+                const selector: Array<HTMLElement> = mainSelector as Array<HTMLElement>;
+                selector.forEach(element => this.MainSelector.push(element));
             } else {
                 const element: HTMLElement = document.querySelector(mainSelector)!;
                 this.MainSelector.push(element);
@@ -72,15 +76,20 @@ export class Selector {
      * @param selector The selector
      * @returns All elements corresponding to the selector and elements
      */
-    private GetElements = (elements: Array<Element>, selector: string, searchParent: boolean) => {
-        const elems: Array<Element> = new Array();
+    private GetElements = (elements: Array<HTMLElement>, selector: string, searchParent: boolean) => {
+        const elems: Array<HTMLElement> = new Array();
 
         elements.forEach(element => {
             if (searchParent) {
-                elems.push(element.closest(selector)!);
+                const foundElement = element.closest(selector)!;
+                if (Utils.IsNotNull(foundElement)) {
+                    elems.push(foundElement as HTMLElement);
+                }
             } else {
                 element.querySelectorAll(selector)!.forEach(node => {
-                    elems.push(node);
+                    if (Utils.IsNotNull(node)) {
+                        elems.push(node as HTMLElement);
+                    }
                 });
             }
         });
@@ -122,7 +131,7 @@ export class Selector {
      * @returns Childrens of elements
      */
     public Children = (childrenSelector: string) => {
-        let childrens: Array<Element> = new Array();
+        let childrens: Array<HTMLElement> = new Array();
         
         if (Utils.IsNotEmpty(childrenSelector)) {
             childrens = this.GetElements(this.MainSelector, ":scope > " + childrenSelector, false);
@@ -140,7 +149,7 @@ export class Selector {
      * @returns Closest childrens of elements
      */
     public Find = (childrenSelector: string) => {
-        let childrens: Array<Element> = new Array();
+        let childrens: Array<HTMLElement> = new Array();
         
         if (Utils.IsNotEmpty(childrenSelector)) {
             childrens = this.GetElements(this.MainSelector, ":scope " + childrenSelector, false);
@@ -167,7 +176,7 @@ export class Selector {
      * @returns Closest parents of elements
      */
     public Closest = (parentSelector: string) => {
-        let parents: Array<Element> = new Array();
+        let parents: Array<HTMLElement> = new Array();
         
         if (Utils.IsNotEmpty(parentSelector)) {
             parents = this.GetElements(this.MainSelector, parentSelector, true);
@@ -180,6 +189,35 @@ export class Selector {
 
     public GetDocument = () => {
         return new Selector(this.MainSelector.map(element => element.ownerDocument.documentElement!));
+    }
+
+    public GetContentDocument = () => {
+        return new Selector(this.MainSelector.map(element => {
+            const elem: HTMLIFrameElement = element as HTMLIFrameElement;
+
+            return elem.contentDocument?.documentElement!;
+        }));
+    }
+
+    public IsHtmlElement = (element: any) => {
+        return element instanceof HTMLElement || (!(typeof element === "string") && "innerHTML" in element && "style" in element);
+    }
+
+    public IsHtmlElementArray = (element: any) => {
+        let isHtmlElementArray: boolean = true;
+
+        if (element instanceof Array) {
+            for (const arrayElem in element) {
+                isHtmlElementArray = this.IsHtmlElement(element[arrayElem]);
+                if (!isHtmlElementArray) {
+                    break;
+                }
+            }
+        } else {
+            isHtmlElementArray = false;
+        }
+
+        return isHtmlElementArray;
     }
 
     /**
@@ -283,14 +321,17 @@ export class Selector {
         // TODO
     }
 
+    public Where = (predicate: (element: HTMLElement) => boolean) => {
+        return new Selector(this.GetAll().filter(predicate));
+    }
+
     /**
      * Loop into each element, and call the callback function
      * 
      * @param callback The function called for each element
      */
-    public ForEach = (callback: (element: Element) => void) => {
+    public ForEach = (callback: (element: HTMLElement) => void): void => {
         this.MainSelector.forEach(callback);
-        return this;
     }
 
     /**
@@ -349,7 +390,7 @@ export class Selector {
      * @param selector The children selector to macth (can be undefined)
      * @returns A function for on / off an event for the selector
      */
-    private OnEvent = (element: Element, eventFunction: Function, selector?: string) => {
+    private OnEvent = (element: HTMLElement, eventFunction: Function, selector?: string) => {
         return (event: Event) => {
             if (Utils.IsNotNull(selector)) {
                 const target = (event.target as HTMLElement).closest(selector!);
@@ -370,7 +411,7 @@ export class Selector {
      * @param eventFunction The function call when event occur
      * @returns A function for on / off an event for a child element
      */
-    private OnChildEvent = (childElement: Element, eventFunction: Function) => {
+    private OnChildEvent = (childElement: HTMLElement, eventFunction: Function) => {
         return (event: Event) => {
             eventFunction.call(childElement, event);
         }

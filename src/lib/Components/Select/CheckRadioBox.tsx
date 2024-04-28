@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import "./css/CheckRadioBox.scss";
 import { EnumEvent } from "../../Enums";
 
@@ -27,26 +27,24 @@ export interface CheckRadioBoxState extends ComponentState {
     IsChecked: boolean
 }
 
-export abstract class CheckRadioBox<Props extends CheckRadioBoxProps, State extends CheckRadioBoxState> 
-extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
+export abstract class CheckRadioBox<Props extends CheckRadioBoxProps> 
+extends Component<Props & CheckRadioBoxProps, CheckRadioBoxState> {
 
-    protected IsChecked:boolean = this.props.Selected;
+    constructor(props: Props & CheckRadioBoxProps, state: CheckRadioBoxState) {
+		super(props);
+        this.state = {
+            IsChecked: this.props.Selected,
+        };
+    }
 
     render() {
-
-        const toggleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-            this.IsChecked = event.target.checked;
-            console.log(event.target.value + " : " + this.IsChecked);
-
-            this.ExecuteFunction(EnumEvent.Check);
-        }
 
         return (
             <div 
                 id={this.GetOwnContainerId()} 
 				{...this.props.Attributes}
                 className={this.GetOwnCssClass()}
-                onChange={toggleCheck}
+                onChange={this.OnCheck}
             >
                 <label>
                     {this.props.Caption}
@@ -54,6 +52,14 @@ extends Component<Props & CheckRadioBoxProps, State & CheckRadioBoxState> {
                 </label>
             </div>
         );
+    }
+
+    public OnCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputElement: HTMLInputElement = event.target as HTMLInputElement;
+        this.setState({IsChecked: (event.target as HTMLInputElement).checked}, () => {
+            this.ExecuteFunction(EnumEvent.Check);
+            this.forceUpdate();
+        });
     }
 
     private getBoxInput = () => {

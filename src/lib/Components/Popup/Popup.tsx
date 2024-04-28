@@ -3,7 +3,7 @@ import { EnumEvent, EnumTitleType } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import CSS from 'csstype';
 import "./css/Popup.scss";
-import { AjaxUtils, Point, Selector, Utils } from "../../Utils";
+import { AjaxUtils, Point, Selector, SerializeUtils, Utils } from "../../Utils";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
 
@@ -299,10 +299,23 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private getFooterPopupButton = (button?: ButtonProps, buttonUrl?: string) => {
         if (Utils.IsNotNull(button)) {
             const buttonProps: ButtonProps = button!;
+            
+            buttonProps.Events.set(EnumEvent.Click, (props: ButtonProps) => {
+                if (Utils.IsNotEmpty(buttonUrl)) {
+                    // Form element inside the popup
+                    const iframeForm: HTMLFormElement = new Selector(`#${props.Id}`).Closest(".Popup-React").Children(".PopupContent")
+                        .Children(".PopupIframe").GetContentDocument().Children("body").Children("form").First() as HTMLFormElement;
 
-            buttonProps.Events.set(EnumEvent.Click, () => {
-                if (Utils.IsNotNull(buttonUrl)) {
-                    AjaxUtils.PostDataWithUrl(buttonUrl!, undefined, new Array(), this.ClosePopup, (error: any) => {
+                    let params = undefined;
+
+                    if (Utils.IsNotNull(iframeForm)) {
+                        // Get data from formulaire inside the popup
+                        params = {
+                            form: SerializeUtils.GetFormData(iframeForm),
+                        };
+                    }
+
+                    AjaxUtils.PostDataWithUrl(buttonUrl!, params, new Array(), this.ClosePopup, (error: any) => {
                         console.error(error);
                     }, "");
                 } else {

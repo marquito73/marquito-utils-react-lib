@@ -7,29 +7,30 @@ import { FlagUtils } from "../../../Utils/FlagUtils";
 import { Selector } from "../../../Utils";
 
 export class CountryBox<Props extends CheckRadioBoxProps> 
-extends CheckRadioBox<Props & CheckRadioBoxProps, CheckRadioBoxState> {
+extends CheckRadioBox<Props & CheckRadioBoxProps> {
     render() {
         this.props.CssClass.push("CountryBox-React");
-
-        const toggleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-            this.IsChecked = event.target.checked;
-            console.log(event.target.value + " : " + this.IsChecked);
-
-            this.ExecuteFunction(EnumEvent.Check);
-        }
 
         return (
             <div 
                 id={this.GetOwnContainerId()} 
 				{...this.props.Attributes}
                 className={this.GetOwnCssClass()}
-                onChange={toggleCheck}
+                onChange={this.OnCheck}
                 onClick={this.ToggleClick}
             >
                 <this.GetCountryInput/>
                 <this.GetCountryLabel/>
             </div>
         );
+    }
+
+    public OnCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputElement: HTMLInputElement = event.target as HTMLInputElement;
+        this.setState({IsChecked: (event.target as HTMLInputElement).checked}, () => {
+            this.ExecuteFunction(EnumEvent.Check);
+            this.forceUpdate();
+        });
     }
 
     private ToggleClick = (event: React.MouseEvent<HTMLDivElement>) => {

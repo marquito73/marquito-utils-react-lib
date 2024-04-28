@@ -1,6 +1,7 @@
 import { StringBuilder } from "./Stringbuilder";
 import * as signalR from "@microsoft/signalr";
 import { Utils } from "./Utils";
+import { SerializableMap } from "./SerializableMap";
 
 export class AjaxUtils {
     public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>, filesUpload: Array<File>, 
@@ -24,7 +25,12 @@ export class AjaxUtils {
             }
             if (Utils.IsNotEmpty(parameters)) {
                 for (const key in parameters) {
-                    formData.append(key, parameters[key]);
+                    const value = parameters[key];
+                    if (value instanceof SerializableMap) {
+                        formData.append(key, JSON.stringify(value.toJSON()));
+                    } else {
+                        formData.append(key, value);
+                    }
                 }
             }
             // Need to be replaced by fetch, axios dont work on application use webpack and this library

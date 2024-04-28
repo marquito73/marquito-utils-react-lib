@@ -2,11 +2,9 @@ import {CheckRadioBoxProps, CheckRadioBox, CheckRadioBoxState} from "./CheckRadi
 import "./css/RadioBox.scss"
 
 export class RadioBox<Props extends CheckRadioBoxProps> 
-extends CheckRadioBox<Props & CheckRadioBoxProps, CheckRadioBoxState> {
+extends CheckRadioBox<Props & CheckRadioBoxProps> {
     render() {
-        this.props.CssClass.push("RadioBox-React");
-
-        //this.LogProperties();
+        this.AddCssClass("RadioBox-React");
 
         return (
             super.render()

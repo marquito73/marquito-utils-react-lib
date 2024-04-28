@@ -2,16 +2,10 @@ import {CheckRadioBoxProps, CheckRadioBox, CheckRadioBoxState} from "./CheckRadi
 import "./css/CheckBox.scss";
 
 export class CheckBox<Props extends CheckRadioBoxProps> 
-extends CheckRadioBox<Props & CheckRadioBoxProps, CheckRadioBoxState> {
+extends CheckRadioBox<Props & CheckRadioBoxProps> {
     render() {
-        this.props.CssClass.push("CheckBox-React");
-
-        this.state = {
-            IsChecked: true
-        }
-
-        //this.LogProperties();
-
+        this.AddCssClass("CheckBox-React");
+        
         return (
             super.render()
         );
