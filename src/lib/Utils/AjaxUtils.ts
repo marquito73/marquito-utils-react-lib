@@ -41,7 +41,11 @@ export class AjaxUtils {
                 .then((response: Response) => response.json())
                 .then((response) => {
                     try {
-                        doneCallback?.(response);
+                        if (response.state === "success") {
+                            doneCallback?.(response);
+                        } else {
+                            failCallback?.(response.message);
+                        }
                     } finally {
                         // TODO
                     }
