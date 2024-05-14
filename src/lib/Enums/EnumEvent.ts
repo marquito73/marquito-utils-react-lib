@@ -55,4 +55,5 @@ export enum EnumEvent {
      * Event triggered when DOM has been completely parsed
      */
     DOMContentLoaded,
+    NewToastMessage,
 }

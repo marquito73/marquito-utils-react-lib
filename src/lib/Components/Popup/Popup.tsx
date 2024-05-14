@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EnumEvent, EnumTitleType } from "../../Enums";
+import { EnumEvent, EnumTitleType, EnumToastType } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import CSS from 'csstype';
 import "./css/Popup.scss";
@@ -101,10 +101,10 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     iframeRef: React.RefObject<HTMLIFrameElement>;
 	constructor(props: Props & PopupProps, state: Props & PopupState) {
 		super(props);
-		this.props.CssClass.push("Popup-React");
+        this.AddCssClass("Popup-React");
         this.AddCssClass("PopupHide");
         if (this.props.ExtendedWhenOpen) {
-            this.props.CssClass.push("PopupMaxSize");
+            this.AddCssClass("PopupMaxSize");
         }
         this.state = {
             IsInMove: false,
@@ -317,6 +317,17 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 
                     AjaxUtils.PostDataWithUrl(buttonUrl!, params, new Array(), this.ClosePopup, (error: any) => {
                         console.error(error);
+
+                        let message: string;
+
+                        if (error instanceof Error) {
+                            message = error.message;
+                        } else {
+                            message = error;
+                        }
+
+                        Utils.DisplayToast(EnumToastType.Error, "Error happen when close popup", message);
+
                     }, "");
                 } else {
                     this.ClosePopup();

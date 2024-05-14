@@ -49,11 +49,11 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		console.table(this.state);
     }
 
-	protected ExecuteFunction = (eventKey: EnumEvent) => {
+	protected ExecuteFunction = (eventKey: EnumEvent, eventData?: object) => {
 		return () => {
 			const eventFunction: Function | undefined = this.props.Events.get(eventKey);
 			if (Utils.IsNotNull(eventFunction)) {
-				eventFunction?.(this.props, this.state);
+				eventFunction?.(this.props, this.state, eventData);
 			}
 		}
 	}

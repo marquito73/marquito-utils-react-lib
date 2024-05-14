@@ -276,6 +276,14 @@ export class Selector {
         // TODO
     }
 
+    public GetData = (dataKey: string) => {
+        return this.GetAttribute(`data-${dataKey}`);
+    }
+
+    public SetData = (dataKey: string, dataValue: any) => {
+        this.SetAttribute(`data-${dataKey}`, dataValue);
+    }
+
     public GetStyle = () => {
         return Utils.Nvl(this.GetAttribute("style") as string);
     }
@@ -344,13 +352,15 @@ export class Selector {
     public On = (event: EnumEvent, eventFunction: Function, selector?: string) => {
         // Bind this event on each elements inside this selector, matching selector if specified
         this.ForEach(element => {
-            element.addEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector), true);
+            element.addEventListener(EnumEvent[event].toLowerCase(), 
+            this.OnEvent(element, eventFunction, selector) as EventListener, true);
         });
         // And for future elements
         if (Utils.IsNotNull(selector)) {
             this.GetDocument().First().addEventListener(EnumEvent[EnumEvent.DOMContentLoaded] as string, () => {
                 this.Find(selector!).ForEach(childElement => {
-                    childElement.addEventListener(EnumEvent[event].toLowerCase(), this.OnChildEvent(childElement, eventFunction), true);
+                    childElement.addEventListener(EnumEvent[event].toLowerCase(), 
+                    this.OnChildEvent(childElement, eventFunction) as EventListener, true);
                 })
             })
         }
@@ -368,13 +378,15 @@ export class Selector {
     public Off = (event: EnumEvent, eventFunction: Function, selector?: string) => {
         // Unbind this event on each elements inside this selector, matching selector if specified
         this.ForEach(element => {
-            element.removeEventListener(EnumEvent[event].toLowerCase(), this.OnEvent(element, eventFunction, selector), true);
+            element.removeEventListener(EnumEvent[event].toLowerCase(), 
+            this.OnEvent(element, eventFunction, selector) as EventListener, true);
         });
         // And for future elements
         if (Utils.IsNotNull(selector)) {
             this.GetDocument().First().addEventListener(EnumEvent[EnumEvent.DOMContentLoaded] as string, () => {
                 this.Find(selector!).ForEach(childElement => {
-                    childElement.removeEventListener(EnumEvent[event].toLowerCase(), this.OnChildEvent(childElement, eventFunction), true);
+                    childElement.removeEventListener(EnumEvent[event].toLowerCase(), 
+                    this.OnChildEvent(childElement, eventFunction) as EventListener, true);
                 })
             })
         }
@@ -396,10 +408,10 @@ export class Selector {
                 const target = (event.target as HTMLElement).closest(selector!);
     
                 if (target) {
-                    eventFunction.call(target, event);
+                    eventFunction.call(this, target, event);
                 }
             } else {
-                eventFunction.call(element, event);
+                eventFunction.call(this, element, event);
             }
         }
     }
@@ -413,7 +425,13 @@ export class Selector {
      */
     private OnChildEvent = (childElement: HTMLElement, eventFunction: Function) => {
         return (event: Event) => {
-            eventFunction.call(childElement, event);
-        }
+            eventFunction.call(this, childElement, event);
+        };
+    }
+
+    public Trigger = (eventName: string, eventData: object | undefined) => {
+        this.ForEach(element => {
+            element.dispatchEvent(new CustomEvent(eventName, {detail: eventData}))
+        });
     }
 }

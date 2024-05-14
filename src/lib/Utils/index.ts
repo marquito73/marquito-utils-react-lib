@@ -6,3 +6,4 @@ export { AjaxUtils } from "./AjaxUtils";
 export { LangUtils } from "./LangUtils";
 export { SerializeUtils } from "./SerializeUtils";
 export { SerializableMap } from "./SerializableMap";
+export { ToastMessage } from "./Toast";

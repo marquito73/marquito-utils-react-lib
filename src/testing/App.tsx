@@ -6,7 +6,7 @@ import { TestGrid } from "./Grid/Grid";
 import { ButtonProps, DatePickerProps, DatePickerState, Icon, IconProps, Popup, PopupProps, Selector, SerializeUtils, Tabs, Utils } from "../lib";
 import { TestButton } from "./Button/Button";
 import { TestIconButton } from "./Button/IconButton";
-import { EnumEvent } from "../lib/Enums";
+import { EnumEvent, EnumToastType } from "../lib/Enums";
 import { TestTabs } from "./Menu/Tabs";
 import { TestCheckListBox } from "./Select/CheckListBox";
 import { TestRadioListBox } from "./Select/RadioListBox";
@@ -18,6 +18,7 @@ import { TestChip } from "./Chip/Chip";
 import { TestCountryListBox } from "./Select/CountryListBox";
 import { TestCountryFlagListBox } from "./Select/CountryFlagListBox";
 import { TestRadarChart } from "./Chart/CustomRadarChart";
+import { TestToastManager } from "./Toast/Toast";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -52,10 +53,19 @@ export default class App extends React.Component<{}, {}> {
 
         events.set(EnumEvent.Click, this.buttonMethod);
 
-        return TestIconButton("ibtnTest", "Test icon button", "icon-cancel-circle", "red", "//www.google.fr", true, events);
+        //return TestIconButton("ibtnTest", "Test icon button", "icon-cancel-circle", "red", "//www.google.fr", true, events);
+        return TestIconButton("ibtnTest", "Test icon button", "icon-cancel-circle", "red", "", false, events);
     }
     public buttonMethod() {
         console.log("Hello world !");
+
+        //$0.dispatchEvent(new CustomEvent("newtoastmessage", {detail: {title: "Titre", content: "Contenu test"}}))
+
+        //new Selector("html").Find(".ToastManager-React").First().dispatchEvent(new CustomEvent("newtoastmessage", {detail: {title: "Titre", content: "Contenu test"}}));
+        /*new Selector("html").Find(".ToastManager-React")
+            .Trigger("newtoastmessage", {title: "Titre", content: "Contenu test"});*/
+
+        Utils.DisplayToast(EnumToastType.Warning, "Titre test", "Contenu test");
     }
 
     // Icone
@@ -252,7 +262,7 @@ export default class App extends React.Component<{}, {}> {
     private HandleClosePopup = (props) => {
         console.log(props);
 
-        const formElement = new Selector("form").First();
+        const formElement = new Selector("form").First() as HTMLFormElement;
 
         console.log(SerializeUtils.SerializeForm(formElement));
         console.log(SerializeUtils.GetFormData(formElement));
@@ -261,6 +271,11 @@ export default class App extends React.Component<{}, {}> {
     // RadarChart
     private getTestRadarChart = () => {
         return TestRadarChart();
+    }
+
+    // Toasts
+    private getToastManager = () => {
+        return TestToastManager();
     }
 
     private OnChangeDate = (props: DatePickerProps, state: DatePickerState) => {
@@ -353,6 +368,7 @@ export default class App extends React.Component<{}, {}> {
                                 {<this.getTestRadarChart/>}
                             </div>
                         </div>
+                        {<this.getToastManager/>}
                     </div>
                 </div>
             </div>

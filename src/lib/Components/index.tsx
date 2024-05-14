@@ -8,9 +8,11 @@ import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
 import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox} from "./Select";
 import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
-import { AjaxUtils, Selector } from "../Utils";
+import { AjaxUtils, Selector, Utils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
 import { CustomRadarChart, RadarChartProps } from "./Chart";
+import { ToastManager, ToastManagerProps } from "./Toast";
+import { EnumToastType } from "../Enums/EnumToastType";
 
 export * from "./Button";
 export * from "./Chart";
@@ -24,6 +26,7 @@ export * from "./Progress";
 export * from "./Range";
 export * from "./Select";
 export * from "./TextArea";
+export * from "./Toast";
 export {ReactWidgetFactory};
 export {AjaxUtils};
 
@@ -238,7 +241,17 @@ export default class ReactWidgetFactory {
 		root.render(<CustomRadarChart {..._props} />);
     }
 
+	public static createToastManager(props: ToastManagerProps, containerId: string) {
+		const _props: ToastManagerProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<ToastManager {..._props} />);
+	}
+
 	public static AjaxUtils(): AjaxUtils {
 		return AjaxUtils;
+	}
+
+	public static DisplayToast(toastType: EnumToastType, title: string, message: string) {
+		Utils.DisplayToast(toastType, title, message);
 	}
 }

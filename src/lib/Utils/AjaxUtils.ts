@@ -2,6 +2,7 @@ import { StringBuilder } from "./Stringbuilder";
 import * as signalR from "@microsoft/signalr";
 import { Utils } from "./Utils";
 import { SerializableMap } from "./SerializableMap";
+import { EnumToastType } from "../Enums";
 
 export class AjaxUtils {
     public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>, filesUpload: Array<File>, 
@@ -44,7 +45,11 @@ export class AjaxUtils {
                         if (response.state === "success") {
                             doneCallback?.(response);
                         } else {
-                            failCallback?.(response.message);
+                            if (failCallback) {
+                                failCallback?.(response.message);
+                            } else {
+                                Utils.DisplayToast(EnumToastType.Error, "Error happen during request", response.message);
+                            }
                         }
                     } finally {
                         // TODO
@@ -54,7 +59,8 @@ export class AjaxUtils {
                     try {
                         failCallback?.(error);
                     } catch(err) {
-                        console.error(`Error happens during Ajax's request : `, err);
+                        //console.error(`Error happens during Ajax's request : `, err);
+                        Utils.DisplayToast(EnumToastType.Error, "Error happens during Ajax's request", err as string);
                     }
                 });
     }

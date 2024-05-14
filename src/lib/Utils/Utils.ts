@@ -1,4 +1,7 @@
+import { EnumToastType } from "../Enums/EnumToastType";
+import { Selector } from "./Selector";
 import { StringBuilder } from "./Stringbuilder";
+import {v4 as uuidv4 } from "uuid";
 
 /**
  * Class with useful tools
@@ -162,5 +165,20 @@ export class Utils {
         }
 
         return value;
+    }
+
+    public static GetNewGUID = () => {
+        return uuidv4();
+    }
+
+    public static DisplayToast = (toastType: EnumToastType, title: string, 
+        message: string) => {
+        new Selector("html").Find(".ToastManager-React")
+            .Trigger("newtoastmessage", 
+            {
+                type: toastType, 
+                title: title, 
+                content: message,
+            });
     }
 }

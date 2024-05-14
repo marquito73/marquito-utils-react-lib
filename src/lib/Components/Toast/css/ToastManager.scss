@@ -1,0 +1,96 @@
+.ToastManager-React {
+    position: fixed;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    pointer-events: none;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    // For display childs
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    justify-content: flex-end;
+    align-items: end;
+}
+
+.ToastManager-React > .Toast-React {
+    width: 15rem;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: row;
+    border-bottom-width: 0.3rem;
+    border-bottom-style: solid;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.98);
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.ToastManager-React > .Toast-React.Debug {
+    border-bottom-color: rgba(132, 0, 255, 0.5);
+}
+
+.ToastManager-React > .Toast-React.Info {
+    border-bottom-color: rgba(140, 144, 145, 0.5);
+}
+
+.ToastManager-React > .Toast-React.Warning {
+    border-bottom-color: rgba(255, 221, 0, 0.5);
+}
+
+.ToastManager-React > .Toast-React.Error {
+    border-bottom-color: rgba(255,0,0,0.5);
+}
+
+.ToastManager-React > .Toast-React > .ToastContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 0.5rem;
+}
+
+.ToastManager-React > .Toast-React > .ToastContent > .ToastTitle {
+    height: 1.5rem;
+    text-align: center;
+    width: 100%;
+}
+
+.ToastManager-React > .Toast-React > .ToastContent > .ToastSeparator {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 95%;
+    margin: 0.2rem 0px 0.5rem 0px;
+}
+
+.ToastManager-React > .Toast-React > .ToastContent > .ToastMessage {
+    height: calc(100% - 1.5rem);
+    text-align: center;
+    width: 100%;
+}
+
+.ToastManager-React > .Toast-React > .IconButton-React {
+    align-self: center;
+}
+
+@keyframes animates-new-toast {
+    from {
+        transform: translateX(16rem);
+    } to {
+        transform: translateX(0);
+    }
+}
+
+.Toast-React {
+    animation: animates-new-toast 0.3s ease-out;
+}
+
+
+/*.Toast-React {
+    width: 10rem;
+    height: 1rem;
+    border: none;
+    background-color: red;
+    position: relative;
+    float: right;
+    margin-right: 1rem;
+}*/
