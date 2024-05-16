@@ -30,7 +30,7 @@ export interface LabelProps extends ComponentProps {
 export class Label<Props extends LabelProps> extends Component<Props & LabelProps, {}> {
 	render() {
         const cssStyles: CSS.Properties = {};
-        if (Utils.IsNotEmpty(this.props.BoldText)) {
+        if (this.props.BoldText) {
             cssStyles.fontWeight = "bold";
         }
         if (Utils.IsNotEmpty(this.props.TextColor)) {
