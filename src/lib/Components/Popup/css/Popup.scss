@@ -3,7 +3,7 @@
     min-height: 10rem;
     background-color: #fafafa;
     position: absolute;
-    filter: drop-shadow(2px 4px 6px black);
+    filter: drop-shadow(2px 4px 6px black) opacity(1);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
 
 .Popup-React.PopupMove {
     transition: width 0.3s, height 0.3s, filter 0.3s !important;
-    filter: drop-shadow(2px 4px 6px deepskyblue) !important;
+    filter: drop-shadow(2px 4px 6px deepskyblue) opacity(1) !important;
 }
 
 .Popup-React.PopupMaxSize {
@@ -33,12 +33,14 @@
 }
 
 .Popup-React.PopupHide {
-    min-width: 0 !important;
-    min-height: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
-    overflow: hidden;
+    filter: drop-shadow(2px 4px 6px black) opacity(0) !important;
+
+    //min-width: 0 !important;
+    //min-height: 0 !important;
+    //width: 0 !important;
+    //height: 0 !important;
+    //padding: 0 !important;
+    //overflow: hidden;
 }
 
 .Popup-React > * {
