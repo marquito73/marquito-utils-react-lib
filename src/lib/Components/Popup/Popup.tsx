@@ -299,6 +299,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private getFooterPopupButton = (button?: ButtonProps, buttonUrl?: string) => {
         if (Utils.IsNotNull(button)) {
             const buttonProps: ButtonProps = button!;
+
+            buttonProps.BoldCaption = true;
             
             buttonProps.Events.set(EnumEvent.Click, (props: ButtonProps) => {
                 if (Utils.IsNotEmpty(buttonUrl)) {
@@ -464,25 +466,33 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     /**
      * Handle the mouse moving the popup
      * 
+     * @param eventTarget Popup element
      * @param event The event of mouse move
      */
-    private Move = (event: Event) => {
+    private Move = (eventTarget: HTMLElement, event: Event) => {
         if (this.state.IsInMove && !this.state.IsExtended) {
             // The selector of the popup container
             const popupSelector: Selector = new Selector(`#${this.props.Id}_cnt`);
             // Get the new position (left top corner) of the popup
-            const newPopupPosition: Point = this.CalculateNewPopupPosition(this.GetMovePoint(event));
-            // Affect new position to the popup
-            const stylesMap: Map<string, string> = new Map();
-            stylesMap.set("left", `${newPopupPosition.X}px`);
-            stylesMap.set("top", `${newPopupPosition.Y}px`);
-            stylesMap.set("bottom", `auto`);
-            stylesMap.set("right", `auto`);
-            popupSelector.SetStyles(stylesMap);
-
-            if (event instanceof TouchEvent) {
-                const touch: Touch = event.touches[0];
-                this.setState({TouchMovePoint: new Point(touch.screenX, touch.screenY)});
+            const newPopupPosition: Point = this.CalculateNewPopupPosition(this.GetMovePoint(eventTarget, event));
+            // Get the max point on bottom right corner
+            const popupParent: HTMLElement = popupSelector.Parent().First();
+            const bottomRightMaxPoint: Point = new Point(popupParent.clientWidth, popupParent.clientHeight);
+            // Affect new position to the popup if popup are inside container
+            if (newPopupPosition.X >= 0 && newPopupPosition.Y >= 0 
+                && (newPopupPosition.X + popupSelector.First().clientWidth) <= bottomRightMaxPoint.X 
+                && (newPopupPosition.Y + popupSelector.First().clientHeight) <= bottomRightMaxPoint.Y) {
+                const stylesMap: Map<string, string> = new Map();
+                stylesMap.set("left", `${newPopupPosition.X}px`);
+                stylesMap.set("top", `${newPopupPosition.Y}px`);
+                stylesMap.set("bottom", `auto`);
+                stylesMap.set("right", `auto`);
+                popupSelector.SetStyles(stylesMap);
+    
+                if (event instanceof TouchEvent) {
+                    const touch: Touch = event.touches[0];
+                    this.setState({TouchMovePoint: new Point(touch.screenX, touch.screenY)});
+                }
             }
         }
     }
@@ -490,17 +500,17 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     /**
      * Get the move point
      * 
+     * @param eventTarget Popup element
      * @param event Mouse or Touch event
      * @returns The move point for calculate new popup position
      */
-    private GetMovePoint = (event: Event) => {
+    private GetMovePoint = (eventTarget: HTMLElement, event: Event) => {
         let movePoint: Point;
 
         if (event instanceof TouchEvent) {
             const touch: Touch = event.touches[0];
             // Get the last move Point
             movePoint = new Point(touch.screenX, touch.screenY).SubstractPoint(this.state.TouchMovePoint);
-            console.log("Test");
         } else {
             const mouseEvent: MouseEvent = event as MouseEvent;
 
