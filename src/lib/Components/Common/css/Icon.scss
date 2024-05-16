@@ -19,6 +19,10 @@
     font-size: 1.5rem;
 }
 
+.Icon-React::before {
+  line-height: 2.2rem;
+}
+
 .icon-home:before {
     content: "\e900";
   }
