@@ -143,16 +143,19 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
     }
 
     private WhenCloseToast = (props: IconButtonProps) => {
-        console.log(props);
-
-        const toastKey: string = new Selector(`#${props.Id}_cnt`)
-        .Closest(".Toast-React").GetData("toastKey");
+        const toast: Selector = new Selector(`#${props.Id}_cnt`)
+            .Closest(".Toast-React");
+        // Add close class
+        toast.AddClass("Close");
 
         //this.state.ToastMessages.re(this.state.ToastCounting, 1);
 
-        this.state.ToastMessages.delete(toastKey);
-
-        this.forceUpdate();
+        this.forceUpdate(() => {
+            setTimeout(() => {
+                this.state.ToastMessages.delete(toast.GetData("toastKey"));
+                this.forceUpdate();
+            }, 300);
+        });
     }
 
     //$0.dispatchEvent(new CustomEvent("newtoastmessage", {detail: {title: "Titre", content: "Contenu test"}}))

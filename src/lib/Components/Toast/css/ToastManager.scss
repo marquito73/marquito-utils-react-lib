@@ -80,13 +80,29 @@
 @keyframes animates-new-toast {
     from {
         transform: translateX(16rem);
+        filter: opacity(0);
     } to {
         transform: translateX(0);
+        filter: opacity(1);
     }
 }
 
 .Toast-React {
     animation: animates-new-toast 0.3s ease-out;
+}
+
+@keyframes animates-close-toast {
+    from {
+        transform: translateX(0);
+        filter: opacity(1);
+    } to {
+        transform: translateX(16rem);
+        filter: opacity(0);
+    }
+}
+
+.Toast-React.Close {
+    animation: animates-close-toast 0.3s ease-in;
 }
 
 
