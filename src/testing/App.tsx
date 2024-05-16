@@ -248,8 +248,8 @@ export default class App extends React.Component<{}, {}> {
             OkButton: okButtonProps,
             CancelButton: cancelButtonProps,
             ValidateButton: validateButtonProps,
-            CanBeResized: false,
-            CanBeMoved: false,
+            CanBeResized: true,
+            CanBeMoved: true,
         }
 
         return (
