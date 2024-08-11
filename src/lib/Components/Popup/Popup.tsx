@@ -49,6 +49,10 @@ export interface PopupProps extends ComponentProps {
      */
     CanBeMoved: boolean,
     /**
+     * The main color used for style this popup
+     */
+    MainStyleColor: string,
+    /**
      * The ok button
      */
     OkButton?: ButtonProps,
@@ -170,7 +174,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         const popupTitle: TitleProps = {
             Text: this.props.Title,
             BoldText: true,
-            TextColor: "deepskyblue",
+            TextColor: this.props.MainStyleColor,
             TextSize: 15,
             TitleType: EnumTitleType.H2,
             Id: `${this.props.Id}Title`,
@@ -301,6 +305,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             const buttonProps: ButtonProps = button!;
 
             buttonProps.BoldCaption = true;
+
+            buttonProps.CaptionColor = this.props.MainStyleColor;
             
             buttonProps.Events.set(EnumEvent.Click, (props: ButtonProps) => {
                 if (Utils.IsNotEmpty(buttonUrl)) {
@@ -349,6 +355,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      */
     private ClosePopup = () => {
         if (this.AddCssClass("PopupHide")) {
+            
+            const spinnerSelector: Selector = this.FindSpinner();
+            
+            if (spinnerSelector.Count() > 0) {
+                spinnerSelector.AddClass("hidden");
+            }
+
 			if (Utils.IsNotNull(this.props.ClosePopupCallback)) {
 				this.props.ClosePopupCallback?.(this.props);
                 if (this.props.ReloadEachTimeOpened) {
@@ -367,6 +380,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
             this.props.CssClass.splice(index);
+
+            const spinnerSelector: Selector = this.FindSpinner();
+            
+            if (spinnerSelector.Count() > 0) {
+                spinnerSelector.RemoveClass("hidden");
+            }
+
             this.forceUpdate();
             if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
@@ -378,6 +398,20 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 this.forceUpdate();
             }
         }
+    }
+
+    private FindSpinner = (): Selector => {
+        const popupSelector: Selector = new Selector(`#${this.props.Id}_cnt`);
+
+        let spinnerSelector: Selector;
+        if (popupSelector.Parent().HasClass("Popup-React-Container")) {
+            // Case for C#, if used with the library MarquitoUtils.Web.React
+            spinnerSelector = popupSelector.Parent().Parent();
+        } else {
+            spinnerSelector = popupSelector.Parent();
+        }
+
+        return spinnerSelector.Find(".Spinner-React");
     }
 
     /**

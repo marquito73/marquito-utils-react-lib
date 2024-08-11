@@ -69,7 +69,8 @@ export const TestRadarChart = () => {
       Events: new Map(),
       LabelColor: "gray",
       LabelSize: 20,
-      RadarGridColor: "gray"
+      RadarGridColor: "gray",
+      ChartTitle: "Test graph"
     };
 
     return (

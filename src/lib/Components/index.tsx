@@ -1,18 +1,20 @@
 import * as React from "react";
 import { createRoot } from 'react-dom/client';
-import {Button, ButtonProps, IconButton, IconButtonProps} from "./Button";
+import { Button, ButtonProps, IconButton, IconButtonProps } from "./Button";
 import { Icon, IconProps } from "./Common";
 import { Grid, GridProps } from "./Grid";
 import { Tabs, TabsProps } from "./Menu";
 import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
-import {CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox} from "./Select";
-import {DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, Title, TitleProps} from "./TextArea";
+import { CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox } from "./Select";
+import { DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, TextParagraph, TextParagraphProps, Title, TitleProps } from "./TextArea";
 import { AjaxUtils, Selector, Utils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
 import { CustomRadarChart, RadarChartProps } from "./Chart";
 import { ToastManager, ToastManagerProps } from "./Toast";
 import { EnumToastType } from "../Enums/EnumToastType";
+import { ImageContainer, ImageContainerProps } from "./Image";
+import { Spinner, SpinnerProps } from "./Spinner";
 
 export * from "./Button";
 export * from "./Chart";
@@ -20,11 +22,13 @@ export * from "./Chip";
 export * from "./Common";
 export * from "./Component";
 export * from "./Grid";
+export * from "./Image";
 export * from "./Menu";
 export * from "./Popup";
 export * from "./Progress";
 export * from "./Range";
 export * from "./Select";
+export * from "./Spinner";
 export * from "./TextArea";
 export * from "./Toast";
 export {ReactWidgetFactory};
@@ -209,6 +213,17 @@ export default class ReactWidgetFactory {
     }
 
 	/**
+	 * Create text paragraph
+	 * 
+	 * @param props Text paragraph properties
+	 */
+	public static createTextParagraph(props: TextParagraphProps, containerId: string) {
+		const _props: TextParagraphProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<TextParagraph {..._props} />);
+    }
+
+	/**
 	 * Create chip
 	 * 
 	 * @param props Chip properties
@@ -231,6 +246,17 @@ export default class ReactWidgetFactory {
     }
 
 	/**
+	 * Create spinner
+	 * 
+	 * @param props Spinner properties
+	 */
+	public static createSpinner(props: SpinnerProps, containerId: string) {
+		const _props: SpinnerProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<Spinner {..._props} />);
+    }
+
+	/**
 	 * Create radar chart
 	 * 
 	 * @param props Radar chart properties
@@ -241,6 +267,22 @@ export default class ReactWidgetFactory {
 		root.render(<CustomRadarChart {..._props} />);
     }
 
+	/**
+	 * Create image container
+	 * 
+	 * @param props Image container properties
+	 */
+	public static createImageContainer(props: ImageContainerProps, containerId: string) {
+		const _props: ImageContainerProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<ImageContainer {..._props} />);
+    }
+
+	/**
+	 * Create manager manager
+	 * 
+	 * @param props Manager manager properties
+	 */
 	public static createToastManager(props: ToastManagerProps, containerId: string) {
 		const _props: ToastManagerProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);

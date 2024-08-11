@@ -19,7 +19,6 @@ export class Button<Props extends ButtonProps> extends AbstractButton<Props & Bu
 		super(props);
 	}
     render() {
-        this.props.CssClass.push("Button-React");
         const cssStyles: CSS.Properties = {};
         if (Utils.IsNotEmpty(this.props.BackgroundColor)) {
             cssStyles.backgroundColor = this.props.BackgroundColor;
@@ -31,7 +30,7 @@ export class Button<Props extends ButtonProps> extends AbstractButton<Props & Bu
         return (
             <div
                 id={this.GetOwnContainerId()}
-                className={this.GetOwnCssClass()}
+                className={`Button-React ${this.GetOwnCssClass()}`}
                 style={cssStyles}
                 
             >

@@ -13,12 +13,14 @@ import { TestRadioListBox } from "./Select/RadioListBox";
 import { TestDatePicker } from "./TextArea/DatePicker";
 import { TestProgressBar } from "./Progress/ProgressBar";
 import { TestTextArea } from "./TextArea/TextArea";
+import { TestTextParagraph } from "./TextArea/TextParagraph";
 import { TestRangeSlider } from "./Range/RangeSlider";
 import { TestChip } from "./Chip/Chip";
 import { TestCountryListBox } from "./Select/CountryListBox";
 import { TestCountryFlagListBox } from "./Select/CountryFlagListBox";
 import { TestRadarChart } from "./Chart/CustomRadarChart";
 import { TestToastManager } from "./Toast/Toast";
+import { TestSpinner } from "./Spinner/Spinner";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -146,6 +148,10 @@ export default class App extends React.Component<{}, {}> {
     private getTestDatePicker = () => {
         return TestDatePicker(new Date("1998/07/16"), this.OnChangeDate);
     }
+    // Text paragraph
+    private getTestTextParagraph = () => {
+        return TestTextParagraph("Test\n test");
+    }
     // Textarea
     private getTestTextArea = () => {
         return TestTextArea("Test value for textarea", "Tap some text here ...");
@@ -250,6 +256,7 @@ export default class App extends React.Component<{}, {}> {
             ValidateButton: validateButtonProps,
             CanBeResized: true,
             CanBeMoved: true,
+            MainStyleColor: "yellow"
         }
 
         return (
@@ -281,6 +288,11 @@ export default class App extends React.Component<{}, {}> {
     private OnChangeDate = (props: DatePickerProps, state: DatePickerState) => {
         console.log(props);
         console.log(state);
+    }
+
+    // Spinner 
+    private getTestSpinner = () => {
+        return TestSpinner("icon-spinner2");
     }
 
     render() {
@@ -341,6 +353,9 @@ export default class App extends React.Component<{}, {}> {
                             <div id="datepicker">
                                 <this.getTestDatePicker/>
                             </div>
+                            <div id="textparagraph">
+                                <this.getTestTextParagraph/>
+                            </div>
                         </div>
                         <div id="Chip">
                             <div id="chip">
@@ -361,6 +376,11 @@ export default class App extends React.Component<{}, {}> {
                         <div id="Popup">
                             <div id="popup">
                                 <this.getTestPopup/>
+                            </div>
+                        </div>
+                        <div id="Spinner">
+                            <div id="spinner">
+                                {<this.getTestSpinner/>}
                             </div>
                         </div>
                         <div id="Chart">

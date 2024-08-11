@@ -3,9 +3,11 @@ import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, Responsi
 import { Chart, ChartProps } from "../Chart";
 import { RadarType } from "./RadarType";
 
+import "./css/RadarChart.scss";
+
 export interface RadarChartProps extends ChartProps {
     RadarTypes: Array<RadarType>,
-    RadarGridColor: string
+    RadarGridColor: string,
 }
 
 export class CustomRadarChart<Props extends RadarChartProps> 
@@ -23,6 +25,7 @@ extends Chart<Props & RadarChartProps> {
                 id={this.GetOwnContainerId()}
                 className="RadarChart-React"
             >
+                <this.GetChartTitle />
                 <ResponsiveContainer width="100%" height="100%">
                     <RadarChart cx="50%" cy="50%" outerRadius="80%" data={this.props.Data}>
                         <PolarGrid

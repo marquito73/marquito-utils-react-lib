@@ -108,7 +108,7 @@ export class AjaxUtils {
     private static GetConstructedUrl = (rootUrl: string, url: string, parameters: Record<string, any>) => {
         const sbUrl: StringBuilder = new StringBuilder("");
 
-        sbUrl.Append(rootUrl).Append(url);
+        sbUrl.Append(url);
         for (const key in parameters) {
             if (!sbUrl.Contains("?")) {
                 sbUrl.Append("?").Append(key).Append("=").Append(parameters[key]);
@@ -124,7 +124,7 @@ export class AjaxUtils {
     private static GetAjaxConstructedUrl = (rootUrl: string, url: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>) => {
         const sbUrl: StringBuilder = new StringBuilder("");
 
-        sbUrl.Append(rootUrl).Append(url).Append("?")
+        sbUrl.Append(url).Append("?")
             .Append("ajax_name").Append("=").Append(ajaxName)
             .Append("&")
             .Append("ajax_action").Append("=").Append(ajaxAction);

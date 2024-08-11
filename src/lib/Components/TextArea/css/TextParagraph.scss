@@ -1,0 +1,11 @@
+.TextParagraph-React {
+    > p {
+        width: inherit;
+        height: inherit;
+        white-space: break-spaces;
+        text-wrap: wrap;
+        
+        text-align: justify;
+        line-height: 2rem;
+    }
+}
