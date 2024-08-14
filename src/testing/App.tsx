@@ -256,7 +256,9 @@ export default class App extends React.Component<{}, {}> {
             ValidateButton: validateButtonProps,
             CanBeResized: true,
             CanBeMoved: true,
-            MainStyleColor: "yellow"
+            MainStyleColor: "yellow",
+            MainBackgroundColor: "",
+            IframeBackgroundColor: ""
         }
 
         return (

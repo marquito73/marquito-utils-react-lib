@@ -13,6 +13,8 @@ export const TestTextParagraph = (value: string) => {
         Text: value,
         TextColor: "black",
         TextSize: 20,
+        BackgroundColor: "grey",
+        BrightnessWhenHoverFocus: false,
     };
 
     return (

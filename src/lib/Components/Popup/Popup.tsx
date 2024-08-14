@@ -53,6 +53,14 @@ export interface PopupProps extends ComponentProps {
      */
     MainStyleColor: string,
     /**
+     * Main background color
+     */
+    MainBackgroundColor: string,
+    /**
+     * Iframe background color
+     */
+    IframeBackgroundColor: string,
+    /**
      * The ok button
      */
     OkButton?: ButtonProps,
@@ -150,6 +158,10 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         cssStyles.width = `${width}px`;
         cssStyles.height = `${height}px`;
 
+        if (Utils.IsNotEmpty(this.props.MainBackgroundColor)) {
+            cssStyles.backgroundColor = this.props.MainBackgroundColor;
+        }
+
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
@@ -185,13 +197,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         }
         popupTitle.CssClass.push("PopupTitle");
         // Min size popup button
-        const minSizePopupButton = this.getHeaderPopupButton("icon-shrink2", "ReducePopup", "Reduce popup size", 
+        const minSizePopupButton = this.GetHeaderPopupButton("icon-shrink2", "ReducePopup", "Reduce popup size", 
             this.props.CanBeResized, this.ReducePopupSize);
         // Max size popup button
-        const maxSizePopupButton = this.getHeaderPopupButton("icon-enlarge2", "ExtendsPopup", "Extends popup size", 
+        const maxSizePopupButton = this.GetHeaderPopupButton("icon-enlarge2", "ExtendsPopup", "Extends popup size", 
             this.props.CanBeResized, this.ExtendsPopupSize);
         // Close popup button
-        const closePopupButton = this.getHeaderPopupButton("icon-cancel-circle", "ClosePopup", "Close popup", 
+        const closePopupButton = this.GetHeaderPopupButton("icon-cancel-circle", "ClosePopup", "Close popup", 
             true, this.ClosePopup);
 
         return (
@@ -223,7 +235,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param clicFunction The function called when mouse clic the button
      * @returns A header button
      */
-    private getHeaderPopupButton = (iconClass: string, buttonName: string, caption: string, isEnabled: boolean, clicFunction: Function) => {
+    private GetHeaderPopupButton = (iconClass: string, buttonName: string, caption: string, isEnabled: boolean, clicFunction: Function) => {
         const closePopupProps: IconButtonProps = {
             IconClass: iconClass,
             IconColor: "black",
@@ -254,10 +266,17 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @returns The content of the popup
      */
     private GetContent = () => {
+        const cssStyles: CSS.Properties = {};
+
+        if (Utils.IsNotEmpty(this.props.IframeBackgroundColor)) {
+            cssStyles.backgroundColor = this.props.IframeBackgroundColor;
+        }
+
         return (
             <div
                 id={`${this.props.Id}Content`}
                 className="PopupContent"
+                style={cssStyles}
             >
                 <iframe
                     id={`${this.props.Id}Iframe`}
@@ -379,7 +398,6 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
     private OpenPopup = () => {
         const index = this.props.CssClass.indexOf("PopupHide");
         if (this.props.CssClass.includes("PopupHide") && index != -1) {
-            this.props.CssClass.splice(index);
 
             const spinnerSelector: Selector = this.FindSpinner();
             
@@ -391,10 +409,12 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             if (Utils.IsEmpty(this.state.CurrentContentUrl)) {
                 if (Utils.IsNotEmpty(this.props.ContentUrl)) {
                     this.setState({CurrentContentUrl: this.props.ContentUrl}, () => {
+                        this.RemoveCssClass("PopupHide");
                         this.forceUpdate();
                     });
                 }
             } else {
+                this.RemoveCssClass("PopupHide");
                 this.forceUpdate();
             }
         }

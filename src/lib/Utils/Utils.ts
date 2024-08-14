@@ -139,7 +139,9 @@ export class Utils {
                     result = new Map();
                 }
 			}
-		}
+		} else if (value instanceof String) {
+            result = "";
+        }
 
 		return result;
     }

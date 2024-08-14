@@ -12,10 +12,19 @@ div.TextBox-React > input {
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, filter 0.3s;
+}
+
+div.TextBox-React.WithoutBorder > input {
+    border-width: 0;
 }
 
 div.TextBox-React > input:hover, 
 div.TextBox-React > input:focus {
     border-color: deepskyblue;
+}
+
+div.TextBox-React.BrightnessWhenHoverFocus > input:hover, 
+div.TextBox-React.BrightnessWhenHoverFocus > input:focus {
+    filter: brightness(1.1);
 }

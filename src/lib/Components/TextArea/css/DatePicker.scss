@@ -19,12 +19,21 @@
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, filter 0.3s;
+}
+
+.DatePicker-React.WithoutBorder > .react-datepicker-wrapper input {
+    border-width: 0;
 }
 
 .DatePicker-React > .react-datepicker-wrapper input:hover, 
 .DatePicker-React > .react-datepicker-wrapper input:focus {
     border-color: deepskyblue !important;
+}
+
+.DatePicker-React.BrightnessWhenHoverFocus > .react-datepicker-wrapper input:hover, 
+.DatePicker-React.BrightnessWhenHoverFocus > .react-datepicker-wrapper input:focus {
+    filter: brightness(1.1);
 }
 
 .DatePicker-React > .react-datepicker__tab-loop * {

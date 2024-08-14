@@ -70,7 +70,8 @@ export const TestRadarChart = () => {
       LabelColor: "gray",
       LabelSize: 20,
       RadarGridColor: "gray",
-      ChartTitle: "Test graph"
+      ChartTitle: "Test graph",
+      ChartTitleColor: "black"
     };
 
     return (

@@ -18,7 +18,10 @@ export const TestDatePicker = (date: Date, onChangeCallback: Function) => {
         Name: "txtDate",
         CssClass: new Array(),
         Attributes: new Map(),
-        Events: events
+        Events: events,
+        HasBorder: false,
+        BackgroundColor: "grey",
+        BrightnessWhenHoverFocus: false,
     };
 
     return (

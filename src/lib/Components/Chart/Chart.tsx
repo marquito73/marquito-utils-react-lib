@@ -8,6 +8,7 @@ export interface ChartProps extends ComponentProps {
   LabelColor: string,
   LabelSize: number,
   ChartTitle: string,
+  ChartTitleColor: string,
 }
 
 export abstract class Chart<Props extends ChartProps> 
@@ -29,7 +30,7 @@ extends Component<Props & ChartProps, {}> {
         Text: this.props.ChartTitle,
         For: "",
         BoldText: true,
-        TextColor: "black",
+        TextColor: this.props.ChartTitleColor,
         TextSize: 20,
         Id: `${this.props.Id}Title`,
         Name: `${this.props.Name}Title`,

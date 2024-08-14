@@ -1,6 +1,9 @@
 import * as React from "react";
 import { EnumEvent } from "../../Enums";
 import {Component, ComponentProps, ComponentState} from "../Component";
+import CSS from 'csstype';
+import { Utils } from "../../Utils";
+
 import "./css/TextBox.scss";
 
 export interface TextBoxProps extends ComponentProps {
@@ -24,25 +27,49 @@ export interface TextBoxProps extends ComponentProps {
 	 * Textbox type
 	 */
 	Type: string,
+	/**
+	 * The component has a border ?
+	 */
+	HasBorder: boolean,
+	/**
+	 * The component's background color
+	 */
+	BackgroundColor: string,
+	/**
+	 * Add minor brightness effect when component is hovered / focused ?
+	 */
+	BrightnessWhenHoverFocus: boolean,
 }
 
 export interface TextBoxState extends ComponentState {
     /**
      * Value updated when change
      */
-    Value: string
+    Value: string,
 }
 
 export class TextBox<Props extends TextBoxProps> extends Component<Props & TextBoxProps, TextBoxState> {
 	constructor(props: Props & TextBoxProps, state: TextBoxState) {
 		super(props, state);
         this.state = {
-            Value: this.props.Value
+            Value: Utils.IsNull(this.props.Value) ? "" : this.props.Value,
+        }
+        this.AddCssClass("TextBox-React");
+
+        if (!this.props.HasBorder) {
+            this.AddCssClass("WithoutBorder");
+        }
+
+        if (this.props.BrightnessWhenHoverFocus) {
+            this.AddCssClass("BrightnessWhenHoverFocus");
         }
 	}
 
 	render() {
-        this.AddCssClass("TextBox-React");
+        const cssStyles: CSS.Properties = {};
+        if (Utils.IsNotEmpty(this.props.BackgroundColor)) {
+            cssStyles.backgroundColor = this.props.BackgroundColor;
+        }
 		return (
 			<div 
 				id={this.GetOwnContainerId()} 
@@ -51,12 +78,12 @@ export class TextBox<Props extends TextBoxProps> extends Component<Props & TextB
 			>
 				<input
 					id={this.props.Id} 
-					defaultValue={this.props.Value}
 					value={this.state.Value}
 					placeholder={this.props.PlaceHolder}
 					readOnly={this.props.ReadOnly}
 					spellCheck={this.props.SpellCheck}
 					type={this.props.Type}
+					style={cssStyles}
 					onChange={this.HandleTextBoxChange} 
 				/>
 			</div>

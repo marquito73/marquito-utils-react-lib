@@ -3,6 +3,7 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import { EnumEvent, EnumLang } from "../../Enums";
 import { LangUtils, Utils } from "../../Utils";
 import {Component, ComponentProps, ComponentState} from "../Component";
+
 import "react-datepicker/dist/react-datepicker.css";  
 import "./css/DatePicker.scss";
 
@@ -26,14 +27,26 @@ export interface DatePickerProps extends ComponentProps {
     /**
      * Language for the datepicker
      */
-    Language: EnumLang
+    Language: EnumLang,
+	/**
+	 * The component has a border ?
+	 */
+	HasBorder: boolean,
+	/**
+	 * The component's background color
+	 */
+	BackgroundColor: string,
+	/**
+	 * Add minor brightness effect when component is hovered / focused ?
+	 */
+	BrightnessWhenHoverFocus: boolean,
 }
 
 export interface DatePickerState extends ComponentState {
     /**
      * Date, value updated when change
      */
-    DateValue: Date
+    DateValue: Date,
 }
 
 export class DatePicker<Props extends DatePickerProps> extends Component<Props & DatePickerProps, DatePickerState> {
@@ -43,12 +56,20 @@ export class DatePicker<Props extends DatePickerProps> extends Component<Props &
         this.state = {
             DateValue: this.props.Date
         }
-    }
-
-	render() {
         this.AddCssClass("DatePicker-React");
         // Register the language choosen
         registerLocale("lang", LangUtils.GetLocalForLang(this.props.Language));
+
+        if (!this.props.HasBorder) {
+            this.AddCssClass("WithoutBorder");
+        }
+
+        if (this.props.BrightnessWhenHoverFocus) {
+            this.AddCssClass("BrightnessWhenHoverFocus");
+        }
+    }
+
+	render() {
         return(
             <div
                 id={this.GetOwnContainerId()}

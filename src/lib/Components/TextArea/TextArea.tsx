@@ -1,7 +1,10 @@
 import React from "react";
 import { EnumEvent } from "../../Enums";
 import { Component, ComponentProps, ComponentState } from "../Component";
+import CSS from 'csstype';
+
 import "./css/TextArea.scss";
+import { Utils } from "../../Utils";
 
 export interface TextAreaProps extends ComponentProps {
 	/**
@@ -27,32 +30,55 @@ export interface TextAreaProps extends ComponentProps {
 	/**
 	 * TextArea can be resized verticaly ?
 	 */
-    CanVerticalResize: boolean
+    CanVerticalResize: boolean,
+	/**
+	 * The component has a border ?
+	 */
+	HasBorder: boolean,
+	/**
+	 * The component's background color
+	 */
+	BackgroundColor: string,
+	/**
+	 * Add minor brightness effect when component is hovered / focused ?
+	 */
+	BrightnessWhenHoverFocus: boolean,
 }
 
 export interface TextAreaState extends ComponentState {
     /**
      * Value updated when change
      */
-    Value: string
+    Value: string,
 }
 
 export class TextArea<Props extends TextAreaProps> extends Component<Props & TextAreaProps, TextAreaState> {
 	constructor(props: Props & TextAreaProps, state: TextAreaState) {
 		super(props, state);
         this.state = {
-            Value: this.props.Value
+            Value: Utils.IsNull(this.props.Value) ? "" : this.props.Value
         }
-		this.props.CssClass.push("TextArea-React");
+		this.AddCssClass("TextArea-React");
         if (this.props.CanHorizontallyResize) {
-            this.props.CssClass.push("horizontalResizeEnabled");
+            this.AddCssClass("horizontalResizeEnabled");
         }
         if (this.props.CanVerticalResize) {
-            this.props.CssClass.push("verticalResizeEnabled");
+            this.AddCssClass("verticalResizeEnabled");
+        }
+
+        if (!this.props.HasBorder) {
+            this.AddCssClass("WithoutBorder");
+        }
+
+        if (this.props.BrightnessWhenHoverFocus) {
+            this.AddCssClass("BrightnessWhenHoverFocus");
         }
 	}
     render() {
-
+        const cssStyles: CSS.Properties = {};
+        if (Utils.IsNotEmpty(this.props.BackgroundColor)) {
+            cssStyles.backgroundColor = this.props.BackgroundColor;
+        }
         return (
 			<div 
 				id={this.GetOwnContainerId()} 
@@ -65,6 +91,7 @@ export class TextArea<Props extends TextAreaProps> extends Component<Props & Tex
 					placeholder={this.props.PlaceHolder}
 					readOnly={this.props.ReadOnly}
 					spellCheck={this.props.SpellCheck}
+					style={cssStyles}
 					onChange={this.HandleTextAreaChange}
 				/>
 			</div>

@@ -43,6 +43,7 @@ extends Chart<Props & RadarChartProps> {
                             this.props.RadarTypes.map((radarType) => {
                                 return (
                                     <Radar 
+                                        key={radarType.Name}
                                         name={radarType.Name} 
                                         dataKey={radarType.DataKey} 
                                         stroke={radarType.StrokeColor} 

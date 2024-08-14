@@ -15,7 +15,10 @@ export const TestTextArea = (value: string, placeHolder: string) => {
         Name: "taTest",
         CssClass: new Array(),
         Attributes: new Map(),
-        Events: new Map()
+        Events: new Map(),
+        HasBorder: false,
+        BackgroundColor: "grey",
+        BrightnessWhenHoverFocus: false,
     };
 
     return (

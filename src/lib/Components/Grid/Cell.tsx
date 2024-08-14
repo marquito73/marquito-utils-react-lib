@@ -85,6 +85,8 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
             Attributes: new Map(),
             Events: new Map(),
             Type: "text",
+            HasBorder: true,
+            BackgroundColor: "none"
         }
 
         return (
@@ -121,7 +123,9 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
             Name: "dp" + this.getCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            HasBorder: true,
+            BackgroundColor: ""
         }
 
         return (

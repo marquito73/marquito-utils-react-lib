@@ -14,12 +14,21 @@ div.TextArea-React > textarea {
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, filter 0.3s;
+}
+
+div.TextArea-React.WithoutBorder > textarea {
+    border-width: 0;
 }
 
 div.TextArea-React > textarea:hover, 
 div.TextArea-React > textarea:focus {
     border-color: deepskyblue;
+}
+
+div.TextArea-React.BrightnessWhenHoverFocus > textarea:hover, 
+div.TextArea-React.BrightnessWhenHoverFocus > textarea:focus {
+    filter: brightness(1.1);
 }
 
 div.TextArea-React.horizontalResizeEnabled.verticalResizeEnabled > textarea {

@@ -15,7 +15,10 @@ export const TestTextBox = (value: string, placeHolder: string) => {
         CssClass: new Array(),
         Attributes: new Map(),
         Events: new Map(),
-        Type: "text"
+        Type: "text",
+        HasBorder: false,
+        BackgroundColor: "grey",
+        BrightnessWhenHoverFocus: false,
     };
 
     return (

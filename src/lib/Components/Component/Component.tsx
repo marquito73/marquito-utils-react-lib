@@ -109,6 +109,13 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		return classAdded;
 	}
 
+	protected RemoveCssClass = (cssClass: string) => {
+		const index = this.props.CssClass.indexOf("PopupHide");
+        if (this.props.CssClass.includes("PopupHide") && index != -1) {
+            this.props.CssClass.splice(index);
+		}
+	}
+
 	protected GetOwnCssAttribute = () => {
 		return this.GetCssAttribute(this.props.CssClass);
 	}
