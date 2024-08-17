@@ -1,3 +1,4 @@
+import { EnumEvent } from "../Enums";
 import { EnumToastType } from "../Enums/EnumToastType";
 import { Selector } from "./Selector";
 import { StringBuilder } from "./Stringbuilder";
@@ -176,7 +177,7 @@ export class Utils {
     public static DisplayToast = (toastType: EnumToastType, title: string, 
         message: string) => {
         new Selector("html").Find(".ToastManager-React")
-            .Trigger("newtoastmessage", 
+            .Trigger(EnumEvent.NewToastMessage.toString().toLocaleLowerCase(), 
             {
                 type: toastType, 
                 title: title, 

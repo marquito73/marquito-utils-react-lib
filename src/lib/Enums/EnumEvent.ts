@@ -56,4 +56,6 @@ export enum EnumEvent {
      */
     DOMContentLoaded,
     NewToastMessage,
+    ComponentIsMounted,
+    ComponentWillUnmounted,
 }

@@ -129,6 +129,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 	}
 
     componentDidMount() {
+        super.componentDidMount();
         new Selector("html").On(EnumEvent.MouseUp, this.StopMoving)
             .On(EnumEvent.MouseMove, this.Move)
             .On(EnumEvent.TouchEnd, this.StopMoving)

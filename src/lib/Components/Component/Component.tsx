@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StringBuilder, Utils } from "../../Utils";
+import { Selector, StringBuilder, Utils } from "../../Utils";
 import CSS from 'csstype';
 import { EnumEvent } from "../../Enums";
 import "./css/Component.scss"
@@ -43,6 +43,24 @@ export interface ComponentState {
  * */
 export abstract class Component<Props extends ComponentProps, State extends ComponentState>
 	extends React.Component<Props & ComponentProps, State & ComponentState> {
+
+	componentDidMount() {
+        new Selector("html")
+            .Trigger(EnumEvent.ComponentIsMounted.toString(), 
+            {
+                ID: this.props.Id,
+				Type: this.constructor.name,
+            });
+	}
+
+	componentWillUnmount() {
+        new Selector("html")
+            .Trigger(EnumEvent.ComponentWillUnmounted.toString(), 
+            {
+                ID: this.props.Id,
+				Type: this.constructor.name,
+            });
+	}
 
 	protected LogProperties = () => {
 		console.table(this.props);
