@@ -52,6 +52,10 @@ export enum EnumEvent {
      */
     Change,
     /**
+     * Scroll event
+     */
+    Scroll,
+    /**
      * Event triggered when DOM has been completely parsed
      */
     DOMContentLoaded,
