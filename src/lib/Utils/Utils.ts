@@ -177,7 +177,7 @@ export class Utils {
     public static DisplayToast = (toastType: EnumToastType, title: string, 
         message: string) => {
         new Selector("html").Find(".ToastManager-React")
-            .Trigger(EnumEvent.NewToastMessage.toString().toLocaleLowerCase(), 
+            .Trigger(EnumEvent.NewToastMessage, 
             {
                 type: toastType, 
                 title: title, 

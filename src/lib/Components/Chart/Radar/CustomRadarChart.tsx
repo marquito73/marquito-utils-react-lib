@@ -23,7 +23,7 @@ extends Chart<Props & RadarChartProps> {
         return (
             <div
                 id={this.GetOwnContainerId()}
-                className="RadarChart-React"
+				className={this.GetOwnCssClass()}
             >
                 <this.GetChartTitle />
                 <ResponsiveContainer width="100%" height="100%">

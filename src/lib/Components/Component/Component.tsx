@@ -46,7 +46,7 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 
 	componentDidMount() {
         new Selector("html")
-            .Trigger(EnumEvent.ComponentIsMounted.toString(), 
+            .Trigger(EnumEvent.ComponentIsMounted, 
             {
                 ID: this.props.Id,
 				Type: this.constructor.name,
@@ -55,7 +55,7 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 
 	componentWillUnmount() {
         new Selector("html")
-            .Trigger(EnumEvent.ComponentWillUnmounted.toString(), 
+            .Trigger(EnumEvent.ComponentWillUnmounted, 
             {
                 ID: this.props.Id,
 				Type: this.constructor.name,

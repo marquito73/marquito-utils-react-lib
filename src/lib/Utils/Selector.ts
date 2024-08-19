@@ -46,16 +46,18 @@ export class Selector {
             } else if (Utils.IsNotNull(mainSelector.constructor) && mainSelector.constructor.name === "HTMLFormElement") {
                 this.MainSelector.push(mainSelector);
             } else {
-                const element: HTMLElement = document.querySelector(mainSelector)!;
-                this.MainSelector.push(element);
+                document.querySelectorAll(mainSelector).forEach(element => {
+                    this.MainSelector.push(element);
+                });
             }
         } else {
             if (this.IsHtmlElementArray(mainSelector)) {
                 const selector: Array<HTMLElement> = mainSelector as Array<HTMLElement>;
                 selector.forEach(element => this.MainSelector.push(element));
             } else {
-                const element: HTMLElement = document.querySelector(mainSelector)!;
-                this.MainSelector.push(element);
+                document.querySelectorAll(mainSelector).forEach(element => {
+                    this.MainSelector.push(element);
+                });
             }
         }
     }
@@ -429,9 +431,10 @@ export class Selector {
         };
     }
 
-    public Trigger = (eventName: string, eventData: object | undefined) => {
+    public Trigger = (eventName: EnumEvent, eventData: object | undefined) => {
         this.ForEach(element => {
-            element.dispatchEvent(new CustomEvent(eventName, {detail: eventData}))
+            element.dispatchEvent(new CustomEvent(EnumEvent[eventName].toString().toLowerCase(), 
+            {detail: eventData}))
         });
     }
 }
