@@ -117,7 +117,6 @@ extends Component<Props & CountryFlagListBoxProps, CountryFlagListBoxState> {
                 id={this.GetContainerId(option.Id)}
                 key={option.Id}
 				{...this.props.Attributes}
-                className={this.GetOwnCssClass()}
                 onClick={this.OnOptionClick}
                 data-countrycode={option.Value}
             >

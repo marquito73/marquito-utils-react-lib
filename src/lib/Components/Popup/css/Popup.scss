@@ -16,6 +16,7 @@
     top: 0;
     bottom: 0;
     margin: auto;
+    visibility: visible;
 }
 
 .Popup-React.PopupMove {
@@ -35,6 +36,7 @@
 .Popup-React.PopupHide {
     filter: drop-shadow(2px 4px 6px black) opacity(0) !important;
     pointer-events: none;
+    visibility: hidden;
 }
 
 .Popup-React > * {
