@@ -128,8 +128,8 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 	}
 
 	protected RemoveCssClass = (cssClass: string) => {
-		const index = this.props.CssClass.indexOf("PopupHide");
-        if (this.props.CssClass.includes("PopupHide") && index != -1) {
+		const index = this.props.CssClass.indexOf(cssClass);
+        if (this.props.CssClass.includes(cssClass) && index != -1) {
             this.props.CssClass.splice(index);
 		}
 	}
@@ -150,5 +150,9 @@ export abstract class Component<Props extends ComponentProps, State extends Comp
 		sbStyle.Append(cssStyle).Append("!important");
 		
 		return sbStyle.ToString();
+	}
+
+	protected GetComponentSelector = () => {
+		return new Selector(this.GetOwnId());
 	}
 }

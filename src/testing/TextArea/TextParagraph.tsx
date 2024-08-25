@@ -4,7 +4,7 @@ import { TextParagraphProps, TextParagraph } from "../../lib";
 
 export const TestTextParagraph = (value: string) => {
     // Text paragraph
-    const txtProps: TextParagraphProps = {
+    const tbProps: TextParagraphProps = {
         Id: "tpParagraph",
         Name: "tpParagraph",
         CssClass: new Array(),
@@ -13,11 +13,15 @@ export const TestTextParagraph = (value: string) => {
         Text: value,
         TextColor: "black",
         TextSize: 20,
-        BackgroundColor: "grey",
+        BackgroundColor: "none",
         BrightnessWhenHoverFocus: false,
+        HasViewMoreButton: true,
+        ViewMoreContent: "View more",
+        ViewLessContent: "View less",
+        ViewMoreButtonColor: "deepskyblue"
     };
 
     return (
-        <TextParagraph {...txtProps}/>
+        <TextParagraph {...tbProps}/>
     );
 }

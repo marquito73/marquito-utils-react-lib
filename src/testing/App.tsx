@@ -150,7 +150,7 @@ export default class App extends React.Component<{}, {}> {
     }
     // Text paragraph
     private getTestTextParagraph = () => {
-        return TestTextParagraph("Test\n test");
+        return TestTextParagraph("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit interdum enim vitae pharetra. \n Integer posuere sodales venenatis. \n Aliquam a augue at lorem tincidunt lacinia vitae et sapien. \n Interdum et malesuada fames ac ante ipsum primis in faucibus. \n Aliquam vel mauris eget turpis imperdiet feugiat non vitae nulla.");
     }
     // Textarea
     private getTestTextArea = () => {

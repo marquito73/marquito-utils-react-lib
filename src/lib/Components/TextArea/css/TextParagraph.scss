@@ -1,11 +1,51 @@
 .TextParagraph-React {
+    display: flex;
+    flex-direction: column;
+
     > p {
         width: inherit;
         height: inherit;
         white-space: break-spaces;
         text-wrap: wrap;
-        
+        position: relative;
         text-align: justify;
         line-height: 2rem;
+        overflow-y: hidden;
+        margin-block-end: 0;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    > .Button-React {
+        box-shadow: none;
+        border: none;
+        width: fit-content;
+        background: none !important;
+
+        > a {
+            padding-top: 0;
+            padding-bottom: 0;
+
+            .Label-React {
+                text-align: left;
+            }
+        }
+    }
+}
+
+.TextParagraph-React.WithViewMoreButton:not(.ViewAllContent) {
+    > p {
+        height: 6rem;
+    }
+
+    > p::after {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        content: "";
+        height: 2rem;
+        width: 100%;
+        backdrop-filter: blur(1px);
+        //background: linear-gradient(to bottom, transparent, white);
     }
 }
