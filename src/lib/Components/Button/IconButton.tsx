@@ -9,6 +9,7 @@ import { Icon, IconProps } from "../Common/Icon";
 export interface IconButtonProps extends AbstractButtonProps {
     IconClass: string,
     IconColor: string
+    IconSize: number,
 }
 
 export class IconButton<Props extends IconButtonProps> extends AbstractButton<Props & IconButtonProps> {
@@ -37,18 +38,19 @@ export class IconButton<Props extends IconButtonProps> extends AbstractButton<Pr
     }
 
     private GetButtonIcon = () => {
-        const lblProps: IconProps = {
+        const iconProps: IconProps = {
             IconClass: this.props.IconClass,
             IconColor: this.props.IconColor,
             Id: this.props.Id + "Icon",
             Name: this.props.Name + "Icon",
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            IconSize: this.props.IconSize,
         }
 
         return (
-            <Icon {...lblProps}/>
+            <Icon {...iconProps}/>
         );
     }
 }
