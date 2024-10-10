@@ -8,7 +8,7 @@ import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
 import { CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox } from "./Select";
 import { DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, TextParagraph, TextParagraphProps, Title, TitleProps } from "./TextArea";
-import { AjaxUtils, Selector, Utils } from "../Utils";
+import { AjaxUtils, Utils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
 import { CustomRadarChart, RadarChartProps } from "./Chart";
 import { ToastManager, ToastManagerProps } from "./Toast";
@@ -295,5 +295,9 @@ export default class ReactWidgetFactory {
 
 	public static DisplayToast(toastType: EnumToastType, title: string, message: string) {
 		Utils.DisplayToast(toastType, title, message);
+	}
+
+    public static OpenPopup(popupID: string) {
+		Utils.OpenPopup(popupID);
 	}
 }

@@ -2,20 +2,23 @@ import { StringBuilder } from "./Stringbuilder";
 import * as signalR from "@microsoft/signalr";
 import { Utils } from "./Utils";
 import { SerializableMap } from "./SerializableMap";
-import { EnumToastType } from "../Enums";
+import { EnumEvent, EnumToastType } from "../Enums";
+import { manual } from "rimraf";
+import { SerializeUtils } from "./SerializeUtils";
+import { Selector } from "./Selector";
 
 export class AjaxUtils {
-    public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, parameters: Record<string, any>, filesUpload: Array<File>, 
-        doneCallback: Function, failCallback: Function, loadingText: string) => {
+    public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, form: string | Selector | undefined, parameters: Record<string, any>, filesUpload: Array<File>, 
+        doneCallback: Function, failCallback: Function) => {
             const url = "/home/ajax";
 
             const constructedUrl = AjaxUtils.GetAjaxConstructedUrl(rootUrl, url, ajaxName, ajaxAction, parameters);
             
-            AjaxUtils.PostDataWithUrl(constructedUrl, undefined, filesUpload, doneCallback, failCallback, loadingText);
+            AjaxUtils.PostDataWithUrl(constructedUrl, form, undefined, filesUpload, doneCallback, failCallback);
     }
 
-    public static PostDataWithUrl = (ajaxUrl: string, parameters: Record<string, any> | undefined, filesUpload: Array<File>, 
-        doneCallback: Function, failCallback: Function, loadingText: string) => {
+    public static PostDataWithUrl = (ajaxUrl: string, form: string | Selector | undefined, parameters: Record<string, any> | undefined, filesUpload: Array<File>, 
+        doneCallback: Function, failCallback: Function) => {
             // Manage files
             const formData = new FormData();
             
@@ -24,22 +27,47 @@ export class AjaxUtils {
                     formData.append("file" + i, filesUpload[i]);
                 }
             }
+
+            // Form data
+            if (Utils.IsNotNull(form) && form !== "") {
+                let formElement: HTMLFormElement;
+                if (form instanceof Selector) {
+                    formElement = form.First() as HTMLFormElement;
+                } else {
+                    formElement = new Selector(`#${form}`).First() as HTMLFormElement;
+                }
+
+                formData.append("form", JSON.stringify(SerializeUtils.GetFormData(formElement).toJSON()));
+            }
+            // Query parameters
             if (Utils.IsNotEmpty(parameters)) {
+                const dataMap: SerializableMap<string, any> = new SerializableMap();
+
                 for (const key in parameters) {
                     const value = parameters[key];
-                    if (value instanceof SerializableMap) {
-                        formData.append(key, JSON.stringify(value.toJSON()));
-                    } else {
-                        formData.append(key, value);
-                    }
+
+                    dataMap.set(key, value);
                 }
+
+                formData.append("parameters", JSON.stringify(dataMap.toJSON()));
             }
             // Need to be replaced by fetch, axios dont work on application use webpack and this library
             fetch(ajaxUrl, {
                 method: "POST",
-                body: formData
+                body: formData,
+                redirect: "follow",
             })
-                .then((response: Response) => response.json())
+                .then((response: Response) => {
+                    // If manualy redirect
+                    if (response.redirected) {
+                        // Redirect manualy browser to new URL
+                        window.location.href = response.url;
+                        return;
+                    }
+                    
+                    // Return JSON response
+                    return response.json();
+                })
                 .then((response) => {
                     try {
                         if (response.state === "success") {
@@ -49,6 +77,22 @@ export class AjaxUtils {
                                 failCallback?.(response.message);
                             } else {
                                 Utils.DisplayToast(EnumToastType.Error, "Error happen during request", response.message);
+                            }
+                        }
+                        if (Utils.IsNotNull(form) && form !== "") {
+                            if (form instanceof Selector) {
+                                form.Trigger(EnumEvent.AjaxReturn, 
+                                    {
+                                        state: response.state, 
+                                        response: response,
+                                    });
+                            } else {
+                                new Selector(`#${form}`)
+                                .Trigger(EnumEvent.AjaxReturn, 
+                                    {
+                                        state: response.state, 
+                                        response: response,
+                                    });
                             }
                         }
                     } finally {
@@ -74,9 +118,9 @@ export class AjaxUtils {
 
             const constructedUrl = AjaxUtils.GetConstructedUrl(rootUrl, url, parameters);
             
-            AjaxUtils.PostDataWithUrl(constructedUrl, parameters, new Array(), () => {
+            AjaxUtils.PostDataWithUrl(constructedUrl, "", parameters, new Array(), () => {
                 window.location.reload();
-            }, failCallback, "");
+            }, failCallback);
     }
 
     public static GetViewWithUrl = (ajaxUrl: string, doneCallback: Function, failCallback: Function) => {

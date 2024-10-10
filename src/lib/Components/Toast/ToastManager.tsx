@@ -135,6 +135,7 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
             CssClass: new Array(),
             Attributes: new Map(),
             Events: events,
+            IconSize: 15,
         };
 
         return(

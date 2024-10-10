@@ -35,14 +35,15 @@ export class Spinner<Props extends SpinnerProps> extends Component<Props & Spinn
 
 	private GetSpinnerIcon = () => {
         const spinnerProps: IconProps = {
-            IconClass: this.props.SpinnerIcon,
-            IconColor: this.props.SpinnerIconColor,
-            Id: `${this.props.Id}_spinnerIcon`,
-            Name: `${this.props.Id}_spinnerIcon`,
-            CssClass: new Array(),
-            Attributes: new Map(),
-            Events: new Map()
-        };
+			IconClass: this.props.SpinnerIcon,
+			IconColor: this.props.SpinnerIconColor,
+			Id: `${this.props.Id}_spinnerIcon`,
+			Name: `${this.props.Id}_spinnerIcon`,
+			CssClass: new Array(),
+			Attributes: new Map(),
+			Events: new Map(),
+			IconSize: 15,
+		};
         return (
             <Icon {...spinnerProps}></Icon>
         );

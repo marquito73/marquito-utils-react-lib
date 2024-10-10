@@ -62,4 +62,6 @@ export enum EnumEvent {
     NewToastMessage,
     ComponentIsMounted,
     ComponentWillUnmounted,
+    OpenPopup,
+    AjaxReturn,
 }

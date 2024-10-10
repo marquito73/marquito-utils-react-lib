@@ -1,12 +1,10 @@
 div.TextBox-React {
     width: inherit;
-    display: flex;
-    justify-content: center;
 }
 
 div.TextBox-React > input {
     height: 20px;
-    width: 99%;
+    width: 100%;
     outline: none;
     border-radius: 5px;
     border-width: 1px;

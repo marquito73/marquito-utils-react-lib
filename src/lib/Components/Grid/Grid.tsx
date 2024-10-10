@@ -121,7 +121,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                     let test: object = new Object();
                     let test1 = Utils.NvlObject(test);
                     // Call ajax of the grid for get next rows
-                    AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", {
+                    AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", undefined, {
                         _gridId: this.props.Id
                     }, new Array(), (gridData: any) => {
                         if (Utils.IsNotEmpty(gridData.MESSAGE)) {
@@ -155,7 +155,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                         }
                     }, (error: any) => {
                         console.error(error);
-                    }, "");
+                    });
                 } catch (e) {
                     console.error(e);
                 } finally {

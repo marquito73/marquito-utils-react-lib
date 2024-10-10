@@ -84,6 +84,10 @@ export interface PopupProps extends ComponentProps {
      * The validate button url
      */
     ValidateButtonUrl?: string,
+    /**
+     * The close URL
+     */
+    CloseUrl?: string,
 }
 
 export interface PopupState extends ComponentState {
@@ -133,8 +137,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         new Selector("html").On(EnumEvent.MouseUp, this.StopMoving)
             .On(EnumEvent.MouseMove, this.Move)
             .On(EnumEvent.TouchEnd, this.StopMoving)
-            .On(EnumEvent.TouchMove, this.Move)
-            .On(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
+            .On(EnumEvent.TouchMove, this.Move);
+
+            if (this.props.ElementIdForOpenPopup !== "" && this.props.ElementIdForOpenPopup !== undefined) {
+                new Selector("html").On(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
+            }
+
+        new Selector(`#${this.GetOwnContainerId()}`).On(EnumEvent.OpenPopup, this.OpenPopup);
     }
   
     componentWillUnmount() {
@@ -142,8 +151,13 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
         new Selector("html").Off(EnumEvent.MouseUp, this.StopMoving)
             .Off(EnumEvent.MouseMove, this.Move)
             .Off(EnumEvent.TouchEnd, this.StopMoving)
-            .Off(EnumEvent.TouchMove, this.Move)
-            .Off(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
+            .Off(EnumEvent.TouchMove, this.Move);
+
+            if (this.props.ElementIdForOpenPopup !== "" && this.props.ElementIdForOpenPopup !== undefined) {
+                new Selector("html").Off(EnumEvent.Click, this.OpenPopup, `#${this.props.ElementIdForOpenPopup}`);
+            }
+
+            new Selector(`#${this.GetOwnContainerId()}`).Off(EnumEvent.OpenPopup, this.OpenPopup);
     }
 
 	render() {
@@ -205,7 +219,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             this.props.CanBeResized, this.ExtendsPopupSize);
         // Close popup button
         const closePopupButton = this.GetHeaderPopupButton("icon-cancel-circle", "ClosePopup", "Close popup", 
-            true, this.ClosePopup);
+            true, this.GetActionMethodCall(this.props.CloseUrl));
 
         return (
             <div
@@ -247,7 +261,8 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
             Name: `${this.props.Name}${buttonName}`,
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            IconSize: 15,
         }
 
         if (!isEnabled) {
@@ -306,12 +321,39 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                 id={`${this.props.Id}PopupFooterButtons`}
                 className="PopupFooterButtons"
             >
-                {this.getFooterPopupButton(this.props.OkButton, this.props.OkButtonUrl)}
-                {this.getFooterPopupButton(this.props.CancelButton, this.props.CancelButtonUrl)}
-                {this.getFooterPopupButton(this.props.ValidateButton, this.props.ValidateButtonUrl)}
+                {this.GetFooterPopupButton(this.props.OkButton, this.props.OkButtonUrl)}
+                {this.GetFooterPopupButton(this.props.CancelButton, this.props.CancelButtonUrl)}
+                {this.GetFooterPopupButton(this.props.ValidateButton, this.props.ValidateButtonUrl)}
             </div>
             </div>
         );
+    }
+
+    private GetActionMethodCall = (buttonUrl?: string) => {
+        return (props: ButtonProps) => {
+            if (Utils.IsNotEmpty(buttonUrl)) {
+                // Form element inside the popup
+                const iframeForm: Selector = new Selector(`#${props.Id}_cnt`).Closest(".Popup-React").Children(".PopupContent")
+                    .Children(".PopupIframe").GetContentDocument().Children("body").Children("form");
+    
+                AjaxUtils.PostDataWithUrl(buttonUrl!, iframeForm, undefined, new Array(), this.ClosePopup, (error: any) => {
+                    console.error(error);
+    
+                    let message: string;
+    
+                    if (error instanceof Error) {
+                        message = error.message;
+                    } else {
+                        message = error;
+                    }
+    
+                    Utils.DisplayToast(EnumToastType.Error, "Error happen when close popup", message);
+    
+                });
+            } else {
+                this.ClosePopup();
+            }
+        };
     }
 
     /**
@@ -320,7 +362,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
      * @param button The button to add to footer
      * @returns A footer button
      */
-    private getFooterPopupButton = (button?: ButtonProps, buttonUrl?: string) => {
+    private GetFooterPopupButton = (button?: ButtonProps, buttonUrl?: string) => {
         if (Utils.IsNotNull(button)) {
             const buttonProps: ButtonProps = button!;
 
@@ -328,39 +370,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 
             buttonProps.CaptionColor = this.props.MainStyleColor;
             
-            buttonProps.Events.set(EnumEvent.Click, (props: ButtonProps) => {
-                if (Utils.IsNotEmpty(buttonUrl)) {
-                    // Form element inside the popup
-                    const iframeForm: HTMLFormElement = new Selector(`#${props.Id}`).Closest(".Popup-React").Children(".PopupContent")
-                        .Children(".PopupIframe").GetContentDocument().Children("body").Children("form").First() as HTMLFormElement;
-
-                    let params = undefined;
-
-                    if (Utils.IsNotNull(iframeForm)) {
-                        // Get data from formulaire inside the popup
-                        params = {
-                            form: SerializeUtils.GetFormData(iframeForm),
-                        };
-                    }
-
-                    AjaxUtils.PostDataWithUrl(buttonUrl!, params, new Array(), this.ClosePopup, (error: any) => {
-                        console.error(error);
-
-                        let message: string;
-
-                        if (error instanceof Error) {
-                            message = error.message;
-                        } else {
-                            message = error;
-                        }
-
-                        Utils.DisplayToast(EnumToastType.Error, "Error happen when close popup", message);
-
-                    }, "");
-                } else {
-                    this.ClosePopup();
-                }
-            });
+            buttonProps.Events.set(EnumEvent.Click, this.GetActionMethodCall(buttonUrl));
 
             return (
                 <Button {...buttonProps!}/>

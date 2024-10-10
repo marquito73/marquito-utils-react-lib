@@ -184,4 +184,8 @@ export class Utils {
                 content: message,
             });
     }
+
+    public static OpenPopup = (popupID: string) => {
+        new Selector(`#${popupID}`).Trigger(EnumEvent.OpenPopup, undefined);
+    }
 }
