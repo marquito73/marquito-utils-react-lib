@@ -21,6 +21,7 @@ import { TestCountryFlagListBox } from "./Select/CountryFlagListBox";
 import { TestRadarChart } from "./Chart/CustomRadarChart";
 import { TestToastManager } from "./Toast/Toast";
 import { TestSpinner } from "./Spinner/Spinner";
+import { TestCandleChart } from "./Chart/CandleChart";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -79,7 +80,8 @@ export default class App extends React.Component<{}, {}> {
             Name: "iTest",
             CssClass: new Array(),
             Attributes: new Map(),
-            Events: new Map()
+            Events: new Map(),
+            IconSize: 15
         }
 
         return (
@@ -282,6 +284,11 @@ export default class App extends React.Component<{}, {}> {
         return TestRadarChart();
     }
 
+    // CandleChart
+    private getTestCandleChart = () => {
+        return TestCandleChart();
+    }
+
     // Toasts
     private getToastManager = () => {
         return TestToastManager();
@@ -382,12 +389,15 @@ export default class App extends React.Component<{}, {}> {
                         </div>
                         <div id="Spinner">
                             <div id="spinner">
-                                {<this.getTestSpinner/>}
+                                {/*<this.getTestSpinner/>*/}
                             </div>
                         </div>
                         <div id="Chart">
                             <div id="radarchart">
                                 {<this.getTestRadarChart/>}
+                            </div>
+                            <div id="candlechart">
+                                {<this.getTestCandleChart/>}
                             </div>
                         </div>
                         {<this.getToastManager/>}

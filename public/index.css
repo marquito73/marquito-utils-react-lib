@@ -57,8 +57,8 @@
 }
 
 #testing > #content > #Chart > * > * {
-    width: 300px;
-    height: 200px;
+    width: 600px;
+    height: 250px;
 }
 
 .ToastManager-React {

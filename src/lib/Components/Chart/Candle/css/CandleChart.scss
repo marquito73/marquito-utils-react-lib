@@ -1,0 +1,13 @@
+.CandleChart-React {
+    .custom-tooltip {
+        transition: all 0.3s;
+
+        background-color: rgba(141, 141, 141, 0.8);
+        border-radius: 10px;
+        padding: 5px;
+        display: flex;
+        row-gap: 10px;
+
+        flex-direction: column;
+    }
+}
