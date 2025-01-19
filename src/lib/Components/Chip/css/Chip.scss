@@ -1,11 +1,12 @@
 .Chip-React {
-    transition: filter 0.3s;
+    transition: filter 0.3s, transform 0.3s;
     border-radius: 25px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
     max-width: fit-content;
+    box-shadow: -2px 4px 5px black;
 }
 
 .Chip-React.hasBorder {
@@ -16,4 +17,5 @@
 
 .Chip-React:hover {
     filter: brightness(1.2);
+    transform: scale(1.1);
 }
