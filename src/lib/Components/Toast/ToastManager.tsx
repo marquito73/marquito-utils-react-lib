@@ -44,15 +44,13 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
                 
 			>
             {
-                /*this.state.ToastMessages.values.map((toastMessage) => {
-                    return (
-                        this.RenderToast(toastMessage)
-                    );
-                })*/
-                [...this.state.ToastMessages.values()].map(message => {
-                    return (
-                        this.RenderToast(message)
-                    );
+                [...this.state.ToastMessages.values()]
+                    .sort((dateOne, dateTwo) => dateOne.MessageDate.getTime() - dateTwo.MessageDate.getTime())
+                    .reverse()
+                    .map(message => {
+                        return (
+                            this.RenderToast(message)
+                        );
                 })
             }
             </div>
@@ -62,7 +60,7 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
     private RenderToast = (toastMessage: ToastMessage) => {
         return (
             <div
-                id={`${this.props.Id}Toast${toastMessage.Guid}`}
+                id={`${this.props.Id}Toast_${toastMessage.Guid}`}
                 className={`Toast-React ${EnumToastType[toastMessage.Type]}`}
                 data-toastkey={toastMessage.Guid}
                 key={toastMessage.Guid}
@@ -84,7 +82,7 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
             Text: title,
             For: "",
             BoldText: true,
-            TextColor: "black",
+            TextColor: "#E5E5E5",
             TextSize: 18,
             Id: "",
             Name: "",
@@ -105,7 +103,7 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
             Text: message,
             For: "",
             BoldText: false,
-            TextColor: "black",
+            TextColor: "#E5E5E5",
             TextSize: 14,
             Id: "",
             Name: "",
@@ -148,8 +146,6 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
             .Closest(".Toast-React");
         // Add close class
         toast.AddClass("Close");
-
-        //this.state.ToastMessages.re(this.state.ToastCounting, 1);
 
         this.forceUpdate(() => {
             setTimeout(() => {

@@ -6,6 +6,7 @@ import "./css/Popup.scss";
 import { AjaxUtils, Point, Selector, SerializeUtils, Utils } from "../../Utils";
 import { Button, ButtonProps, IconButton, IconButtonProps } from "../Button";
 import { Title, TitleProps } from "../TextArea";
+import { ResultContent } from "../../Utils/ResultContent";
 
 export interface PopupProps extends ComponentProps {
     /**
@@ -337,17 +338,21 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
                     .Children(".PopupIframe").GetContentDocument().Children("body").Children("form");
     
                 AjaxUtils.PostDataWithUrl(buttonUrl!, iframeForm, undefined, new Array(), this.ClosePopup, (error: any) => {
-                    console.error(error);
-    
                     let message: string;
+                    let title: string = "Error happen when close popup";
     
                     if (error instanceof Error) {
                         message = error.message;
+                    } else if (error instanceof ResultContent) {
+                        title = error.Title;
+                        message = error.Message;
                     } else {
                         message = error;
                     }
+
+                    console.error(title);
     
-                    Utils.DisplayToast(EnumToastType.Error, "Error happen when close popup", message);
+                    Utils.DisplayToast(EnumToastType.Error, title, message);
     
                 });
             } else {

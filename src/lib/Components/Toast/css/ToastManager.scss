@@ -14,16 +14,22 @@
 }
 
 .ToastManager-React > .Toast-React {
-    width: 15rem;
+    width: 16rem;
     pointer-events: auto;
     display: flex;
     flex-direction: row;
-    border-bottom-width: 0.3rem;
-    border-bottom-style: solid;
+    padding: 10px;
+    //border-bottom-width: 0.3rem;
+    //border-bottom-style: solid;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.98);
     filter: drop-shadow(2px 4px 6px black);
     transition: filter 0.3s;
+    animation: animates-new-toast 0.3s ease-out;
+}
+
+.ToastManager-React > .Toast-React.Close {
+    animation: animates-close-toast 0.3s ease-in;
 }
 
 .ToastManager-React > .Toast-React:hover {
@@ -31,19 +37,23 @@
 }
 
 .ToastManager-React > .Toast-React.Debug {
-    border-bottom-color: rgba(132, 0, 255, 0.5);
+    //border-bottom-color: rgba(132, 0, 255, 0.5);
+    background-color: rgba(132, 0, 255, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Info {
-    border-bottom-color: rgba(140, 144, 145, 0.5);
+    //border-bottom-color: rgba(140, 144, 145, 0.5);
+    background-color: rgba(140, 144, 145, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Warning {
-    border-bottom-color: rgba(255, 221, 0, 0.5);
+    //border-bottom-color: rgba(255, 221, 0, 0.5);
+    background-color: rgba(255, 221, 0, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Error {
-    border-bottom-color: rgba(255,0,0,0.5);
+    //border-bottom-color: rgba(255,0,0,0.5);
+    background-color: rgba(255,0,0,0.5) !important;
 }
 
 .ToastManager-React > .Toast-React > .ToastContent {
@@ -87,10 +97,6 @@
     }
 }
 
-.Toast-React {
-    animation: animates-new-toast 0.3s ease-out;
-}
-
 @keyframes animates-close-toast {
     from {
         transform: translateX(0);
@@ -100,18 +106,3 @@
         filter: opacity(0);
     }
 }
-
-.Toast-React.Close {
-    animation: animates-close-toast 0.3s ease-in;
-}
-
-
-/*.Toast-React {
-    width: 10rem;
-    height: 1rem;
-    border: none;
-    background-color: red;
-    position: relative;
-    float: right;
-    margin-right: 1rem;
-}*/

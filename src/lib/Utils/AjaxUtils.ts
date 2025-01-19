@@ -6,6 +6,7 @@ import { EnumEvent, EnumToastType } from "../Enums";
 import { manual } from "rimraf";
 import { SerializeUtils } from "./SerializeUtils";
 import { Selector } from "./Selector";
+import { ResultContent } from "./ResultContent";
 
 export class AjaxUtils {
     public static PostData = (rootUrl: string, ajaxName: string, ajaxAction: string, form: string | Selector | undefined, parameters: Record<string, any>, filesUpload: Array<File>, 
@@ -70,28 +71,29 @@ export class AjaxUtils {
                 })
                 .then((response) => {
                     try {
-                        if (response.state === "success") {
+                        const jsonResponse: ResultContent = new ResultContent(response.state, response.title, response.message, response.data);
+                        if (jsonResponse.State === "success") {
                             doneCallback?.(response);
                         } else {
                             if (failCallback) {
-                                failCallback?.(response.message);
+                                failCallback?.(jsonResponse);
                             } else {
-                                Utils.DisplayToast(EnumToastType.Error, "Error happen during request", response.message);
+                                Utils.DisplayToast(EnumToastType.Error, "Error happen during request", jsonResponse.Message);
                             }
                         }
                         if (Utils.IsNotNull(form) && form !== "") {
                             if (form instanceof Selector) {
                                 form.Trigger(EnumEvent.AjaxReturn, 
                                     {
-                                        state: response.state, 
-                                        response: response,
+                                        state: jsonResponse.State, 
+                                        response: jsonResponse,
                                     });
                             } else {
                                 new Selector(`#${form}`)
                                 .Trigger(EnumEvent.AjaxReturn, 
                                     {
-                                        state: response.state, 
-                                        response: response,
+                                        state: jsonResponse.State, 
+                                        response: jsonResponse,
                                     });
                             }
                         }
