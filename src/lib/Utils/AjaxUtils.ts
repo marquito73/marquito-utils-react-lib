@@ -19,7 +19,7 @@ export class AjaxUtils {
     }
 
     public static PostDataWithUrl = (ajaxUrl: string, form: string | Selector | undefined, parameters: Record<string, any> | undefined, filesUpload: Array<File>, 
-        doneCallback: Function, failCallback: Function) => {
+        doneCallback: Function | undefined, failCallback: Function | undefined) => {
             // Manage files
             const formData = new FormData();
             
@@ -78,7 +78,7 @@ export class AjaxUtils {
                             if (failCallback) {
                                 failCallback?.(jsonResponse);
                             } else {
-                                Utils.DisplayToast(EnumToastType.Error, "Error happen during request", jsonResponse.Message);
+                                Utils.DisplayToast(EnumToastType.Error, jsonResponse.Title, jsonResponse.Message);
                             }
                         }
                         if (Utils.IsNotNull(form) && form !== "") {

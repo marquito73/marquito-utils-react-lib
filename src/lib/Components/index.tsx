@@ -15,12 +15,14 @@ import { ToastManager, ToastManagerProps } from "./Toast";
 import { EnumToastType } from "../Enums/EnumToastType";
 import { ImageContainer, ImageContainerProps } from "./Image";
 import { Spinner, SpinnerProps } from "./Spinner";
+import { FileInput, FileInputProps } from "./File";
 
 export * from "./Button";
 export * from "./Chart";
 export * from "./Chip";
 export * from "./Common";
 export * from "./Component";
+export * from "./File";
 export * from "./Grid";
 export * from "./Image";
 export * from "./Menu";
@@ -276,6 +278,17 @@ export default class ReactWidgetFactory {
 		const _props: ImageContainerProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<ImageContainer {..._props} />);
+    }
+
+	/**
+	 * Create file input
+	 * 
+	 * @param props File input properties
+	 */
+	public static createFileInput(props: FileInputProps, containerId: string) {
+		const _props: FileInputProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<FileInput {..._props} />);
     }
 
 	/**

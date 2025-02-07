@@ -37,22 +37,18 @@
 }
 
 .ToastManager-React > .Toast-React.Debug {
-    //border-bottom-color: rgba(132, 0, 255, 0.5);
     background-color: rgba(132, 0, 255, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Info {
-    //border-bottom-color: rgba(140, 144, 145, 0.5);
     background-color: rgba(140, 144, 145, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Warning {
-    //border-bottom-color: rgba(255, 221, 0, 0.5);
     background-color: rgba(255, 221, 0, 0.5) !important;
 }
 
 .ToastManager-React > .Toast-React.Error {
-    //border-bottom-color: rgba(255,0,0,0.5);
     background-color: rgba(255,0,0,0.5) !important;
 }
 

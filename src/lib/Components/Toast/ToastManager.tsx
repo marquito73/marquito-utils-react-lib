@@ -67,22 +67,22 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
             >
                 
                 <div className="ToastContent">
-                    {this.GetTitleLabel(toastMessage.Title)}
-                    {this.GetMessageLabel(toastMessage.Message)}
+                    {this.GetTitleLabel(toastMessage.Title, toastMessage.Type)}
+                    {this.GetMessageLabel(toastMessage.Message, toastMessage.Type)}
                 </div>
                 {this.GetCloseButton(toastMessage.Guid)}
             </div>
         );
     }
 
-    private GetTitleLabel = (title: string) => {
+    private GetTitleLabel = (title: string, type: EnumToastType) => {
         const cssClass = new Array();
         cssClass.push("toastTitle");
         const titleProps: LabelProps = {
             Text: title,
             For: "",
             BoldText: true,
-            TextColor: "#E5E5E5",
+            TextColor: type === EnumToastType.Warning ? "#000000" : "#E5E5E5",
             TextSize: 18,
             Id: "",
             Name: "",
@@ -96,14 +96,14 @@ extends Component<Props & ToastManagerProps, ToastManagerState> {
         );
     }
 
-    private GetMessageLabel = (message: string) => {
+    private GetMessageLabel = (message: string, type: EnumToastType) => {
         const cssClass = new Array();
         cssClass.push("toastMessage");
         const titleProps: LabelProps = {
             Text: message,
             For: "",
             BoldText: false,
-            TextColor: "#E5E5E5",
+            TextColor: type === EnumToastType.Warning ? "#000000" : "#E5E5E5",
             TextSize: 14,
             Id: "",
             Name: "",

@@ -1,0 +1,32 @@
+.FileInput-React {
+    width: fit-content !important;
+    cursor: pointer;
+    border-radius: 5px;
+    outline-style: dashed;
+    outline-color: var(--file-input-color);
+    transition: outline-color 0.3s, transform 0.3s;
+    padding: 10px 20px;
+
+    > input {
+        display: none;
+    }
+
+    > .Label-React {
+        font-weight: bold;
+        color: var(--file-input-color) !important;
+    }
+
+    > .Label-React > label {
+        transition: color 0.3s;
+        cursor: inherit !important;
+    }
+}
+
+.FileInput-React.DragOver, .FileInput-React:hover {
+    outline-color: color-mix(in srgb, var(--file-input-color) 50%, transparent);
+    transform: scale(1.05);
+
+    > .Label-React > label {
+        color: color-mix(in srgb, var(--file-input-color) 50%, transparent) !important;
+    }
+}

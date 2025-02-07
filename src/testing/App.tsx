@@ -22,6 +22,7 @@ import { TestRadarChart } from "./Chart/CustomRadarChart";
 import { TestToastManager } from "./Toast/Toast";
 import { TestSpinner } from "./Spinner/Spinner";
 import { TestCandleChart } from "./Chart/CandleChart";
+import { TestFileInput } from "./File/FileInput";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -189,6 +190,10 @@ export default class App extends React.Component<{}, {}> {
     // RangeSlider
     private getTestRangeSlider = () => {
         return TestRangeSlider(20, 1, 40, 0.2);
+    }
+
+    private getTestFileInput = () => {
+        return TestFileInput();
     }
 
     // Popup
@@ -387,6 +392,11 @@ export default class App extends React.Component<{}, {}> {
                                 <this.getTestPopup/>
                             </div>
                         </div>
+                        <div id="FileInput">
+                            <div id="fileinput">
+                                <this.getTestFileInput/>
+                            </div>
+                        </div>
                         <div id="Spinner">
                             <div id="spinner">
                                 {/*<this.getTestSpinner/>*/}
@@ -407,3 +417,4 @@ export default class App extends React.Component<{}, {}> {
         );
     }
 }
+
