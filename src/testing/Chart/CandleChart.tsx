@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CandleChart, CandleChartProps, Candle } from "../../lib";
+import { tr } from "date-fns/locale";
 
 export const TestCandleChart = () => {
       let data: Array<Candle> = [
@@ -65,7 +66,7 @@ export const TestCandleChart = () => {
 
       data = new Array();
 
-      const days = 50;
+      const days = 250;
 
       const GetRandomValue = (min: number, max: number) => {
         return Math.floor((Math.random() * (max - min)) + min)
@@ -75,10 +76,10 @@ export const TestCandleChart = () => {
         if (i == 0) {
             data.push({
                 Time: new Date("2024/10/11"),
-                Low: 20,
-                High: 45,
-                Open: 28,
-                Close: 38,
+                Low: 20.1,
+                High: 45.1,
+                Open: 28.1,
+                Close: 38.1,
                 Volume: 5
             });
         } else {
@@ -98,23 +99,31 @@ export const TestCandleChart = () => {
                 High: high,
                 Open: open,
                 Close: close,
-                Volume: 5,
+                Volume: GetRandomValue(1, 10),
             });
         }
-      }
+    };
 
     // Chart
     const candleChartProps: CandleChartProps = {
-      Data: data,
-      Id: "radarChart",
-      Name: "",
-      CssClass: new Array(),
-      Attributes: new Map(),
-      Events: new Map(),
-      LabelColor: "gray",
-      LabelSize: 20,
-      ChartTitle: "Candle chart",
-      ChartTitleColor: "black"
+        Data: data,
+        Id: "radarChart",
+        Name: "",
+        CssClass: new Array(),
+        Attributes: new Map(),
+        Events: new Map(),
+        LabelColor: "gray",
+        LabelSize: 20,
+        ChartTitle: "Candle chart",
+        ChartTitleColor: "black",
+        StockPriceName: "Apple Inc.(AAPL)",
+        EnableCrossHair: true,
+        DecimalCount: 2,
+        ProductName: "AAPL",
+        UseSignalRForLiveTrading: false,
+        SignalRHubUrl: "",
+        SignalRHubMethodName: "",
+        Period: 300,
     };
 
     return (

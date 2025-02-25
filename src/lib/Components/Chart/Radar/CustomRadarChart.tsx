@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer } from "recharts";
-import { Chart, ChartProps } from "../Chart";
+import { Chart, ChartProps, ChartState } from "../Chart";
 import { RadarType } from "./RadarType";
 
 import "./css/RadarChart.scss";
@@ -11,10 +11,10 @@ export interface RadarChartProps extends ChartProps {
 }
 
 export class CustomRadarChart<Props extends RadarChartProps> 
-extends Chart<Props & RadarChartProps> {
+extends Chart<Props & RadarChartProps, {}> {
 
-	constructor(props: Props & RadarChartProps) {
-        super(props);
+	constructor(props: Props & RadarChartProps, state: Props & ChartState) {
+        super(props, state);
         
 		this.props.CssClass.push("RadarChart-React");
     }

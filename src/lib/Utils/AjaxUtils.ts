@@ -186,16 +186,25 @@ export class AjaxUtils {
      * Get connection with signalR
      * 
      * @param url Url of the hub
+     * @returns Connection with signalR
+     */
+    private static GetSignalRConnection = (url: string): signalR.HubConnection => {
+        return new signalR.HubConnectionBuilder().withUrl(url).build();
+    }
+
+    /**
+     * Get connection with signalR and listen from signalR
+     * 
+     * @param url Url of the hub
      * @param methodName Method name in hub
      * @param callback Callback function when hub send data
      * @returns Connection with signalR
      */
-    public static GetSignalRConnection(url: string, methodName: string, callback: Function)/* : HubConnection*/ {
+    public static GetDataFromSignalR = async (url: string, methodName: string, callback: Function) => {
         // Prepare the connection to the signalR hub
-        const connection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl(url).build();
+        const connection: signalR.HubConnection = this.GetSignalRConnection(url);
         // Execute this function on message reception
         connection.on(methodName, (message) => {
-            callback?.(message);
             try {
                 callback?.(message);
             } catch(err) {
@@ -203,7 +212,25 @@ export class AjaxUtils {
             }
         });
         // Start the connection
-        connection.start();
+        await connection.start();
+
+        return connection;
+    }
+
+    /**
+     * Invoke a method into a signalR Hub
+     * @param url Url of the hub
+     * @param methodName Method name in hub
+     * @param params Params to send to the Hub method
+     * @returns Connection with signalR
+     */
+    public static InvokeSignalRMethod = async (url: string, methodName: string, ...params: any[]) => {
+        // Prepare the connection to the signalR hub
+        const connection: signalR.HubConnection = this.GetSignalRConnection(url);
+        // Start the connection
+        await connection.start();
+
+        connection.invoke(methodName, params);
 
         return connection;
     }

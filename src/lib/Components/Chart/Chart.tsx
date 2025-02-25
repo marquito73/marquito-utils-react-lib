@@ -1,5 +1,5 @@
 import React from "react";
-import {Component, ComponentProps} from "../Component";
+import {Component, ComponentProps, ComponentState} from "../Component";
 import { Label, LabelProps } from "../TextArea/Label";
 import "./css/Chart.scss";
 
@@ -11,11 +11,15 @@ export interface ChartProps extends ComponentProps {
   ChartTitleColor: string,
 }
 
-export abstract class Chart<Props extends ChartProps> 
-extends Component<Props & ChartProps, {}> {
+export interface ChartState extends ComponentState {
 
-	constructor(props: Props & ChartProps) {
-        super(props);
+}
+
+export abstract class Chart<Props extends ChartProps, State extends ChartState> 
+extends Component<Props & ChartProps, State & ChartState> {
+
+	constructor(props: Props & ChartProps, state: State & ChartState) {
+        super(props, state);
 		
 		this.props.CssClass.push("Chart-React");
     }

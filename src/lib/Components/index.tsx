@@ -10,7 +10,7 @@ import { CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, 
 import { DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, TextParagraph, TextParagraphProps, Title, TitleProps } from "./TextArea";
 import { AjaxUtils, Utils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
-import { CustomRadarChart, RadarChartProps } from "./Chart";
+import { CandleChart, CandleChartProps, CustomRadarChart, RadarChartProps } from "./Chart";
 import { ToastManager, ToastManagerProps } from "./Toast";
 import { EnumToastType } from "../Enums/EnumToastType";
 import { ImageContainer, ImageContainerProps } from "./Image";
@@ -267,6 +267,17 @@ export default class ReactWidgetFactory {
 		const _props: RadarChartProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<CustomRadarChart {..._props} />);
+    }
+
+	/**
+	 * Create candle chart
+	 * 
+	 * @param props Candle chart properties
+	 */
+	public static createCandleChart(props: CandleChartProps, containerId: string) {
+		const _props: CandleChartProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<CandleChart {..._props} />);
     }
 
 	/**
