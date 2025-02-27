@@ -1,16 +1,19 @@
 import * as React from "react";
 import { Chart, ChartProps, ChartState } from "../Chart";
 import { Candle } from "./Candle";
-import { Browser } from '@syncfusion/ej2-base';
-import { AxesDirective, AxisDirective, CandleSeries, Category, ChartComponent, ChartTheme, ColumnSeries, Crosshair, DateTime, 
-    IAxisLabelRenderEventArgs, ILoadedEventArgs, Inject, IPointRenderEventArgs, IZoomCompleteEventArgs, Legend, Logarithmic, RowDirective, RowsDirective, SeriesCollectionDirective, 
-    SeriesDirective, StripLine, Tooltip, Zoom } from '@syncfusion/ej2-react-charts';
-
-import "./css/CandleChart.scss";
 import { AjaxUtils, StringBuilder, Utils } from "../../../Utils";
 import { MarketTrade } from "./MarketTrade";
+import { Browser } from '@syncfusion/ej2-base';
+import { AxesDirective, AxisDirective, CandleSeries, Category, ChartComponent, ChartTheme, ColumnSeries, Crosshair, DateTime, 
+    IAxisLabelRenderEventArgs, ILoadedEventArgs, Inject, IPointRenderEventArgs, IZoomCompleteEventArgs, Legend, Logarithmic, RowDirective, 
+    RowsDirective, SeriesCollectionDirective, SeriesDirective, StripLine, Tooltip, Zoom } from '@syncfusion/ej2-react-charts';
+
+import "./css/CandleChart.scss";
 
 
+/**
+ * Candle chart's properties
+ */
 export interface CandleChartProps extends ChartProps {
     Data: Array<Candle>,
     StockPriceName: string,
@@ -22,6 +25,10 @@ export interface CandleChartProps extends ChartProps {
     SignalRHubMethodName: string,
     Period: number,
 }
+
+/**
+ * Candle chart's state properties
+ */
 export interface CandleChartState extends ChartState {
     ZoomFactor: number,
     ZoomPosition: number,
@@ -31,6 +38,9 @@ export interface CandleChartState extends ChartState {
     Data: Array<Candle>,
 }
 
+/**
+ * A candle chart
+ */
 export class CandleChart<Props extends CandleChartProps, State extends CandleChartState> 
 extends Chart<Props & CandleChartProps, State & CandleChartState> {
 
@@ -101,7 +111,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                             crosshair={{
                                 enable: this.props.EnableCrossHair,
                             }}
-                            pointRender={this.PointRender.bind(this)}>
+                            >
                             <Inject 
                                 services={[
                                     CandleSeries, StripLine, Category, Tooltip, DateTime, Zoom, Legend, ColumnSeries, Logarithmic, Crosshair
@@ -166,6 +176,11 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         )
     }
 
+    /**
+     * On zoom completed
+     * 
+     * @param args On zoom completed args
+     */
     private OnZoomCompleted = (args: IZoomCompleteEventArgs) => {
         const visibleData = this.state.Data.filter(candle =>
             new Date(candle.Time).getTime() >= (args.currentVisibleRange.min ?? 0) &&
@@ -183,10 +198,20 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         }
     }
 
+    /**
+     * Get the decimal format
+     * 
+     * @returns The decimal format
+     */
     private GetDecimalFormat = () => {
         return `n${this.props.DecimalCount}`;
     }
 
+    /**
+     * Get the tooltip format
+     * 
+     * @returns The tooltip format
+     */
     private GetToolTipFormat = () => {
         return new StringBuilder("")
             .Append("<b>").Append(this.props.StockPriceName).Append("</b> <br> ")
@@ -198,6 +223,11 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
             .ToString();
     }
 
+    /**
+     * On chart load
+     * 
+     * @param args Chart load args
+     */
     private OnChartLoad = (args: ILoadedEventArgs) => {
         this.setState({
             ZoomFactor: args.chart.primaryXAxis.zoomFactor ?? 1, 
@@ -212,10 +242,11 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         }
     };
 
+    /**
+     * Connect to Live Trading signalR hub for prices
+     */
     private WaitForNewPrice = () => {
         AjaxUtils.GetDataFromSignalR(this.props.SignalRHubUrl, this.props.SignalRHubMethodName, (lastMarketTrade: MarketTrade) => {
-            console.log(lastMarketTrade);
-
             const candles: Array<Candle> = this.state.Data;
 
             const lastCandle: Candle = candles[this.state.Data.length - 1];
@@ -248,14 +279,25 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         }).then(connection => connection.invoke("WaitForNewMarketTrade", this.props.ProductName));
     }
 
+    /**
+     * The lastMarketTrade create a ned Candle on the chart ?
+     * 
+     * @param candle The last candle
+     * @param lastMarketTrade The last price from signalR hub
+     * @returns The lastMarketTrade create a ned Candle on the chart ?
+     */
     private IsNewCandle = (candle: Candle, lastMarketTrade: MarketTrade): boolean => {
         const secondsGap: number = Math.abs(new Date(candle.Time).getTime() - new Date(lastMarketTrade.Time).getTime()) / 1000
         
         return secondsGap > this.props.Period;
     }
-        
+
+    /**
+     * On load chart
+     * 
+     * @param args Load render
+     */
     private Load = (args: ILoadedEventArgs) => {
-        console.log(this.state);
         args.chart.primaryXAxis.zoomFactor = this.state.ZoomFactor ?? 1;
         args.chart.primaryXAxis.zoomPosition = this.state.ZoomPosition ?? 0;
         let selectedTheme: string = location.hash.split('/')[1];
@@ -263,30 +305,13 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).
         replace(/-dark/i, "Dark").replace(/contrast/i,'Contrast').replace(/-highContrast/i, 'HighContrast') as ChartTheme;
     };
-        
+
+    /**
+     * Rendel the Y axis label for the volume
+     * 
+     * @param args Volume axis label render
+     */
     private AxisLabelRender = (args: IAxisLabelRenderEventArgs) => {
         args.text = args.text.replace("0000000M", "M");
-    }
-
-    private PointRender = (args: IPointRenderEventArgs) => {
-        let pointAdded = true;
-
-        if (args.series.chart.enableRtl) {
-            args.series.chart.annotations[0].x = 0;
-        }
-        if (pointAdded && args.series.points[args.series.points.length - 1] === args.point) {
-            const firstPoint = args.series.chart.enableRtl ? args.series.points[args.series.points.length - 1].x : args.series.points[0].x;
-            args.series.chart.annotations[0].x = new Date(Number(firstPoint)).getTime() + (args.series.chart.enableRtl ? 2000 : 1000);
-            args.series.chart.annotations[0].y = args.point.close as number;
-            args.series.chart.annotations[0].content = `<div style="width: ${args.series.chart.initialClipRect.width}px; height: 0; left: ${Browser.isDevice ? -10 : -16}px; position: absolute;">
-            <svg width="100%" height="2" style="display: block;">
-              <line x1="0" y1="1" x2="${args.series.chart.initialClipRect.width}" y2="1" 
-                style="stroke:#868180; stroke-width:0.75; stroke-dasharray:5,5;" />
-            </svg>
-          </div>
-          <div style="width: 40px; height: 18px; background-color: ${args.fill}; border: 1px solid rgba(48, 153, 245, 0.4); color: white; font-size: 11px; text-align: center; line-height: 18px; position: absolute; left: ${(args.series.chart.enableRtl ? -args.series.chart.initialClipRect : args.series.chart.initialClipRect.width - 20) }px; top: -9px;">
-            ${((args.point.close as number) ?? 0).toFixed(2)}
-          </div> `;
-        }
     }
 }
