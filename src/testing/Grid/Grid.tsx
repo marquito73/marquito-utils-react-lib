@@ -43,7 +43,7 @@ export const TestGrid = () => {
             ColNumber: column.ColNumber,
             ColName: column.Name,
             CellType: column.ColType,
-            Id: "cellTest",
+            Id: `cellTest_${column.ColNumber}_${rowNum}`,
             Name: "cellTest",
             CssClass: new Array(),
             Attributes: new Map(),
