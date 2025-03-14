@@ -137,7 +137,7 @@ export class FileInput<Props extends FileInputProps> extends Component<Props & F
     }
 
     private DisplayExtensionError = (filename: string) => {
-        Utils.DisplayToast(EnumToastType.Warning, "Extension not authorized", `Extension of the file ${filename} isn't authorized`);
+        Utils.DisplayToast(EnumToastType.Warning, "Extension not authorized", `Extension of the file ${filename} isn't authorized`, 5000);
     }
 
     private CheckExtension = (filename: string): boolean => {

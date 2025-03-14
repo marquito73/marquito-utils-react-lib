@@ -175,13 +175,14 @@ export class Utils {
     }
 
     public static DisplayToast = (toastType: EnumToastType, title: string, 
-        message: string) => {
+        message: string, duration?: number) => {
         new Selector("html").Find(".ToastManager-React")
             .Trigger(EnumEvent.NewToastMessage, 
             {
                 type: toastType, 
                 title: title, 
                 content: message,
+                duration: duration,
             });
     }
 

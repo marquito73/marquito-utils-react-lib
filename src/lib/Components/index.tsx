@@ -317,8 +317,8 @@ export default class ReactWidgetFactory {
 		return AjaxUtils;
 	}
 
-	public static DisplayToast(toastType: EnumToastType, title: string, message: string) {
-		Utils.DisplayToast(toastType, title, message);
+	public static DisplayToast(toastType: EnumToastType, title: string, message: string, duration?: number) {
+		Utils.DisplayToast(toastType, title, message, duration);
 	}
 
     public static OpenPopup(popupID: string) {

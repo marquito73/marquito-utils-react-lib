@@ -352,7 +352,7 @@ export class Popup<Props extends PopupProps> extends Component<Props & PopupProp
 
                     console.error(title);
     
-                    Utils.DisplayToast(EnumToastType.Error, title, message);
+                    Utils.DisplayToast(EnumToastType.Error, title, message, 5000);
     
                 });
             } else {

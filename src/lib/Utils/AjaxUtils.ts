@@ -78,7 +78,7 @@ export class AjaxUtils {
                             if (failCallback) {
                                 failCallback?.(jsonResponse);
                             } else {
-                                Utils.DisplayToast(EnumToastType.Error, jsonResponse.Title, jsonResponse.Message);
+                                Utils.DisplayToast(EnumToastType.Error, jsonResponse.Title, jsonResponse.Message, 5000);
                             }
                         }
                         if (Utils.IsNotNull(form) && form !== "") {
@@ -106,7 +106,7 @@ export class AjaxUtils {
                         failCallback?.(error);
                     } catch(err) {
                         //console.error(`Error happens during Ajax's request : `, err);
-                        Utils.DisplayToast(EnumToastType.Error, "Error happens during Ajax's request", err as string);
+                        Utils.DisplayToast(EnumToastType.Error, "Error happens during Ajax's request", err as string, 5000);
                     }
                 });
     }

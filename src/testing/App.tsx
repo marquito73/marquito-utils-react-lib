@@ -69,7 +69,11 @@ export default class App extends React.Component<{}, {}> {
         /*new Selector("html").Find(".ToastManager-React")
             .Trigger("newtoastmessage", {title: "Titre", content: "Contenu test"});*/
 
-        Utils.DisplayToast(EnumToastType.Warning, "Titre test", "Contenu test");
+        Utils.DisplayToast(EnumToastType.Debug, "Titre Debug", "Contenu test", 10000);
+        Utils.DisplayToast(EnumToastType.Info, "Titre Info", "Contenu test", 11000);
+        Utils.DisplayToast(EnumToastType.Warning, "Titre Warning", "Contenu test", 12000);
+        Utils.DisplayToast(EnumToastType.Error, "Titre Error", "Contenu test", 13000);
+        Utils.DisplayToast(EnumToastType.Error, "Titre Error", "Contenu durée infinie");
     }
 
     // Icone

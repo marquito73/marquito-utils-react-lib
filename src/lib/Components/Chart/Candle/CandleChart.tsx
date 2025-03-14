@@ -223,7 +223,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         periodButtonProps.Events.set(EnumEvent.Click, this.GetPeriodButtonClickMethod(period));
         
         return (
-            <Button {...periodButtonProps}/>
+            <Button key={period} {...periodButtonProps}/>
         );
     }
 
@@ -235,7 +235,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                         Product: this.props.ProductName,
                         Period: period,
                     }, new Array(), (response: ResultContent) => {
-                        Utils.DisplayToast(EnumToastType.Info, response.Title, response.Message);
+                        Utils.DisplayToast(EnumToastType.Info, response.Title, response.Message, 5000);
                         const newCandles: Array<Candle> = response.Data as Array<Candle>;
     
                         this.setState({

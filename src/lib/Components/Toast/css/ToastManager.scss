@@ -13,74 +13,107 @@
     align-items: end;
 }
 
-.ToastManager-React > .Toast-React {
-    width: 16rem;
-    pointer-events: auto;
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    //border-bottom-width: 0.3rem;
-    //border-bottom-style: solid;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.98);
-    filter: drop-shadow(2px 4px 6px black);
-    transition: filter 0.3s;
-    animation: animates-new-toast 0.3s ease-out;
-}
+.ToastManager-React {
+    > .Toast-React {
+        width: 16rem;
+        pointer-events: auto;
+        display: flex;
+        flex-direction: column;
+        //border-bottom-width: 0.3rem;
+        //border-bottom-style: solid;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        filter: drop-shadow(2px 4px 6px black);
+        transition: filter 0.3s;
+        animation: animates-new-toast 0.3s ease-out;
 
-.ToastManager-React > .Toast-React.Close {
-    animation: animates-close-toast 0.3s ease-in;
-}
+        > .ToastContainer {
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
 
-.ToastManager-React > .Toast-React:hover {
-    filter: drop-shadow(2px 4px 6px black) brightness(0.9);
-}
+            > .ToastContent {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                padding-left: 0.5rem;
+    
+                > .ToastTitle {
+                    height: 1.5rem;
+                    text-align: center;
+                    width: 100%;
+                }
+    
+                > .ToastSeparator {
+                    height: 1px;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    width: 95%;
+                    margin: 0.2rem 0px 0.5rem 0px;
+                }
+    
+                > .ToastMessage {
+                    height: calc(100% - 1.5rem);
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+    
+            > .IconButton-React {
+                align-self: center;
+            }
+        }
 
-.ToastManager-React > .Toast-React.Debug {
-    background-color: rgba(132, 0, 255, 0.5) !important;
-}
+        > .ToastDuration {
+            height: 3px;
+            border-radius: 25px;
+            transition: width 0.3s;
+        }
 
-.ToastManager-React > .Toast-React.Info {
-    background-color: rgba(140, 144, 145, 0.5) !important;
-}
+        > .ToastDuration.WithoutDuration {
+            display: none;
+        }
+    }
 
-.ToastManager-React > .Toast-React.Warning {
-    background-color: rgba(255, 221, 0, 0.5) !important;
-}
+    > .Toast-React.Close {
+        animation: animates-close-toast 0.3s ease-in;
+    }
+    
+    > .Toast-React:hover {
+        filter: drop-shadow(2px 4px 6px black) brightness(0.9);
+    }
+    
+    > .Toast-React.Debug {
+        background-color: rgba(132, 0, 255, 0.5) !important;
 
-.ToastManager-React > .Toast-React.Error {
-    background-color: rgba(255,0,0,0.5) !important;
-}
+        > .ToastDuration {
+            background-color: rgba(132, 0, 255, 1);
+        }
+    }
+    
+    > .Toast-React.Info {
+        background-color: rgba(140, 144, 145, 0.5) !important;
 
-.ToastManager-React > .Toast-React > .ToastContent {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding-left: 0.5rem;
-}
+        > .ToastDuration {
+            background-color: rgba(140, 144, 145, 1);
+        }
+    }
+    
+    > .Toast-React.Warning {
+        background-color: rgba(255, 221, 0, 0.5) !important;
 
-.ToastManager-React > .Toast-React > .ToastContent > .ToastTitle {
-    height: 1.5rem;
-    text-align: center;
-    width: 100%;
-}
+        > .ToastDuration {
+            background-color: rgba(255, 221, 0, 0.8);
+        }
+    }
+    
+    > .Toast-React.Error {
+        background-color: rgba(255, 0, 0, 0.5) !important;
 
-.ToastManager-React > .Toast-React > .ToastContent > .ToastSeparator {
-    height: 1px;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 95%;
-    margin: 0.2rem 0px 0.5rem 0px;
-}
-
-.ToastManager-React > .Toast-React > .ToastContent > .ToastMessage {
-    height: calc(100% - 1.5rem);
-    text-align: center;
-    width: 100%;
-}
-
-.ToastManager-React > .Toast-React > .IconButton-React {
-    align-self: center;
+        > .ToastDuration {
+            background-color: rgba(255, 0, 0, 0.8);
+        }
+    }
 }
 
 @keyframes animates-new-toast {
