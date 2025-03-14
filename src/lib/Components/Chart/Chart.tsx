@@ -9,6 +9,7 @@ export interface ChartProps extends ComponentProps {
   LabelSize: number,
   ChartTitle: string,
   ChartTitleColor: string,
+  BackgroundColor?: string,
 }
 
 export interface ChartState extends ComponentState {

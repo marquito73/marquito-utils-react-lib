@@ -9,6 +9,10 @@ import { AxesDirective, AxisDirective, CandleSeries, Category, ChartComponent, C
     RowsDirective, SeriesCollectionDirective, SeriesDirective, StripLine, Tooltip, Zoom } from '@syncfusion/ej2-react-charts';
 
 import "./css/CandleChart.scss";
+import { Label, LabelProps } from "../../TextArea";
+import { Button, ButtonProps } from "../../Button";
+import { EnumEvent, EnumToastType } from "../../../Enums";
+import { ResultContent } from "../../../Utils/ResultContent";
 
 
 /**
@@ -24,6 +28,10 @@ export interface CandleChartProps extends ChartProps {
     SignalRHubUrl: string,
     SignalRHubMethodName: string,
     Period: number,
+    PriceLabel?: string,
+    VolumeLabel?: string,
+    PeriodsAvailable: Map<string, number>,
+    ReloadCandleDataURL?: string,
 }
 
 /**
@@ -36,6 +44,9 @@ export interface CandleChartState extends ChartState {
     MinimumPrice: number | undefined,
     LiveTradingAlreadyLaunched: boolean,
     Data: Array<Candle>,
+    CurrentPrice: number,
+    CurrentPriceColor: string,
+    CurrentPeriod: number,
 }
 
 /**
@@ -49,6 +60,8 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         
         this.props.CssClass.push("CandleChart-React");
 
+        const lastCandle: Candle = this.props.Data[this.props.Data.length - 1];
+
         this.state = {
             ZoomFactor: 1,
             ZoomPosition: 0,
@@ -56,6 +69,9 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
             MinimumPrice: undefined,
             LiveTradingAlreadyLaunched: false,
             Data: this.props.Data,
+            CurrentPrice: lastCandle.Close,
+            CurrentPriceColor: lastCandle.Close >= lastCandle.Open ? "green" : "red",
+            CurrentPeriod: this.props.Period,
         } as State;
     }
     
@@ -64,6 +80,16 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
             <div 
                 id={this.GetOwnContainerId()}
                 className={this.GetOwnCssClass()}>
+                <div className="period">
+                    {
+                        Array.from(this.props.PeriodsAvailable.keys()).map(period => {
+                            return this.GetPeriodButton(period);
+                        })
+                    }
+                </div>
+                <div className="currentPrice">
+                    {this.GetPriceLabel()}
+                </div>
                 <div className='control-section'>
                     <div className="row">
                         {/* The candle chart */}
@@ -72,6 +98,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                             style={{ 
                                 textAlign: "center" 
                             }} 
+                            background={this.props.BackgroundColor}
                             load={this.Load.bind(this)} 
                             primaryXAxis={{ 
                                 valueType: 'DateTime', 
@@ -79,7 +106,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                                 majorGridLines: { width: 0 } 
                             }} 
                             primaryYAxis={{ 
-                                title: 'Volume', 
+                                title: this.props.VolumeLabel ?? "Volume", 
                                 labelFormat: '{value}M', 
                                 opposedPosition: true, 
                                 majorGridLines: { width: 1 }, 
@@ -133,7 +160,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                                         width: 1 
                                     }} 
                                     labelFormat={this.GetDecimalFormat()} 
-                                    title='Price' 
+                                    title={this.props.PriceLabel ?? "Price"} 
                                     plotOffset={30} 
                                     lineStyle={{ 
                                         width: 0 
@@ -174,6 +201,78 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                 </div>
             </div >
         )
+    }
+
+    private GetPeriodButton = (period: string) => {
+        const periodButtonProps: ButtonProps = {
+            BoldCaption: false,
+            CaptionColor: "",
+            BackgroundColor: "",
+            BorderColor: this.state.CurrentPeriod === this.props.PeriodsAvailable.get(period)! ? "red" : "",
+            CaptionSize: 0,
+            Caption: period,
+            Link: "",
+            OpenInNewTab: false,
+            Id: `${this.GetOwnId()}_${period}`,
+            Name: `${this.GetOwnId()}_${period}`,
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        };
+        
+        periodButtonProps.Events.set(EnumEvent.Click, this.GetPeriodButtonClickMethod(period));
+        
+        return (
+            <Button {...periodButtonProps}/>
+        );
+    }
+
+    private GetPeriodButtonClickMethod = (period: string) => {
+        return (props: ButtonProps) => {
+            if (this.state.CurrentPeriod !== this.props.PeriodsAvailable.get(period)!) {
+                if (Utils.IsNotEmpty(this.props.ReloadCandleDataURL)) {
+                    AjaxUtils.PostDataWithUrl(this.props.ReloadCandleDataURL!, undefined, {
+                        Product: this.props.ProductName,
+                        Period: period,
+                    }, new Array(), (response: ResultContent) => {
+                        Utils.DisplayToast(EnumToastType.Info, response.Title, response.Message);
+                        const newCandles: Array<Candle> = response.Data as Array<Candle>;
+    
+                        this.setState({
+                            ZoomFactor: 1,
+                            ZoomPosition: 0,
+                            MaximumPrice: Math.max(...newCandles.map(c => c.High)),
+                            MinimumPrice: Math.min(...newCandles.map(c => c.Low)),
+                            CurrentPeriod: this.props.PeriodsAvailable.get(period)!,
+                            Data: newCandles,
+                        });
+                    }, undefined);
+                } else {
+                    this.setState({
+                        CurrentPeriod: this.props.PeriodsAvailable.get(period)!,
+                    });
+                }
+            }
+        };
+    }
+
+    private GetPriceLabel = () => {
+        const priceLabelProps: LabelProps = {
+            Text: this.state.CurrentPrice.toString(),
+            For: "",
+            BoldText: true,
+            TextColor: this.state.CurrentPriceColor,
+            TextSize: 15,
+            Id: `${this.GetOwnId()}_price`,
+            Name: `${this.GetOwnId()}_price`,
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map()
+        };
+
+        return (
+            <Label {...priceLabelProps}/>
+        );
     }
 
     /**
@@ -249,11 +348,13 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
         AjaxUtils.GetDataFromSignalR(this.props.SignalRHubUrl, this.props.SignalRHubMethodName, (lastMarketTrade: MarketTrade) => {
             const candles: Array<Candle> = this.state.Data;
 
-            const lastCandle: Candle = candles[this.state.Data.length - 1];
+            let lastCandle: Candle = candles[this.state.Data.length - 1];
 
             if (this.IsNewCandle(lastCandle, lastMarketTrade)) {
+                const newDate: Date = new Date(lastCandle.Time);
+                newDate.setSeconds(newDate.getSeconds() + this.state.CurrentPeriod);
                 const newCandle: Candle = {
-                    Time: lastMarketTrade.Time,
+                    Time: newDate,
                     Low: lastMarketTrade.Price,
                     High: lastMarketTrade.Price,
                     Open: lastMarketTrade.Price,
@@ -273,8 +374,12 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
                 }
             }
 
+            lastCandle = candles[this.state.Data.length - 1];
+
             this.setState({
                 Data: candles,
+                CurrentPrice: lastCandle.Close,
+                CurrentPriceColor: lastCandle.Close >= lastCandle.Open ? "green" : "red",
             });
         }).then(connection => connection.invoke("WaitForNewMarketTrade", this.props.ProductName));
     }
@@ -289,7 +394,7 @@ extends Chart<Props & CandleChartProps, State & CandleChartState> {
     private IsNewCandle = (candle: Candle, lastMarketTrade: MarketTrade): boolean => {
         const secondsGap: number = Math.abs(new Date(candle.Time).getTime() - new Date(lastMarketTrade.Time).getTime()) / 1000
         
-        return secondsGap > this.props.Period;
+        return secondsGap > this.state.CurrentPeriod;
     }
 
     /**

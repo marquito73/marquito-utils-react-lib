@@ -71,9 +71,9 @@ export class AjaxUtils {
                 })
                 .then((response) => {
                     try {
-                        const jsonResponse: ResultContent = new ResultContent(response.state, response.title, response.message, response.data);
+                        const jsonResponse: ResultContent = new ResultContent(response.State, response.Title, response.Message, response.Data);
                         if (jsonResponse.State === "success") {
-                            doneCallback?.(response);
+                            doneCallback?.(jsonResponse);
                         } else {
                             if (failCallback) {
                                 failCallback?.(jsonResponse);

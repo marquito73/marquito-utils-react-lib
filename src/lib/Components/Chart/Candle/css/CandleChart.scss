@@ -15,4 +15,20 @@
 
         flex-direction: column;
     }*/
+
+    > .period {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 10px;
+    }
+
+    > .currentPrice {
+        justify-self: center;
+    }
+
+    > .control-section > .row > div {
+        width: fit-content !important;
+    }
 }

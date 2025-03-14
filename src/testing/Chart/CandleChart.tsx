@@ -107,7 +107,7 @@ export const TestCandleChart = () => {
     // Chart
     const candleChartProps: CandleChartProps = {
         Data: data,
-        Id: "radarChart",
+        Id: "candleChart",
         Name: "",
         CssClass: new Array(),
         Attributes: new Map(),
@@ -124,6 +124,10 @@ export const TestCandleChart = () => {
         SignalRHubUrl: "",
         SignalRHubMethodName: "",
         Period: 300,
+        PeriodsAvailable: new Map([
+            ["M1", 60],
+            ["M5", 300],
+        ]),
     };
 
     return (
