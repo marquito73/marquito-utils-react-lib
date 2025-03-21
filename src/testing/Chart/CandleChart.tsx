@@ -128,6 +128,7 @@ export const TestCandleChart = () => {
             ["M1", 60],
             ["M5", 300],
         ]),
+        SyncFusionLicenseKey: "",
     };
 
     return (

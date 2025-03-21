@@ -61,6 +61,10 @@
     height: 250px;
 }
 
+#testing > #content > #SideBar > * {
+    height: 300px;
+}
+
 .ToastManager-React {
     /* Tests only*/
     /* background: rgba(0, 0, 0, 0.5); */

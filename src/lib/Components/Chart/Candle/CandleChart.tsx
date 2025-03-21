@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Chart, ChartProps, ChartState } from "../Chart";
 import { Candle } from "./Candle";
 import { AjaxUtils, StringBuilder, Utils } from "../../../Utils";
 import { MarketTrade } from "./MarketTrade";
@@ -13,12 +12,13 @@ import { Label, LabelProps } from "../../TextArea";
 import { Button, ButtonProps } from "../../Button";
 import { EnumEvent, EnumToastType } from "../../../Enums";
 import { ResultContent } from "../../../Utils/ResultContent";
+import { SyncFusionChart, SyncFusionChartProps, SyncFusionChartState } from "../SyncFusion/SyncFusionChart";
 
 
 /**
  * Candle chart's properties
  */
-export interface CandleChartProps extends ChartProps {
+export interface CandleChartProps extends SyncFusionChartProps {
     Data: Array<Candle>,
     StockPriceName: string,
     ProductName: string,
@@ -37,7 +37,7 @@ export interface CandleChartProps extends ChartProps {
 /**
  * Candle chart's state properties
  */
-export interface CandleChartState extends ChartState {
+export interface CandleChartState extends SyncFusionChartState {
     ZoomFactor: number,
     ZoomPosition: number,
     MaximumPrice: number | undefined,
@@ -53,7 +53,7 @@ export interface CandleChartState extends ChartState {
  * A candle chart
  */
 export class CandleChart<Props extends CandleChartProps, State extends CandleChartState> 
-extends Chart<Props & CandleChartProps, State & CandleChartState> {
+extends SyncFusionChart<Props & CandleChartProps, State & CandleChartState> {
 
     constructor(props: Props & CandleChartProps, state: State & CandleChartState) {
         super(props, state);
