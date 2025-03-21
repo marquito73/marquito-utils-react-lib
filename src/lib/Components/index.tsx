@@ -7,6 +7,7 @@ import { Tabs, TabsProps } from "./Menu";
 import { Popup, PopupProps } from "./Popup";
 import { ProgressBar, ProgressBarProps } from "./Progress";
 import { CheckBox, RadioBox, CheckRadioBoxProps, ContentBoxProps, CheckListBox, RadioListBox, CountryFlagListBoxProps, CountryFlagListBox } from "./Select";
+import { SideBar, SideBarProps } from "./SideBar";
 import { DatePicker, DatePickerProps, Label, LabelProps, TextArea, TextAreaProps, TextBox, TextBoxProps, TextParagraph, TextParagraphProps, Title, TitleProps } from "./TextArea";
 import { AjaxUtils, Utils } from "../Utils";
 import { Chip, ChipProps } from "./Chip";
@@ -30,6 +31,7 @@ export * from "./Popup";
 export * from "./Progress";
 export * from "./Range";
 export * from "./Select";
+export * from "./SideBar";
 export * from "./Spinner";
 export * from "./TextArea";
 export * from "./Toast";
@@ -245,6 +247,17 @@ export default class ReactWidgetFactory {
 		const _props: CountryFlagListBoxProps = { ...props };
 		const root = createRoot(document.getElementById(containerId) as HTMLElement);
 		root.render(<CountryFlagListBox {..._props} />);
+    }
+
+	/**
+	 * Create side bar
+	 * 
+	 * @param props Side bar properties
+	 */
+	public static createSideBar(props: SideBarProps, containerId: string) {
+		const _props: SideBarProps = { ...props };
+		const root = createRoot(document.getElementById(containerId) as HTMLElement);
+		root.render(<SideBar {..._props} />);
     }
 
 	/**

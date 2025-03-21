@@ -23,6 +23,7 @@ import { TestToastManager } from "./Toast/Toast";
 import { TestSpinner } from "./Spinner/Spinner";
 import { TestCandleChart } from "./Chart/CandleChart";
 import { TestFileInput } from "./File/FileInput";
+import { TestSideBar } from "./SideBar/SideBar";
 
 export default class App extends React.Component<{}, {}> {
 
@@ -313,6 +314,10 @@ export default class App extends React.Component<{}, {}> {
         return TestSpinner("icon-spinner2");
     }
 
+    private getTestSideBar = () => {
+        return TestSideBar();
+    }
+
     render() {
         return (
             <div>
@@ -412,6 +417,11 @@ export default class App extends React.Component<{}, {}> {
                             </div>
                             <div id="candlechart">
                                 {<this.getTestCandleChart/>}
+                            </div>
+                        </div>
+                        <div id="SideBar">
+                            <div id="sidebar">
+                            {<this.getTestSideBar/>}
                             </div>
                         </div>
                         {<this.getToastManager/>}

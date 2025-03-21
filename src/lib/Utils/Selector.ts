@@ -63,12 +63,21 @@ export class Selector {
     }
 
     /**
-     * Get the countof  elements on this selector
+     * Get the count of elements on this selector
      * 
      * @returns The count of elements on this selector
      */
     public Count = () => {
         return this.MainSelector.length;
+    }
+
+    /**
+     * The selector has at least one element
+     * 
+     * @returns The selector has at least one element
+     */
+    public Any = () => {
+        return this.Count() >= 1;
     }
 
     /**
@@ -161,6 +170,10 @@ export class Selector {
 
         return new Selector(childrens);
     }
+
+    public Exclude = (excludeSelector: string) => {
+        // TODO Exclude element from current selector with the exclude selector
+    }
     
     /**
      * Get parents of elements
@@ -238,7 +251,11 @@ export class Selector {
      * @param className The class to add
      */
     public AddClass = (className: string) => {
-        this.ForEach(element => element.classList.add(className));
+        this.ForEach(element => {
+            if (!element.classList.contains(className)) {
+                element.classList.add(className);
+            }
+        });
     }
 
     /**
@@ -436,5 +453,9 @@ export class Selector {
             element.dispatchEvent(new CustomEvent(EnumEvent[eventName].toString().toLowerCase(), 
             {detail: eventData}))
         });
+    }
+
+    public SetIframeSource = (viewURL: string) => {
+        (this.First() as HTMLIFrameElement).src = viewURL;
     }
 }

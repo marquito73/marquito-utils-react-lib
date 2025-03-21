@@ -2,7 +2,6 @@ import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
 import "./css/ToastManager.scss";
 import { Selector, ToastMessage, Utils } from "../../Utils";
-import CSS from 'csstype';
 import { EnumEvent, EnumToastType } from "../../Enums";
 import { IconButton, IconButtonProps } from "../Button";
 import { Label, LabelProps } from "../TextArea";
