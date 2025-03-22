@@ -21,6 +21,7 @@ export const TestSideBar = () => {
     // SideBar
     const SideBarProps: SideBarProps = {
         Title: "Side bar de test titre",
+        TitleColor: "black",
         Entries: entries,
         Width: 200,
         BackgroundColor: "rgba(0, 0, 0, 0.2)",
@@ -32,7 +33,8 @@ export const TestSideBar = () => {
         EntryColor: "black",
         EntrySelectedColor: "rgba(255, 0, 0, 0.7)",
         EntryHoverColor: "rgba(255, 0, 0, 0.15)",
-        ViewContainerID: ""
+        OutlineColor: "red",
+        ViewContainerID: "",
     };
 
     return (

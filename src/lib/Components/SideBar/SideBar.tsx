@@ -1,21 +1,24 @@
 import * as React from "react";
 import {Component, ComponentProps, ComponentState} from "../Component";
-import { Label, LabelProps } from "../TextArea";
+import { Label, LabelProps, Title, TitleProps } from "../TextArea";
 import { MenuEntry } from "./MenuEnty";
 import { Icon, IconProps } from "../Common";
 import { Selector, Utils } from "../../Utils";
 import CSS from 'csstype';
 import "./css/SideBar.scss";
+import { EnumTitleType } from "../../Enums";
 
 
 export interface SideBarProps extends ComponentProps {
     Title: string,
+    TitleColor: string,
     Entries: Array<MenuEntry>,
     Width: number,
     BackgroundColor: string,
     EntryColor: string,
     EntrySelectedColor: string,
     EntryHoverColor: string,
+    OutlineColor: string,
     ViewContainerID: string,
 }
 
@@ -32,6 +35,25 @@ extends Component<Props & SideBarProps, SideBarState> {
         this.state = {
             CurrentlySelectedEntry: "",
         };
+
+        const entriesSelected: Array<MenuEntry> = this.GetAllEntriesSelected();
+        if (Utils.IsNotEmpty(entriesSelected)) {
+            this.LoadEntryView(entriesSelected[0]);
+        }
+    }
+
+    private GetAllEntries = (): Array<MenuEntry> => {
+        const allEntries: Array<MenuEntry> = new Array();
+
+        this.props.Entries.forEach(subEntry => allEntries.push(subEntry));
+
+        return this.GetAllSubEntries(allEntries);
+    }
+
+    private GetAllEntriesSelected = () => {
+        return this.GetAllEntries().filter(entry => {
+            return Utils.IsEmpty(entry.SubEntries) && entry.Selected && Utils.IsNotEmpty(entry.ViewURL);
+        });
     }
 
     render() {
@@ -40,6 +62,7 @@ extends Component<Props & SideBarProps, SideBarState> {
             backgroundColor: this.props.BackgroundColor,
             "--entry-selected-color": this.props.EntrySelectedColor,
             "--entry-hover-color": this.props.EntryHoverColor,
+            "--sidebar-outline-color": this.props.OutlineColor,
         } as CSS.Properties;
 
         return (
@@ -49,12 +72,33 @@ extends Component<Props & SideBarProps, SideBarState> {
 				className={this.GetOwnCssClass()}
                 style={cssStyles}
 			>
+                {this.RenderTitle()}
+                <div className="Separator"/>
                 <div className="SideBarEntries">
                     {
                         this.props.Entries.map((entry) => this.RenderEntry(entry))
                     }
                 </div>
             </div>
+        );
+    }
+
+    private RenderTitle = () => {
+        const titleProps: TitleProps = {
+            Text: this.props.Title,
+            BoldText: false,
+            TextColor: this.props.TitleColor,
+            TextSize: 16,
+            TitleType: EnumTitleType.H1,
+            Id: `${this.GetOwnId()}_Title`,
+            Name: `${this.GetOwnId()}_Title`,
+            CssClass: new Array(),
+            Attributes: new Map(),
+            Events: new Map(),
+        };
+
+        return (
+            <Title {...titleProps}/>
         );
     }
 
@@ -132,14 +176,6 @@ extends Component<Props & SideBarProps, SideBarState> {
         };
     }
 
-    private GetAllEntries = (): Array<MenuEntry> => {
-        const allEntries: Array<MenuEntry> = new Array();
-
-        this.props.Entries.forEach(subEntry => allEntries.push(subEntry));
-
-        return this.GetAllSubEntries(allEntries);
-    }
-
     private GetAllSubEntries = (entries: Array<MenuEntry>): Array<MenuEntry> => {
         entries.forEach(entry => {
             if (Utils.IsNotEmpty(entry.SubEntries)) {
@@ -159,15 +195,19 @@ extends Component<Props & SideBarProps, SideBarState> {
 
             const entry: MenuEntry = this.GetAllEntries().filter(x => x.EntryKey === entryKey)[0];
 
-            if (Utils.IsEmpty(entry.SubEntries)) {
-                if (Utils.IsNotNull(entry.ViewURL)) {
-                    new Selector(`iframe#${this.props.ViewContainerID}`).SetIframeSource(entry.ViewURL!);
-                }
+            this.LoadEntryView(entry);
+        }
+    }
 
-                this.setState({CurrentlySelectedEntry: entryKey});
-            } else {
-                this.setState({CurrentlySelectedEntry: ""});
+    private LoadEntryView = (entry: MenuEntry) => {
+        if (Utils.IsEmpty(entry.SubEntries)) {
+            if (Utils.IsNotNull(entry.ViewURL)) {
+                new Selector(`iframe#${this.props.ViewContainerID}`).SetIframeSource(entry.ViewURL!);
             }
+
+            this.setState({CurrentlySelectedEntry: entry.EntryKey});
+        } else {
+            this.setState({CurrentlySelectedEntry: ""});
         }
     }
 

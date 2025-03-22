@@ -4,11 +4,25 @@
     height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
-    padding: 20px;
-    outline: 2px solid red;
+    height: calc(100% - 20px);
+    row-gap: 5px;
+    padding: 10px;
+    outline: 2px solid var(--sidebar-outline-color);
     border-radius: 5px;
     backdrop-filter: blur(30px);
+    overflow: hidden;
+
+    > .Title-React {
+        align-self: center;
+    }
+
+    > .Separator {
+        width: 90%;
+        align-self: center;
+        height: 2px;
+        background-color: var(--entry-selected-color);
+        border-radius: 25px;
+    }
 
     > .SideBarEntries {
         display: flex;
