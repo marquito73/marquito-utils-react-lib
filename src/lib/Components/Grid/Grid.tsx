@@ -1,11 +1,9 @@
-import React/*, { UIEvent }*/ from "react";
+import React from "react";
 import { AjaxUtils, Selector, StringBuilder, Utils } from "../../Utils";
-import { Component, ComponentProps } from "../Component";
+import { Component, ComponentProps, ComponentState } from "../Component";
 import { Column, ColumnProps } from "./Column";
 import { Row, RowProps } from "./Row";
 import "./css/Grid.scss";
-import { EnumContentType } from "../../Enums";
-import ReactDOM from "react-dom";
 import { CellProps } from "./Cell";
 import { Label, LabelProps } from "../TextArea";
 
@@ -18,32 +16,44 @@ export interface GridProps extends ComponentProps {
     TotalOfRows: number
 }
 
-export class Grid<Props extends GridProps> extends Component<Props & GridProps, {}> {
+export interface GridState extends ComponentState {
+    AjaxIsUsed: boolean,
+}
+
+export class Grid<Props extends GridProps> extends Component<Props & GridProps, GridState> {
+    constructor(props: Props & GridProps, state: Props & GridState) {
+		super(props);
+
+        this.AddCssClass("Grid-React");
+
+        this.state = {
+            AjaxIsUsed: false,
+        };
+    }
+
     render() {
         return (
             <div 
                 id={this.GetOwnContainerId()}
-                className="Grid-React"
+				{...this.props.Attributes}
+				className={this.GetOwnCssClass()}
             >
-                <div 
-                id={this.GetOwnId()}
-                    className="Grid"
-                >
-                    <table className="grid">
-                        {this.getHeader()}
-                        {this.getBody()}
-                    </table>
-                    {this.GetFooter()}
-                </div>
+                <table 
+                    id={this.GetOwnId()}
+                    className="Grid">
+                    {this.GetHeader()}
+                    {this.GetBody()}
+                </table>
+                {this.GetFooter()}
             </div>
         );
     }
 
-    private getHeader = () => {
+    private GetHeader = () => {
         return (
             <thead 
                 id={this.GetContainerId(this.props.Id + "_header")}
-                className="gridHeader"
+                className="GridHeader"
             >
                 <tr className="GridRow-React">
                     {
@@ -58,12 +68,12 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
         );
     }
 
-    private getBody = () => {
+    private GetBody = () => {
         return (
             <tbody 
                 id={this.GetContainerId(this.props.Id + "_body")}
-                className="gridBody"
-                onScroll={this.handleScroll}
+                className="GridBody"
+                onScroll={this.HandleScroll}
             >
                 {
                     this.props.Rows.map((row) => {
@@ -92,7 +102,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
         return (
             <div
                 id={this.GetContainerId(this.props.Id + "_footer")}
-                className="gridFooter"
+                className="GridFooter"
             >
                 <label id={this.GetContainerId(this.props.Id + "_emptyFooterLabel")}/>
                 <Label {...lblPaginationProps}/>
@@ -100,26 +110,17 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
         );
     }
 
-    private handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    private HandleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (this.props.UseInfiniteScroll) {
-            this.handleInfiniteScroll(e);
+            this.HandleInfiniteScroll(e);
         }
     }
 
-    private handleInfiniteScroll = (e: React.UIEvent<HTMLDivElement>) => {
-        const body: Selector = new Selector(e.currentTarget);
-
-        if (Utils.IsNull(body.GetAttribute("ajaxIsUsed"))) {
-            body.SetAttribute("ajaxIsUsed", false);
-        }
-
-        if (!Utils.GetAsBoolean(body.GetAttribute("ajaxIsUsed"))) {
-            if ((e.currentTarget.scrollTop + e.currentTarget.offsetHeight) 
-                >= e.currentTarget.scrollHeight) {
-                body.SetAttribute("ajaxIsUsed", true);
+    private HandleInfiniteScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        if (!this.state.AjaxIsUsed) {
+            if ((e.currentTarget.scrollTop + e.currentTarget.offsetHeight) >= e.currentTarget.scrollHeight) {
+                this.setState({AjaxIsUsed: true});
                 try {
-                    let test: object = new Object();
-                    let test1 = Utils.NvlObject(test);
                     // Call ajax of the grid for get next rows
                     AjaxUtils.PostData(this.props.RootUrl, "Grid/AjxReactGrid", "getNextRows", undefined, {
                         _gridId: this.props.Id
@@ -141,11 +142,6 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                                 return row;
                             });
                             
-                            // TODO A rendre fonctionnel, ne marche pas pour le moment
-                            /*newRowsProps = newRowsProps.map((row) => {
-                                return Utils.NvlObject(row) as RowProps;
-                            });*/
-                            
                             if (Utils.IsNotEmpty(newRowsProps)) {
                                 newRowsProps.forEach((rowProps) => {
                                     this.props.Rows.push(rowProps);
@@ -159,7 +155,7 @@ export class Grid<Props extends GridProps> extends Component<Props & GridProps, 
                 } catch (e) {
                     console.error(e);
                 } finally {
-                    body.SetAttribute("ajaxIsUsed", false);
+                    this.setState({AjaxIsUsed: false});
                 }
             }
         }

@@ -16,25 +16,21 @@ export interface CellProps extends ComponentProps {
 }
 
 export class Cell<Props extends CellProps> extends Component<Props & CellProps, {}> {
-
     constructor(props: Props & CellProps) {
         super(props);
-        this.props.CssClass.push("GridCell-React");
-        this.props.CssClass.push("grid_content_" + EnumContentType[this.props.CellType].toLowerCase());
+        this.AddCssClass("GridCell-React");
+        this.AddCssClass(`grid_content_${EnumContentType[this.props.CellType].toLowerCase()}`);
         this.props.Attributes.set("colNumber", Utils.GetAsString(this.props.ColNumber));
     }
 
     render() {
         return (
-            <this.getCellComponent/>
+            <this.GetCellComponent/>
         );
     }
 
-    private getCellComponent = () => {
-
+    private GetCellComponent = () => {
         let component: JSX.Element;
-
-        // TODO Gérer si cela est éditable ou non
 
         if (this.props.IsEditable) {
             switch (this.props.CellType) {
@@ -42,12 +38,12 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
                 case EnumContentType.Number:
                     const sVal: string = Utils.GetAsString(this.props.Value);
 
-                    component = this.getTextBox(sVal);
+                    component = this.GetTextBox(sVal);
                     break;
                 case EnumContentType.Boolean:
                     const bVal: boolean = Utils.GetAsBoolean(this.props.Value);
 
-                    component = this.getCheckBox("TODO", bVal);
+                    component = this.GetCheckBox("TODO", bVal);
                     break;
                 case EnumContentType.Date:
                     const dVal: Date = Utils.GetAsDate(this.props.Value);
@@ -55,16 +51,16 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
                     component = this.GetDatePicker(dVal);
                     break;
                 default:
-                    component = this.getLabel(Utils.GetAsString(this.props.Value));
+                    component = this.GetLabel(Utils.GetAsString(this.props.Value));
                     break;
             } 
         } else {
-            component = this.getLabel(Utils.GetAsString(this.props.Value));
+            component = this.GetLabel(Utils.GetAsString(this.props.Value));
         }
 
         return (
             <td 
-                id={"td" + this.getCellExtensionId()}
+                id={"td" + this.GetCellExtensionId()}
                 data-colnumber={Utils.GetAsString(this.props.ColNumber)}
                 className={this.GetOwnCssClass()}
             >
@@ -73,14 +69,14 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         );
     }
 
-    private getTextBox = (value: string) => {
+    private GetTextBox = (value: string) => {
         const txtProps: TextBoxProps = {
             Value: value,
             PlaceHolder: "",
             ReadOnly: false,
             SpellCheck: false,
-            Id: "txt" + this.getCellExtensionId(),
-            Name: "txt" + this.getCellExtensionName(),
+            Id: "txt" + this.GetCellExtensionId(),
+            Name: "txt" + this.GetCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
             Events: new Map(),
@@ -95,14 +91,14 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         );
     }
 
-    private getCheckBox = (value: string, selected: boolean) => {
+    private GetCheckBox = (value: string, selected: boolean) => {
         const chkProps: CheckRadioBoxProps = {
             Value: value,
             Caption: "",
             Selected: selected,
             Type: "checkbox",
-            Id: "chk" + this.getCellExtensionId(),
-            Name: "chk" + this.getCellExtensionName(),
+            Id: "chk" + this.GetCellExtensionId(),
+            Name: "chk" + this.GetCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
             Events: new Map()
@@ -120,8 +116,8 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
             MaximumDate: undefined,
             PlaceHolder: "",
             Language: EnumLang.FR,
-            Id: "dp" + this.getCellExtensionId(),
-            Name: "dp" + this.getCellExtensionName(),
+            Id: "dp" + this.GetCellExtensionId(),
+            Name: "dp" + this.GetCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
             Events: new Map(),
@@ -135,15 +131,15 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         );
     }
 
-    private getLabel = (value: string) => {
+    private GetLabel = (value: string) => {
         const txtProps: LabelProps = {
             Text: value,
             BoldText: false,
             TextColor: "red",
             TextSize: 15,
             For: "",
-            Id: "lbl" + this.getCellExtensionId(),
-            Name: "lbl" + this.getCellExtensionName(),
+            Id: "lbl" + this.GetCellExtensionId(),
+            Name: "lbl" + this.GetCellExtensionName(),
             CssClass: new Array(),
             Attributes: new Map(),
             Events: new Map()
@@ -154,23 +150,12 @@ export class Cell<Props extends CellProps> extends Component<Props & CellProps, 
         );
     }
 
-    private getCellExtensionName = () => {
-        const sbCell:StringBuilder = new StringBuilder("_");
-        
-        sbCell.Append("")
-            .Append(this.props.ColName);
-
-        return sbCell.ToString();
+    private GetCellExtensionName = () => {
+        return new StringBuilder("_").Append("").Append(this.props.ColName).ToString();
     }
 
-    private getCellExtensionId = () => {
-        const sbCell:StringBuilder = new StringBuilder("_");
-        
-        sbCell.Append("")
-            .Append(Utils.GetAsString(this.props.RowNumber))
-            .Append(Utils.GetAsString(this.props.ColNumber))
-            .Append(this.props.ColName);
-
-        return sbCell.ToString();
+    private GetCellExtensionId = () => {
+        return new StringBuilder("_").Append("").Append(Utils.GetAsString(this.props.RowNumber))
+            .Append(Utils.GetAsString(this.props.ColNumber)).Append(this.props.ColName).ToString();
     }
 }

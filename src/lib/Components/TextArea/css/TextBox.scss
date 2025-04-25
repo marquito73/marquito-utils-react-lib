@@ -1,28 +1,31 @@
-div.TextBox-React {
+.TextBox-React {
     width: inherit;
+
+    > input {
+        height: 20px;
+        width: calc(100% - 2px);
+        outline: none;
+        border-radius: 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+        transition: border-color 0.3s, filter 0.3s;
+        padding-inline: 0;
+        padding-block: 0;
+    }
+
+    > input:hover, > input:focus {
+        border-color: deepskyblue;
+    }
 }
 
-div.TextBox-React > input {
-    height: 20px;
+.TextBox-React.WithoutBorder > input {
     width: 100%;
-    outline: none;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    transition: border-color 0.3s, filter 0.3s;
-}
-
-div.TextBox-React.WithoutBorder > input {
     border-width: 0;
 }
 
-div.TextBox-React > input:hover, 
-div.TextBox-React > input:focus {
-    border-color: deepskyblue;
-}
-
-div.TextBox-React.BrightnessWhenHoverFocus > input:hover, 
-div.TextBox-React.BrightnessWhenHoverFocus > input:focus {
-    filter: brightness(1.1);
+.TextBox-React.BrightnessWhenHoverFocus {
+    > input:hover, > input:focus {
+        filter: brightness(1.1);
+    }
 }

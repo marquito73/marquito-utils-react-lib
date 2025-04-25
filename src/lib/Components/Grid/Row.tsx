@@ -1,5 +1,4 @@
 import * as React from "react";
-import { StringBuilder, Utils } from "../../Utils";
 import { Component, ComponentProps } from "../Component";
 import { Cell, CellProps } from "./Cell";
 
@@ -9,14 +8,12 @@ export interface RowProps extends ComponentProps {
 }
 
 export class Row<Props extends RowProps> extends Component<Props & RowProps, {}> {
-
     constructor(props: Props & RowProps) {
         super(props);
-        this.props.CssClass.push("GridRow-React");
+        this.AddCssClass("GridRow-React");
     }
 
     render() {
-        this.props.CssClass.push("GridRow-React");
         return (
             <tr 
                 id={this.props.Id}

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { EnumCheckMode, EnumContentType } from "../../Enums";
+import { EnumCheckMode, EnumContentType, EnumEvent } from "../../Enums";
 import { Selector, StringBuilder, Utils } from "../../Utils";
-import { Component, ComponentProps } from "../Component";
+import { Component, ComponentProps, ComponentState } from "../Component";
 import "./css/Column.scss";
 
 export interface ColumnProps extends ComponentProps {
@@ -13,20 +13,24 @@ export interface ColumnProps extends ComponentProps {
     CheckMode: EnumCheckMode
 }
 
-export class Column<Props extends ColumnProps> extends Component<Props & ColumnProps, {}> {
+export interface ColumnState extends ComponentState {
+    CurrentResize: boolean,
+}
 
-    constructor(props: Props & ColumnProps) {
+export class Column<Props extends ColumnProps> extends Component<Props & ColumnProps, ColumnState> {
+    constructor(props: Props & ColumnProps, state: Props & ColumnState) {
         super(props);
-        this.props.CssClass.push("GridColumn-React");
-        this.props.CssClass.push("grid_" + EnumCheckMode[this.props.CheckMode].toLowerCase());
-        this.props.CssClass.push("grid_content_" + EnumContentType[this.props.ColType].toLowerCase());
+
+        this.AddCssClass("GridColumn-React");
+        this.AddCssClass(`grid_${EnumCheckMode[this.props.CheckMode].toLowerCase()}`);
+        this.AddCssClass(`grid_content_${EnumContentType[this.props.ColType].toLowerCase()}`);
+
+        this.state = {
+            CurrentResize: false,
+        };
     }
 
     render() {
-        this.props.CssClass.push("GridColumn-React");
-        this.props.CssClass.push("grid_" + EnumCheckMode[this.props.CheckMode].toLowerCase());
-        this.props.CssClass.push("grid_content_" + EnumContentType[this.props.ColType].toLowerCase());
-
         return (
             <th 
                 id={this.props.Id}
@@ -35,37 +39,41 @@ export class Column<Props extends ColumnProps> extends Component<Props & ColumnP
                 {this.props.Caption}
                 <div 
                     className="resizer"
-                    onMouseDown={this.handleResizeMouseDown}
-                    onMouseUp={this.handleResizeMouseUp}
-                    onMouseMove={this.handleResizeMouseMove}
+                    onMouseDown={this.HandleResizeMouseDown}
                 />
             </th>
         );
     }
 
-    private handleResizeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        new Selector(e.currentTarget).Parent().SetAttribute("currentResize", true);
+    private HandleResizeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        this.setState({CurrentResize: true});
+
+        new Selector(e.currentTarget).GetDocument().On(EnumEvent.MouseUp, this.HandleResizeMouseUp);
+        new Selector(e.currentTarget).GetDocument().On(EnumEvent.MouseMove, this.HandleResizeMouseMove);
     }
 
-    private handleResizeMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
-        new Selector(e.currentTarget).Parent().SetAttribute("currentResize", false);
+    private HandleResizeMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+        this.setState({CurrentResize: false});
+        new Selector(e.currentTarget).GetDocument().Off(EnumEvent.MouseMove, this.HandleResizeMouseMove);
     }
-
-    // TODO Trouver le moyen de détecter le mouseup pendant le mousemove, pour interrompre le resize
-    // TODO Trouver un moyen de forcer les noms de colonnes à avoir une taille minimale
-    private handleResizeMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        // Header cell selector
-        const headerCellSelector: Selector = new Selector(e.currentTarget).Parent();
-
-        if (Utils.GetAsBoolean(headerCellSelector.GetAttribute("currentResize"))) {
+    
+    private HandleResizeMouseMove = (element: HTMLElement, event: React.MouseEvent<HTMLElement>) => {
+        if (this.state.CurrentResize) {
+            // Header cell selector
+            const headerCellSelector: Selector = new Selector(`#${this.props.Id}`);
             // Body cells selector
-            const cellsSelector: Selector = headerCellSelector.Closest("table")
-                .Find("tbody").Children("tr").Children(`td[data-colnumber="${this.props.ColNumber}"`);
+            const cellsSelector: Selector = headerCellSelector.Closest(".Grid").Find("tbody").Children("tr")
+                .Children(`td[data-colnumber="${this.props.ColNumber}"`);
             // Calculate the new width
-            const newWidth: number = headerCellSelector.First().clientWidth + e.movementX - 10;
-            // Affect this new width to cells
-            headerCellSelector.SetStyle("width", newWidth + "px !important");
-            cellsSelector.SetStyle("width", newWidth + "px !important");
+            //const newWidth: number = headerCellSelector.First().clientWidth + event.movementX - 10;
+            const newWidth = element.scrollLeft + event.clientX - headerCellSelector.First().getBoundingClientRect().x - 10;
+
+            if (newWidth > 0) {
+                // Affect this new width to the column
+                headerCellSelector.SetStyle("width", newWidth + "px !important");
+                // and body cells selector
+                cellsSelector.SetStyle("width", newWidth + "px !important");
+            }
         }
     }
 }

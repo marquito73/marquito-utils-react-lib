@@ -366,7 +366,7 @@ export class Selector {
      * 
      * @param event The event
      * @param eventFunction The function call when event occur
-     * @param selector The children selector to macth (can be undefined)
+     * @param selector The children selector to match (can be undefined)
      */
     public On = (event: EnumEvent, eventFunction: Function, selector?: string) => {
         // Bind this event on each elements inside this selector, matching selector if specified

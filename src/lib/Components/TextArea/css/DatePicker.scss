@@ -1,37 +1,40 @@
 .DatePicker-React {
     min-width: 4.5rem;
     width: 4.5rem;
-}
 
-.DatePicker-React > .react-datepicker-wrapper,
-.DatePicker-React > .react-datepicker-wrapper > *,
-.DatePicker-React > .react-datepicker-wrapper > * > input {
-    min-width: inherit;
-    width: inherit;
-}
+    > .react-datepicker-wrapper {
+        input {
+            width: calc(100% - 2px);
+            height: 20px;
+            outline: none;
+            border-radius: 5px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: black;
+            transition: border-color 0.3s, filter 0.3s;
+            padding-inline: 0;
+            padding-block: 0;
+        }
 
-.DatePicker-React > .react-datepicker-wrapper input {
-    height: 20px;
-    outline: none;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    transition: border-color 0.3s, filter 0.3s;
+        input:hover, input:focus {
+            border-color: deepskyblue !important;
+        }
+    }
+
+    > .react-datepicker-wrapper, > .react-datepicker-wrapper > *, > .react-datepicker-wrapper > * > input {
+        min-width: inherit;
+    }
 }
 
 .DatePicker-React.WithoutBorder > .react-datepicker-wrapper input {
+    width: 100%;
     border-width: 0;
 }
 
-.DatePicker-React > .react-datepicker-wrapper input:hover, 
-.DatePicker-React > .react-datepicker-wrapper input:focus {
-    border-color: deepskyblue !important;
-}
-
-.DatePicker-React.BrightnessWhenHoverFocus > .react-datepicker-wrapper input:hover, 
-.DatePicker-React.BrightnessWhenHoverFocus > .react-datepicker-wrapper input:focus {
-    filter: brightness(1.1);
+.DatePicker-React.BrightnessWhenHoverFocus > .react-datepicker-wrapper {
+    input:hover, input:focus {
+        filter: brightness(1.1);
+    }
 }
 
 .DatePicker-React > .react-datepicker__tab-loop * {
@@ -59,18 +62,3 @@
 .DatePicker-React .react-datepicker__month-read-view:hover .react-datepicker__month-read-view--down-arrow {
     border-color: deepskyblue !important;
 }
-
-/*.DatePicker-React > .react-datepicker-wrapper input {
-    height: 20px;
-    outline: none;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    transition: border-color 0.3s;
-}
-
-.DatePicker-React > .react-datepicker-wrapper input:hover, 
-.DatePicker-React > .react-datepicker-wrapper input:focus {
-    border-color: deepskyblue !important;
-}*/
